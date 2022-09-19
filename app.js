@@ -3,7 +3,9 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-// require('./models/User');
+require('./models/User');
+require('./config/passport');
+const passport = require('passport');
 
 const debug = require('debug');
 const cors = require('cors');
@@ -20,7 +22,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+
 const { isProduction } = require('./config/keys');
 
 if (!isProduction) {
@@ -45,6 +48,7 @@ const csrfRouter = require('./routes/api/csrf');
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/csrf', csrfRouter);
+
 
 app.use((req, res, next) => {
     const err = new Error('Not Found');
