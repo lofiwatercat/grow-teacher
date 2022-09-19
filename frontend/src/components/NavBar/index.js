@@ -34,7 +34,7 @@ function NavBar () {
 
   return (
     <>
-      <h1>Posts</h1>
+      <Link to={'/'}>Home</Link>
       { getLinks() }
     </>
   );
