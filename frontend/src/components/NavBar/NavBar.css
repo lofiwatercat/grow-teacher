@@ -6,6 +6,7 @@
   height: 48px;
   background-color: white;
   width: 100vw;
+  z-index: 1;
 }
 
 .NavBar button {
