@@ -7,10 +7,6 @@
     "dev": "dotenv nodemon ./bin/www --inspect"
   },
   "dependencies": {
-    "react-redux": "^8.0.2",
-    "react-router-dom": "^5.3.3",
-    "redux": "^4.2.0",
-    "redux-thunk": "^2.4.1",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
@@ -23,7 +19,11 @@
     "morgan": "~1.9.1",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "react-redux": "^8.0.2",
+    "react-router-dom": "^5.3.3",
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.1"
   },
   "devDependencies": {
     "dotenv-cli": "^6.0.0",

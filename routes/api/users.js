@@ -9,6 +9,7 @@ const passport = require('passport');
 const validateRegisterInput = require('../../validation/register.js');
 const validateLoginInput = require('../../validation/login.js');
 const { loginUser, restoreUser } = require('../../config/passport');
+const { isProduction } = require('../../config/keys');
 
 
 /* GET users listing. */

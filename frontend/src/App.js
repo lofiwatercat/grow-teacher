@@ -11,11 +11,11 @@ import SignupForm from "./components/SessionForms/SignupForm";
 import { getCurrentUser } from "./store/reducers/session_reducer";
 
 function App() {
-  const [loaded, setLoaded] = useState(true);
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(getCurrentUser()).then(() => setLoaded(true));
-  // }, [dispatch]);
+  const [loaded, setLoaded] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCurrentUser()).then(() => setLoaded(true));
+  }, [dispatch]);
 
   return (
     loaded && (
@@ -23,7 +23,7 @@ function App() {
         <Navbar />
         <Switch>
           {/* <AuthRoute exact path="/" /> */}
-          <Route exact path="/login" component={LoginForm} />
+          <AuthRoute exact path="/login" component={LoginForm} />
           {/* <Route exact path="/signup" component={SignupForm} /> */}
         </Switch>
       </>

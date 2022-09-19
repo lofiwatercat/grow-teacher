@@ -7,14 +7,14 @@ import { login, clearSessionErrors } from "../../store/reducers/session_reducer"
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-//   const errors = useSelector((state) => state.errors.session);
+  // const errors = useSelector((state) => state.errors.session);
   const dispatch = useDispatch();
 
-//   useEffect(() => {
-//     return () => {
-//       dispatch(clearSessionErrors());
-//     };
-//   }, [dispatch]);
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(clearSessionErrors());
+  //   };
+  // }, [dispatch]);
 
   const update = (field) => {
     const setState = field === "email" ? setEmail : setPassword;
