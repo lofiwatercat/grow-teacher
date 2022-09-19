@@ -22,4 +22,3 @@ export const getPost = postId => state => {
   }
 }
 
-export const fetch_post = 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import Navbar from "./components/NavBar"
+import NavBar from "./components/NavBar"
 
 import { AuthRoute, ProtectedRoute } from "./components/Routes/Routes";
 
@@ -21,7 +21,7 @@ function App() {
   return (
     loaded && (
       <>
-        <Navbar />
+        <NavBar />
         <Switch>
           <AuthRoute exact path="/" component={SplashPage}/>
           <AuthRoute exact path="/login" component={LoginForm} />

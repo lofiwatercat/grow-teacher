@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import "./NavBar.css";
+import "./NavBar.scss";
 import { logout } from "../../store/reducers/session_reducer";
 
 function NavBar() {
@@ -35,7 +35,7 @@ function NavBar() {
   return (
     <>
       <div className="NavBar">
-        <Link to={'/'}>Home</Link>
+        <Link id="home-link" to={'/'}>Home</Link>
         {getLinks()}
       </div>
     </>

@@ -1,0 +1,60 @@
+.NavBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: sticky;
+  height: 48px;
+  background-color: white;
+  width: 80vw;
+  z-index: 1;
+  position:fixed;
+  top: 20px; 
+  left: 0;
+  transform: translate(calc(50vw - 50%));
+  border-radius: 50px;
+  padding-left: 30px;
+  padding-right: 30px;
+  align-items: center;
+
+  a {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    border-radius: 10px;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 20px;
+  }
+
+  a:hover {
+    background-color: WhiteSmoke;
+  }
+
+  #home-link {
+    width: 40px;
+  }
+}
+
+.NavBar button {
+  height: 20px;
+}
+
+.links-nav {
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.links-auth {
+  width: 100px;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  
+
+}
