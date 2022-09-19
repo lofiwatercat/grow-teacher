@@ -2,7 +2,13 @@ import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import sessionReducer from "./reducers/session_reducer";
 
+// For the entities slice of state
+const entitiesReducer = combineReducers({
+  // add users, posts
+})
+
 const rootReducer = combineReducers({
+    entities: entitiesReducer,
     session: sessionReducer
 })
 

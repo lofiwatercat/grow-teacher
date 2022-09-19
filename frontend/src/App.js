@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
+import Navbar from "./components/navbar"
 
 import { AuthRoute, ProtectedRoute } from "./components/Routes/Routes";
 
@@ -19,6 +20,7 @@ function App() {
   return (
     loaded && (
       <>
+        <Navbar />
         <Switch>
           {/* <AuthRoute exact path="/" /> */}
           <Route exact path="/login" component={LoginForm} />
