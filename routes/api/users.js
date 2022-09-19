@@ -18,6 +18,7 @@ const { loginUser, restoreUser } = require('../../config/passport');
 //   });
 // });
 //sign up
+router.get("/test", (req, res) => res.json({ msg: "This is the users route" }));
 
 router.get('/current', restoreUser, (req, res) => {
   if (!isProduction) {
