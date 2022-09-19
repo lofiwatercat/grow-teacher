@@ -1,6 +1,7 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import sessionReducer from "./reducers/session_reducer";
+import errors from "./reducers/errors_reducer"
 
 // For the entities slice of state
 const entitiesReducer = combineReducers({
@@ -9,6 +10,7 @@ const entitiesReducer = combineReducers({
 
 const rootReducer = combineReducers({
     // entities: entitiesReducer,
+    errors, 
     session: sessionReducer
 })
 
