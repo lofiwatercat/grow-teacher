@@ -30,14 +30,14 @@ function LoginForm() {
     <div className="form-container">
       <form className="session-form" onSubmit={handleSubmit}>
         <h2>Sign in to Grow Teacher</h2>
-        {/* <div className="errors">{errors?.email}</div> */}
+        <div className="errors">{errors?.email}</div>
           <input
             type="text"
             value={email}
             onChange={update("email")}
             placeholder="Email"
           />
-        {/* <div className="errors">{errors?.password}</div> */}
+        <div className="errors">{errors?.password}</div>
           <input
             type="password"
             value={password}
