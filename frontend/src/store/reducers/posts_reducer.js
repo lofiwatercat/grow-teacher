@@ -25,7 +25,7 @@ export const getPosts = (state) => {
   if (!state || !state.entities) {
     return [];
   } else {
-    return state.entities.posts;
+    return Object.values(state.entities.posts);
   }
 };
 
