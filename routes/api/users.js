@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const mongoose = require('mongoose');
 require('../../models/User')
 const User = mongoose.model('User');
@@ -11,14 +11,7 @@ const validateLoginInput = require('../../validation/login.js');
 const { loginUser, restoreUser } = require('../../config/passport');
 const { isProduction } = require('../../config/keys');
 
-
-/* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.json({
-//     message: "GET /api/users"
-//   });
-// });
-//sign up
+router.get("/test", (req, res) => res.json({ msg: "This is the users route" }));
 
 router.get('/current', restoreUser, (req, res) => {
   if (!isProduction) {
