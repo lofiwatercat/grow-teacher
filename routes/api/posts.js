@@ -53,6 +53,7 @@ router.post('/',requireUser, async(req, res, next) => {
     if (!isProduction) {
         const csrfToken = req.csrfToken();
         res.cookie("CSRF-TOKEN", csrfToken);
+        // console.log(res)
     }
     try {
         const newPost = new Post({
@@ -61,9 +62,11 @@ router.post('/',requireUser, async(req, res, next) => {
         items: req.body.items,
         author: req.user._id
       });
+    //   console.log(newPost, "HELLLOEEE")
 
       let post = await newPost.save();
-      post = await post.populate('author', '_id, email');
+      post = await post.populate('author');
+      console.log(post, "Tswift")
       return res.json(post);
     }
     catch(err) {

@@ -11,6 +11,8 @@ import SignupForm from "./components/SessionForms/SignupForm";
 import { getCurrentUser } from "./store/reducers/session_reducer";
 import SplashPage from "./views/SplashPage";
 
+import Testing from './components/testing'
+
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
@@ -26,6 +28,7 @@ function App() {
           <AuthRoute exact path="/" component={SplashPage}/>
           <AuthRoute exact path="/login" component={LoginForm} />
           <AuthRoute exact path="/signup" component={SignupForm} />
+          <ProtectedRoute exact path="/testing" component={Testing} />
 
         </Switch>
       </>

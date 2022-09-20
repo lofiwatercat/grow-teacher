@@ -93,6 +93,7 @@ export const deletePost = (postId) => async (dispatch) => {
 
 const postsReducer = (state = {}, action) => {
   Object.freeze(state);
+  
   let nextState = { ...state };
   switch (action.type) {
     case RECEIVE_POSTS:
