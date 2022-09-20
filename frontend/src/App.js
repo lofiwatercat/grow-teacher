@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import NavBar from "./components/NavBar"
 
 import { AuthRoute, ProtectedRoute } from "./components/Routes/Routes";
@@ -10,6 +10,7 @@ import SignupForm from "./components/SessionForms/SignupForm";
 
 import { getCurrentUser } from "./store/reducers/session_reducer";
 import SplashPage from "./views/SplashPage";
+import PostsFormPage from "./views/PostsFormPage";
 
 import Testing from './components/testing'
 
@@ -29,7 +30,8 @@ function App() {
           <AuthRoute exact path="/login" component={LoginForm} />
           <AuthRoute exact path="/signup" component={SignupForm} />
           <ProtectedRoute exact path="/testing" component={Testing} />
-
+          <ProtectedRoute exact path="/posts/create" component={PostsFormPage} />
+          <Redirect to="/" />
         </Switch>
       </>
     )
