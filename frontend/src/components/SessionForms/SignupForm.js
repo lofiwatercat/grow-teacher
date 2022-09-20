@@ -102,6 +102,7 @@ function SignupForm() {
         />
       </label>
       <input
+        id="sessionform-button"
         type="submit"
         value="Sign Up"
         disabled={!email || !username || !password || password !== password2}
