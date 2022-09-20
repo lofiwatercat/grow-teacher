@@ -35,10 +35,7 @@ export const getPost = (postId) => (state) => {
   } else if (!state.entities.posts) {
     return null;
   } else {
-    console.log("in selector", `${postId}`)
-    console.log(state.entities.posts)
-    console.log(state.entities.posts[`${postId}`])
-    return state.entities.posts[`${postId}`];
+    return state.entities.posts[postId];
   }
 };
 

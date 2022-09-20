@@ -17,12 +17,10 @@ const PostsShow = () => {
 
   // Exit out for first render
   if (!post) return null;
-  console.log("in post show", post)
 
   return (
     <>
       <div id="post-show">
-        {post && console.log(post.title)}
       </div>
     </>
   );
