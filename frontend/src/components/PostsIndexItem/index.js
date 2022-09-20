@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './PostsIndexItem.scss' 
 
 // Receieves a post from index
@@ -8,7 +9,7 @@ const PostsIndexItem = ({ post }) => {
         INSERT PICTURE HERE
       </div>
       <div class="item-text">
-        <p>{post.title}</p>
+        <Link to={`posts/${post._id}`}>{post.title}</Link>
         <p>{post.body}</p>
       </div>
     </div>

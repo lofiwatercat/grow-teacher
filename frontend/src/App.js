@@ -34,7 +34,7 @@ function App() {
           <ProtectedRoute exact path="/posts" component={PostsIndexPage} />
           <ProtectedRoute exact path="/testing" component={Testing} />
           <ProtectedRoute exact path="/posts/create" component={PostsFormPage} />
-          <ProtectedRoute exact path="/posts/:postid" component={PostsShowPage} />
+          <ProtectedRoute exact path="/posts/:postId" component={PostsShowPage} />
           <Redirect to="/" />
         </Switch>
       </>
