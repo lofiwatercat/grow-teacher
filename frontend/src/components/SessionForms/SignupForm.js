@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./SessionForm.scss";
-import { signup, clearSessionErrors } from "../../store/reducers/session_reducer";
+import {
+  signup,
+  clearSessionErrors,
+  login,
+} from "../../store/reducers/session_reducer";
 
 function SignupForm() {
   const [email, setEmail] = useState("");
@@ -51,65 +55,73 @@ function SignupForm() {
     dispatch(signup(user));
   };
 
+  const handleDemoLogin = (e) => {
+    e.preventDefault();
+    dispatch(login({ email: "demo1@user.io", password: "password" }));
+  };
+
   return (
     <>
-    <div id="signup-page">
-    <div id="signup-text">
-        <p>Filler Text</p>
-        <p>Help your teachers</p>
-        <p>Help your kids</p>
-        <p>Filler image</p>
-    </div>
-    <div id="signup-form-container">
-    <form className="session-form" onSubmit={usernameSubmit}>
-      <h2>Sign Up</h2>
-      <div className="errors">{errors?.email}</div>
-      <label>
-        <input
-          type="text"
-          value={email}
-          onChange={update("email")}
-          placeholder="Email"
-        />
-      </label>
-      <div className="errors">{errors?.username}</div>
-      <label>
-        <input
-          type="text"
-          value={username}
-          onChange={update("username")}
-          placeholder="Username"
-        />
-      </label>
-      <div className="errors">{errors?.password}</div>
-      <label>
-        <input
-          type="password"
-          value={password}
-          onChange={update("password")}
-          placeholder="Password"
-        />
-      </label>
-      <div className="errors">
-        {password !== password2 && "Confirm Password field must match"}
+      <div id="signup-page">
+        <div id="signup-text">
+          <p>Filler Text</p>
+          <p>Help your teachers</p>
+          <p>Help your kids</p>
+          <p>Filler image</p>
+        </div>
+        <div id="signup-form-container">
+          <form className="session-form" onSubmit={usernameSubmit}>
+            <h2>Sign Up</h2>
+            <div className="errors">{errors?.email}</div>
+            <label>
+              <input
+                type="text"
+                value={email}
+                onChange={update("email")}
+                placeholder="Email"
+              />
+            </label>
+            <div className="errors">{errors?.username}</div>
+            <label>
+              <input
+                type="text"
+                value={username}
+                onChange={update("username")}
+                placeholder="Username"
+              />
+            </label>
+            <div className="errors">{errors?.password}</div>
+            <label>
+              <input
+                type="password"
+                value={password}
+                onChange={update("password")}
+                placeholder="Password"
+              />
+            </label>
+            <div className="errors">
+              {password !== password2 && "Confirm Password field must match"}
+            </div>
+            <label>
+              <input
+                type="password"
+                value={password2}
+                onChange={update("password2")}
+                placeholder="Confirm Password"
+              />
+            </label>
+            <input
+              className="sessionform-button"
+              type="submit"
+              value="Sign Up"
+              disabled={
+                !email || !username || !password || password !== password2
+              }
+            />
+            <input type="submit" value="Demo Login" onClick={handleDemoLogin} />
+          </form>
+        </div>
       </div>
-      <label>
-        <input
-          type="password"
-          value={password2}
-          onChange={update("password2")}
-          placeholder="Confirm Password"
-        />
-      </label>
-      <input
-        id="sessionform-button"
-        type="submit"
-        value="Sign Up"
-        disabled={!email || !username || !password || password !== password2}
-      />
-    </form>
-    </div>
-    </div>
     </>
   );
 }
