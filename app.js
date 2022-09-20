@@ -4,7 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('./models/User');
-require('./config/passport');
+require('./models/Post');
+// require('./config/passport');
 const passport = require('passport');
 
 const debug = require('debug');
@@ -13,8 +14,7 @@ const csurf = require('csurf');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/api/users');
-
-
+const postsRouter = require('./routes/api/posts');
 
 const app = express();
 
@@ -48,6 +48,8 @@ const csrfRouter = require('./routes/api/csrf');
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/csrf', csrfRouter);
+app.use('/api/posts', postsRouter);
+
 
 
 app.use((req, res, next) => {
