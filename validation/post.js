@@ -10,6 +10,16 @@ const validatePostInput = [
       .exists({ checkFalsy: true })
       .isLength({ min: 2, max: 255 })
       .withMessage('Body must be between 2 and 255 characters'),
+    check("items.*.name")  
+      .exists({ checkFalsy: true })
+      .withMessage('name must exist'),
+    check("items.*.totalCost")  
+      .exists({ checkFalsy: true })
+      .withMessage('total cost must be included'),
+    check("items.*.amount")  
+      .exists({ checkFalsy: true })
+      .withMessage('amount must be included'),
+
     handleValidationErrors
   ];
   

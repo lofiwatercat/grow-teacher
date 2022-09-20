@@ -12,7 +12,8 @@ const itemsSchema = Schema(
         name: String,
         totalCost: Number,
         amount: Number,
-        comments: noReqString,
+        details: noReqString,
+        status: Boolean,
     },
     {
         timestamps: true
