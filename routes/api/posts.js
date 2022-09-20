@@ -19,8 +19,8 @@ router.get("/", async(req, res) => {
             const payload = await Promise.all(posts.map(async post => {
                 const p = {};
                 p.title = post.title
-                p.body = recipe.body
-                p.items = recipe.total_rating
+                p.body = post.body
+                p.items = post.items
                 p.author_name = await User.findOne({ _id: post.author }).then((res) => { 
                     return "test_name";
                 })
@@ -30,7 +30,7 @@ router.get("/", async(req, res) => {
             res.json(payload)
         }
         )
-        .catch(err => console.log(err));
+        .catch(err => res.status(404).json({nopostsfound: 'No posts found'}));
 })
 
 // get one post
@@ -39,13 +39,13 @@ router.get("/:id", (req, res) => {
         const csrfToken = req.csrfToken();
         res.cookie("CSRF-TOKEN", csrfToken);
     }
-    Post.findOne({id: req.params.id})
+    Post.findOne({id: req.params._id})
     .then(async post => 
     {
-        await post.populate('author', '_id, email')
+        await post.populate('author', '_id username email')
         return res.json(post);
     })
-    .catch(err => console.log(err));
+    .catch(err => res.status(404).json({nopostsfound: 'No posts found with that ID'}));
 })
 
 //post a post
@@ -65,8 +65,7 @@ router.post('/',requireUser, async(req, res, next) => {
     //   console.log(newPost, "HELLLOEEE")
 
       let post = await newPost.save();
-      post = await post.populate('author');
-      console.log(post, "Tswift")
+      post = await post.populate('author', '_id username email');
       return res.json(post);
     }
     catch(err) {
@@ -85,16 +84,6 @@ router.patch('/:id',requireUser, async(req, res, next) => {
             return res.json(post);
         })
 })
-// router.patch("/:id", (req, res) => {
-
-//     Post.findOneAndUpdate({id: req.params.id},
-//         req.body,
-//         { new: true, useFindAndModify: false },
-//         (err, post) => {
-//             if (err) return res.status(500).send(err);
-//             return res.json(post);
-//         })
-// })
 
 //delete a post
 router.delete('/:id', (req, res) => {
