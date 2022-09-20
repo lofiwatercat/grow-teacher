@@ -9,12 +9,15 @@ const authorId = {
     ref: 'User'
 }
 
-const repliesSchema = Schema(
-    {
+const repliesSchema = Schema({
+        
         author: authorId,
-        body: String,
+        body: {
+            type: String,
+            required: true,
+       },
     },
-    {
+       {
         timestamps: true
     },
 )
