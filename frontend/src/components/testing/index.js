@@ -31,7 +31,7 @@ const TestingPost = () => {
          }
   ]
   }
-  const testPostUpdata = {
+  const testPostUpdate = {
   author: "asldkjfljqwer",
   title: "Need Some lovin 2",
   body: "Long Foo Bar Long Foo Bar",

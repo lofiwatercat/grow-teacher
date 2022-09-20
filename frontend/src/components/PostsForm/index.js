@@ -5,17 +5,23 @@ const PostsForm = () => {
   const sessionUser = useSelector(state => state.session.user)
 
   let post = {
-    
+    author: {},
+    title: "",
+    body: "",
+    items: [],
   }
-  const [newPost, setNewPost] = useState()
+  const [newPost, setNewPost] = useState(post)
   const handleSubmit = (e) => {
+    // setNewPost({...newPost, newPost.author: {}})
     e.preventDefault();
   }
 
   return (
     <>
       <div>
-        <form></form>
+        <form>
+          <button onClick={handleSubmit}>Create</button>
+        </form>
       </div>
     </>
   );
