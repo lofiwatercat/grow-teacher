@@ -1,18 +1,26 @@
-.form-container {
-  position: relative;
-  height: 100vh;
-}
-
 .session-form {
   display: flex;
-  height: 20%;
+  height: 50%;
   max-height: 300px;
   flex-direction: column;
-  align-items: center;
   position: absolute;
   justify-content: space-between;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 12vw;
+  max-width: 12vw;
+
+  h2 {
+    font-size: 30px;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    input {
+      margin-top: 10px;
+    }
+  }
 }
 

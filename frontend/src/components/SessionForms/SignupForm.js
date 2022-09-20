@@ -52,11 +52,11 @@ function SignupForm() {
   };
 
   return (
+    <div id="signup-form-container">
     <form className="session-form" onSubmit={usernameSubmit}>
-      <h2>Sign Up Form</h2>
+      <h2>Sign Up</h2>
       <div className="errors">{errors?.email}</div>
       <label>
-        <span>Email</span>
         <input
           type="text"
           value={email}
@@ -66,7 +66,6 @@ function SignupForm() {
       </label>
       <div className="errors">{errors?.username}</div>
       <label>
-        <span>Username</span>
         <input
           type="text"
           value={username}
@@ -76,7 +75,6 @@ function SignupForm() {
       </label>
       <div className="errors">{errors?.password}</div>
       <label>
-        <span>Password</span>
         <input
           type="password"
           value={password}
@@ -88,7 +86,6 @@ function SignupForm() {
         {password !== password2 && "Confirm Password field must match"}
       </div>
       <label>
-        <span>Confirm Password</span>
         <input
           type="password"
           value={password2}
@@ -102,6 +99,7 @@ function SignupForm() {
         disabled={!email || !username || !password || password !== password2}
       />
     </form>
+    </div>
   );
 }
 
