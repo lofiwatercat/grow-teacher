@@ -52,6 +52,14 @@ function SignupForm() {
   };
 
   return (
+    <>
+    <div id="signup-page">
+    <div id="signup-text">
+        <p>Filler Text</p>
+        <p>Help your teachers</p>
+        <p>Help your kids</p>
+        <p>Filler image</p>
+    </div>
     <div id="signup-form-container">
     <form className="session-form" onSubmit={usernameSubmit}>
       <h2>Sign Up</h2>
@@ -100,6 +108,8 @@ function SignupForm() {
       />
     </form>
     </div>
+    </div>
+    </>
   );
 }
 
