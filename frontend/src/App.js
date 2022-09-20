@@ -12,6 +12,7 @@ import { getCurrentUser } from "./store/reducers/session_reducer";
 import SplashPage from "./views/SplashPage";
 import PostsFormPage from "./views/PostsFormPage";
 import PostsShowPage from "./views/PostsShowPage";
+import PostsIndexPage from "./views/PostsIndexPage";
 
 import Testing from './components/testing'
 
@@ -30,6 +31,7 @@ function App() {
           <AuthRoute exact path="/" component={SplashPage}/>
           <AuthRoute exact path="/login" component={LoginForm} />
           <AuthRoute exact path="/signup" component={SignupForm} />
+          <ProtectedRoute exact path="/posts" component={PostsIndexPage} />
           <ProtectedRoute exact path="/testing" component={Testing} />
           <ProtectedRoute exact path="/posts/create" component={PostsFormPage} />
           <ProtectedRoute exact path="/posts/:postid" component={PostsShowPage} />
