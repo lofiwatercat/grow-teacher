@@ -59,7 +59,7 @@ const PostsShow = () => {
 
           {post.items.map(item => {
             return (
-              <PostItem  item={item} authorId={post.author._id} key={`${item._id}`}/>
+              <PostItem  post={post} item={item} authorId={post.author._id} key={`${item._id}`}/>
             )
           })}
         </div>

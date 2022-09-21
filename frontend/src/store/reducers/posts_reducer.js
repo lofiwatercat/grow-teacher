@@ -70,7 +70,7 @@ export const createPost = (post) => async (dispatch) => {
 };
 
 export const updatePost = (post) => async (dispatch) => {
-  const res = await jwtFetch(`/api/posts/${post.id}`, {
+  const res = await jwtFetch(`/api/posts/${post._id}`, {
     method: "PATCH",
     body: JSON.stringify(post),
   });
