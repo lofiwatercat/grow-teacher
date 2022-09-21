@@ -85,7 +85,6 @@ function LoginForm() {
       username,
       password: passwordSignUp,
     };
-    console.log(user)
 
     dispatch(signup(user));
   };

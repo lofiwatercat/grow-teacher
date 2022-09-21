@@ -15,10 +15,10 @@ import PostsFormPage from "./views/PostsFormPage";
 import Testing from './components/testing'
 
 function App() {
-  const [loaded, setLoaded] = useState(true);
+  const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
-    // dispatch(getCurrentUser()).then(() => setLoaded(true));
+    dispatch(getCurrentUser()).then(() => setLoaded(true));
   }, [dispatch]);
 
   return (
