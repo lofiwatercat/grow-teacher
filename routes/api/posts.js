@@ -39,7 +39,7 @@ router.get("/:id", (req, res) => {
         const csrfToken = req.csrfToken();
         res.cookie("CSRF-TOKEN", csrfToken);
     }
-    Post.findOne({id: req.params._id})
+    Post.findOne({_id: req.params.id})
     .then(async post => 
     {
         await post.populate('author', '_id username email')
