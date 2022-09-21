@@ -4,6 +4,8 @@ import { Link, useParams, useHistory } from 'react-router-dom';
 import "./PostsShow.scss"
 import { fetchPost, getPost, deletePost } from "../../store/reducers/posts_reducer"
 
+import PostItem from "../PostItem"
+
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -57,11 +59,7 @@ const PostsShow = () => {
 
           {post.items.map(item => {
             return (
-            <div className="post-item" key={`${item._id}`}>
-              <p>{item.name}</p>
-              <p>{item.amount}</p>
-              <p>{item.totalCost}</p>
-            </div>
+              <PostItem  item={item} authorId={post.author._id} key={`${item._id}`}/>
             )
           })}
         </div>
