@@ -18,7 +18,6 @@ const PostsShow = () => {
   // Exit out for first render
   if (!post) return null;
 
-
   return (
     <>
       <div id="post-show">
