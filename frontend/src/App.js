@@ -15,10 +15,10 @@ import PostsFormPage from "./views/PostsFormPage";
 import Testing from './components/testing'
 
 function App() {
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getCurrentUser()).then(() => setLoaded(true));
+    // dispatch(getCurrentUser()).then(() => setLoaded(true));
   }, [dispatch]);
 
   return (
@@ -28,7 +28,7 @@ function App() {
         <Switch>
           <AuthRoute exact path="/" component={SplashPage}/>
           <AuthRoute exact path="/login" component={LoginForm} />
-          <AuthRoute exact path="/signup" component={SignupForm} />
+          <AuthRoute exact path="/signup" component={LoginForm} />
           <ProtectedRoute exact path="/testing" component={Testing} />
           <ProtectedRoute exact path="/posts/create" component={PostsFormPage} />
           <Redirect to="/" />

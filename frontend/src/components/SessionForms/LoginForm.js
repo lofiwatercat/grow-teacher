@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import TextField from "@mui/material/TextField";
+import isEmail from "validator/lib/isEmail";
 import "./SessionForm.scss";
 
 import {
@@ -10,36 +12,49 @@ import {
 
 function LoginForm() {
   // LOGIN
+  const [isValidEmail, setIsValidEmail] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const errors = useSelector((state) => state.errors.session);
 
   // SIGNUP
+  const [isValidEmailSignUp, setIsValidEmailSignUp] = useState(false);
   const [emailSignUp, setEmailSignUp] = useState("");
   const [username, setUsername] = useState("");
   const [passwordSignUp, setPasswordSignUp] = useState("");
   const [password2, setPassword2] = useState("");
 
-  const errors = useSelector((state) => state.errors.session);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    return () => {
-      dispatch(clearSessionErrors());
-    };
+    dispatch(clearSessionErrors());
   }, [dispatch]);
 
   // LOGIN
-  const update = (field) => {
+  const update = (e, field) => {
+    e.preventDefault();
     const setState = field === "email" ? setEmail : setPassword;
-    return (e) => setState(e.currentTarget.value);
+    if (field === "email") {
+      if (isEmail(e.currentTarget.value)) {
+        setIsValidEmail(true);
+      } else {
+        setIsValidEmail(false);
+      }
+    }
+    return setState(e.currentTarget.value);
   };
 
-  const updateSignUp = (field) => {
+  const updateSignUp = (e, field) => {
     let setState;
 
     switch (field) {
       case "email":
         setState = setEmailSignUp;
+        if (isEmail(e.currentTarget.value)) {
+          setIsValidEmailSignUp(true);
+        } else {
+          setIsValidEmailSignUp(false);
+        }
         break;
       case "username":
         setState = setUsername;
@@ -54,7 +69,7 @@ function LoginForm() {
         throw Error("Unknown field in Signup Form");
     }
 
-    return (e) => setState(e.currentTarget.value);
+    return setState(e.currentTarget.value);
   };
 
   const handleDemoLogin = (e) => {
@@ -64,7 +79,7 @@ function LoginForm() {
 
   const usernameSubmit = (e) => {
     e.preventDefault();
-    dispatch(clearSessionErrors());
+
     const user = {
       emailSignUp,
       username,
@@ -76,13 +91,12 @@ function LoginForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(clearSessionErrors());
+
     dispatch(login({ email, password }));
   };
 
   useEffect(() => {
-    const container = document.getElementById("container");
-    const overlayCon = document.getElementById("overlayCon");
+    const container = document.getElementById("outer-form-container");
     const overlayBtn = document.getElementById("overlayBtn");
 
     overlayBtn.addEventListener("click", () => {
@@ -95,90 +109,108 @@ function LoginForm() {
   }, []);
 
   return (
-    <div className="container" id="container">
+    <div className="outer-form-container" id="outer-form-container">
       <div className="form-container sign-in-container">
-        <form action="#" onSubmit={handleSubmit}>
+        <form className="session-form" action="#" onSubmit={handleSubmit}>
           <h1>Sign in to Grow Teacher</h1>
-          <div className="errors">{errors?.email}</div>
           <div className="infield">
-            <input
-              type="text"
+            <TextField
+              className="input-auth-field"
+              error={!isValidEmail && !(email.length === 0)}
+              label="Email"
+              variant="outlined"
               value={email}
-              onChange={update("email")}
+              onChange={(e) => update(e, "email")}
               placeholder="Email"
+              required
+              helperText="Please enter a valid email"
             />
-            <label></label>
           </div>
-          <div className="errors">{errors?.password}</div>
           <div className="infield">
-            <input
-              type="password"
+            <TextField
+              className="input-auth-field"
+              error={
+                !(password.length >= 6 && password.length <= 30) &&
+                !(password.length === 0)
+              }
+              label="Password"
+              variant="outlined"
               value={password}
-              onChange={update("password")}
-              placeholder="Password"
+              onChange={(e) => update(e, "password")}
+              placeholder="password"
+              required
+              helperText="Password must be between 6 and 30 characters"
+              type="password"
             />
-            <label></label>
           </div>
-          <button disabled={!email || !password}>Log In</button>
+          <button>Log In</button>
           <button onClick={handleDemoLogin}>Demo Login</button>
         </form>
       </div>
       <div className="form-container sign-up-container">
-          <form action="#" onSubmit={usernameSubmit}>
-            <h1>Sign Up</h1>
-            <div className="errors">{errors?.email}</div>
-            <div className="infield">
-              <input
-                type="text"
-                value={emailSignUp}
-                onChange={updateSignUp("email")}
-                placeholder="Email"
-              />
-              <label></label>
-            </div>
-            <div className="errors">{errors?.username}</div>
-            <div className="infield">
-              <input
-                type="text"
-                value={username}
-                onChange={updateSignUp("username")}
-                placeholder="Username"
-              />
-              <label></label>
-            </div>
-            <div className="errors">{errors?.password}</div>
-            <div className="infield">
-              <input
-                type="password"
-                value={passwordSignUp}
-                onChange={updateSignUp("password")}
-                placeholder="Password"
-              />
-              <label></label>
-            </div>
-            <div className="errors">
-              {passwordSignUp !== password2 && "Confirm Password field must match"}
-            </div>
-            <div className="infield">
-              <input
-                type="password"
-                value={password2}
-                onChange={updateSignUp("password2")}
-                placeholder="Confirm Password"
-              />
-              <label></label>
-            </div>
-            <button
-              className="sessionform-button"
-              disabled={
-                !emailSignUp || !username || !passwordSignUp || passwordSignUp !== password2
+        <form className="session-form" action="#" onSubmit={usernameSubmit}>
+          <h1>Sign Up</h1>
+          <div className="infield">
+            <TextField
+              className="input-auth-field"
+              error={!isValidEmailSignUp && !(emailSignUp.length === 0) || errors?.email}
+              label="Email"
+              variant="outlined"
+              value={emailSignUp}
+              onChange={(e) => updateSignUp(e, "email")}
+              placeholder="Email"
+              required
+              helperText="Please enter a valid email"
+            />
+          </div>
+          <div className="infield">
+            <TextField
+              className="input-auth-field"
+              error={errors?.username}
+              label="Username"
+              variant="outlined"
+              value={username}
+              onChange={(e) => updateSignUp(e, "username")}
+              placeholder="Username"
+              required
+              helperText="Please enter a valid username"
+            />
+          </div>
+          <div className="infield">
+            <TextField
+              className="input-auth-field"
+              error={
+                !(passwordSignUp.length >= 6 && passwordSignUp.length <= 30) &&
+                !(passwordSignUp.length === 0)
               }
-            >
-              Sign Up
-            </button>
-            <button onClick={handleDemoLogin}>Demo Login</button>
-          </form>
-        </div>
+              label="Password"
+              variant="outlined"
+              value={passwordSignUp}
+              onChange={(e) => updateSignUp(e, "password")}
+              placeholder="Password"
+              required
+              helperText="Password must be between 6 and 30 characters"
+              type="password"
+            />
+          </div>
+          <div className="infield">
+            <TextField
+              className="input-auth-field"
+              error={passwordSignUp !== password2}
+              label="Confirm Password"
+              variant="outlined"
+              value={password2}
+              onChange={(e) => updateSignUp(e, "password2")}
+              placeholder="Confirm Password"
+              required
+              helperText="Confirm Password field must match"
+              type="password"
+            />
+          </div>
+          <button className="sessionform-button">Sign Up</button>
+          <button onClick={handleDemoLogin}>Demo Login</button>
+        </form>
+      </div>
       <div className="overlay-container" id="overlayCon">
         <div className="overlay">
           <div className="overlay-panel overlay-left">
@@ -186,12 +218,12 @@ function LoginForm() {
             <p>
               To keep connected with us please login with your personal info
             </p>
-            <button onClick={() => dispatch(clearSessionErrors())}>Sign In</button>
+            <button>Sign In</button>
           </div>
           <div className="overlay-panel overlay-right">
             <h1>Hello, Friend!</h1>
             <p>Enter your personal details and start journey with us</p>
-            <button onClick={() => dispatch(clearSessionErrors())}>Sign Up</button>
+            <button>Sign Up</button>
           </div>
         </div>
         <button id="overlayBtn"></button>

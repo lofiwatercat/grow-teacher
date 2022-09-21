@@ -16,7 +16,8 @@
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
-    "sass": "^1.54.9"
+    "sass": "^1.54.9",
+    "validator": "^13.7.0"
   },
   "scripts": {
     "start": "react-scripts start",
