@@ -150,7 +150,7 @@ function LoginForm() {
       </div>
       <div className="form-container sign-up-container">
         <form className="session-form" action="#" onSubmit={usernameSubmit}>
-          <h1>Sign Up</h1>
+          <h1>Sign Up for Grow Teacher</h1>
           <div className="infield">
             <TextField
               className="input-auth-field"
@@ -217,13 +217,13 @@ function LoginForm() {
           <div className="overlay-panel overlay-left">
             <h1>Welcome Back!</h1>
             <p>
-              To keep connected with us please login with your personal info
+              To keep connected with us, please login with your personal info
             </p>
             <button>Sign In</button>
           </div>
           <div className="overlay-panel overlay-right">
             <h1>Hello, Friend!</h1>
-            <p>Enter your personal details and start journey with us</p>
+            <p>Enter your personal details and start helping the community</p>
             <button>Sign Up</button>
           </div>
         </div>
