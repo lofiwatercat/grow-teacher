@@ -79,12 +79,13 @@ function LoginForm() {
 
   const usernameSubmit = (e) => {
     e.preventDefault();
-
+    dispatch(clearSessionErrors());
     const user = {
-      emailSignUp,
+      email: emailSignUp,
       username,
-      passwordSignUp,
+      password: passwordSignUp,
     };
+    console.log(user)
 
     dispatch(signup(user));
   };
@@ -143,6 +144,7 @@ function LoginForm() {
               type="password"
             />
           </div>
+          <div className="errors">{errors?.email}</div>
           <button>Log In</button>
           <button onClick={handleDemoLogin}>Demo Login</button>
         </form>
@@ -153,7 +155,7 @@ function LoginForm() {
           <div className="infield">
             <TextField
               className="input-auth-field"
-              error={!isValidEmailSignUp && !(emailSignUp.length === 0) || errors?.email}
+              error={(!isValidEmailSignUp && !(emailSignUp.length === 0)) || errors?.email}
               label="Email"
               variant="outlined"
               value={emailSignUp}
@@ -207,7 +209,7 @@ function LoginForm() {
               type="password"
             />
           </div>
-          <button className="sessionform-button">Sign Up</button>
+          <button className="sessionform-button" onClick={usernameSubmit}>Sign Up</button>
           <button onClick={handleDemoLogin}>Demo Login</button>
         </form>
       </div>
@@ -226,7 +228,7 @@ function LoginForm() {
             <button>Sign Up</button>
           </div>
         </div>
-        <button id="overlayBtn"></button>
+        <button onClick={() => dispatch(clearSessionErrors())} id="overlayBtn"></button>
       </div>
     </div>
   );
