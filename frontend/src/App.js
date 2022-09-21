@@ -30,12 +30,8 @@ function App() {
         <Switch>
           <AuthRoute exact path="/" component={SplashPage}/>
           <AuthRoute exact path="/login" component={LoginForm} />
-<<<<<<< HEAD
           <AuthRoute exact path="/signup" component={LoginForm} />
-=======
-          <AuthRoute exact path="/signup" component={SignupForm} />
           <ProtectedRoute exact path="/posts" component={PostsIndexPage} />
->>>>>>> origin/post-backend
           <ProtectedRoute exact path="/testing" component={Testing} />
           <ProtectedRoute exact path="/posts/create" component={PostsFormPage} />
           <ProtectedRoute exact path="/posts/:postId" component={PostsShowPage} />
