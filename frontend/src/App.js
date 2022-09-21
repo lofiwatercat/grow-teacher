@@ -33,7 +33,7 @@ function App() {
           <AuthRoute exact path="/signup" component={LoginForm} />
           <ProtectedRoute exact path="/posts" component={PostsIndexPage} />
           <ProtectedRoute exact path="/testing" component={Testing} />
-          <ProtectedRoute exact path="/posts/create" component={PostsFormPage} />
+          <ProtectedRoute exact path="/posts/new" component={PostsFormPage} />
           <ProtectedRoute exact path="/posts/:postId" component={PostsShowPage} />
           <Redirect to="/" />
         </Switch>

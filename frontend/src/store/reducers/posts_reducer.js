@@ -35,8 +35,6 @@ export const getPost = (postId) => (state) => {
   } else if (!state.entities.posts) {
     return null;
   } else {
-    console.log(postId)
-    console.log(state.entities.posts)
     return state.entities.posts[postId];
   }
 };
