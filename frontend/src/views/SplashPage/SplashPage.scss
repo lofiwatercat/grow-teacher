@@ -15,7 +15,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 300px;
+  width: 600px;
   height: 500px;
   position: absolute;
   top: 50%;
@@ -23,9 +23,14 @@
   transform: translate(-50%, -65%);
 }
 
+.splash-middle-title {
+  width: 100%;
+}
+
 .splash-middle-text h1 {
   padding: 30px;
   font-size: 48px;
+  text-align: center;
 
   -webkit-animation: fadein 1.5s; /* Safari, Chrome and Opera > 12.1 */
   -moz-animation: fadein 1.5s; /* Firefox < 16 */
@@ -84,7 +89,7 @@
 }
 
 .splash-middle-text button {
-  background-color: #d2bfdb;
+  background-color: #fdd250;
   box-shadow: 2px 5px 10px darkgray;
   background-repeat: no-repeat;
   padding: 15px;
@@ -96,7 +101,7 @@
   font-size: 29px;
 
   &:hover {
-    background-color: #b8aabf;
+    background-color: #fae884;
   }
 
   -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
@@ -157,16 +162,31 @@
 
 .splash-about {
   display: block;
-  height: 100vh;
+  height: 80vh;
+  width: 80%;
+  margin: auto;
+  font-family: "ProductSans", "Trebuchet MS", "Lucida Sans Unicode",
+    "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+}
+
+.splash-about-title-container {
+  display: block;
+  align-items: center;
+  height: 200px;
+}
+
+.splash-about-title {
+  display: block;
   width: 80%;
   margin: auto;
 }
 
-.splash-about-title {
-  display: flex;
-  align-items: center;
-  height: 200px;
-  width: 100%;
+.splash-about-title h1 {
+  font-size: 36px;
+}
+
+.splash-about-title h3 {
+  font-size: 24px;
 }
 
 .instructions-container {
@@ -174,27 +194,55 @@
   align-items: center;
   height: 100%;
   max-height: 200px;
+  width: 80%;
+  margin: auto;
+  justify-content: space-between;
 }
 
 .instruction {
   display: flex;
   align-items: center;
-  width: 33%;
+  width: 30%;
   height: 100%;
   flex-direction: row;
+  font-family: "ProductSans", "Trebuchet MS", "Lucida Sans Unicode",
+    "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+}
+
+.instruction:hover {
+  scale: 1.01;
 }
 
 .instruction-item {
-  display: block;
+  border: 1px solid #fae884;
+  display: flex;
   width: 100%;
-  height: 80px;
+  height: 300px;
   padding: 10px;
+  margin: auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px #e4983e;
+}
+
+.instruction-image {
+  width: calc(100% - 36px);
+  width: 270px;
+  height: 200px;
+}
+
+.arrow {
+  width: 100%;
+  height: 100%;
 }
 
 .instruction-number {
-  background-color: #d2bfdb;
+  display: flex;
+  align-items: center;
   width: 36px;
   height: 36px;
+  background-color: #fdd250;
   border-radius: 50%;
 }
 
@@ -203,12 +251,21 @@
   font-weight: 900;
   position: relative;
   left: 10px;
-  top: 3px;
+  top: 25px;
   padding-bottom: 50px;
+}
+
+.instruction-title {
+  width: 100%;
 }
 
 .instruction-item h3 {
   font-size: 24px;
   font-weight: 600;
   margin-bottom: 15px;
+}
+
+@font-face {
+  font-family: "ProductSans";
+  src: url(../../assets/fonts/ProductSans-Regular.ttf);
 }

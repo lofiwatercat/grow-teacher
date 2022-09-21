@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import "./NavBar.scss";
 import { logout } from "../../store/reducers/session_reducer";
-import { useEffect } from "react";
 
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);
@@ -40,7 +39,7 @@ function NavBar() {
       return (
         <ul className="links-auth">
           <li>
-            <Link to={"/login"}>Login/Signup</Link>
+            <Link className="login-button" to={"/login"}>Login/Signup</Link>
           </li>
         </ul>
       );
@@ -50,11 +49,8 @@ function NavBar() {
   return (
     <>
       <header className="navbar">
-        <Link to="#" className="logo">
-          Logo
-        </Link>
-        <Link id="home-link" to={"/"}>
-          Home
+        <Link to="/" className="logo">
+          GrowTeacher
         </Link>
         {getLinks()}
       </header>
