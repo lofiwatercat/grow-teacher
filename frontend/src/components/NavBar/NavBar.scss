@@ -6,7 +6,7 @@
   transition: 0.6s;
   padding: 30px 100px;
   z-index: 1;
-  top: 20px; 
+  top: 20px;
   left: 0;
   transform: translate(calc(50vw - 50%));
   border-radius: 50px;
@@ -55,6 +55,7 @@
   transform: 0;
 }
 
-.sticky .logo, .sticky ul li a {
+.sticky .logo,
+.sticky ul li a {
   color: black;
 }

@@ -79,7 +79,6 @@ function LoginForm() {
 
   const usernameSubmit = (e) => {
     e.preventDefault();
-    dispatch(clearSessionErrors());
     const user = {
       email: emailSignUp,
       username,
@@ -91,7 +90,6 @@ function LoginForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     dispatch(login({ email, password }));
   };
 
@@ -116,22 +114,27 @@ function LoginForm() {
           <div className="infield">
             <TextField
               className="input-auth-field"
-              error={!isValidEmail && !(email.length === 0)}
+              error={(!isValidEmail && !(email.length === 0)) || errors?.email}
               label="Email"
               variant="outlined"
               value={email}
               onChange={(e) => update(e, "email")}
               placeholder="Email"
               required
-              helperText="Please enter a valid email"
+              helperText={
+                errors?.email
+                  ? "Invalid credentials"
+                  : "Please enter a valid email"
+              }
             />
           </div>
           <div className="infield">
             <TextField
               className="input-auth-field"
               error={
-                !(password.length >= 6 && password.length <= 30) &&
-                !(password.length === 0)
+                (!(password.length >= 6 && password.length <= 30) &&
+                  !(password.length === 0)) ||
+                errors?.email
               }
               label="Password"
               variant="outlined"
@@ -139,11 +142,14 @@ function LoginForm() {
               onChange={(e) => update(e, "password")}
               placeholder="password"
               required
-              helperText="Password must be between 6 and 30 characters"
+              helperText={
+                errors?.email
+                  ? "Invalid credentials"
+                  : "Password must be between 6 and 30 characters"
+              }
               type="password"
             />
           </div>
-          <div className="errors">{errors?.email}</div>
           <button>Log In</button>
           <button onClick={handleDemoLogin}>Demo Login</button>
         </form>
@@ -154,14 +160,21 @@ function LoginForm() {
           <div className="infield">
             <TextField
               className="input-auth-field"
-              error={(!isValidEmailSignUp && !(emailSignUp.length === 0)) || errors?.email}
+              error={
+                (!isValidEmailSignUp && !(emailSignUp.length === 0)) ||
+                errors?.email
+              }
               label="Email"
               variant="outlined"
               value={emailSignUp}
               onChange={(e) => updateSignUp(e, "email")}
               placeholder="Email"
               required
-              helperText="Please enter a valid email"
+              helperText={
+                errors?.email
+                  ? "A user has already registered with this email"
+                  : "Please enter a valid email"
+              }
             />
           </div>
           <div className="infield">
@@ -174,7 +187,11 @@ function LoginForm() {
               onChange={(e) => updateSignUp(e, "username")}
               placeholder="Username"
               required
-              helperText="Please enter a valid username"
+              helperText={
+                errors?.username
+                  ? "A user has already registered with this username"
+                  : "Please enter a valid username"
+              }
             />
           </div>
           <div className="infield">
@@ -208,7 +225,9 @@ function LoginForm() {
               type="password"
             />
           </div>
-          <button className="sessionform-button" onClick={usernameSubmit}>Sign Up</button>
+          <button className="sessionform-button" onClick={usernameSubmit}>
+            Sign Up
+          </button>
           <button onClick={handleDemoLogin}>Demo Login</button>
         </form>
       </div>
@@ -217,7 +236,7 @@ function LoginForm() {
           <div className="overlay-panel overlay-left">
             <h1>Welcome Back!</h1>
             <p>
-              To keep connected with us, please login with your personal info
+              To keep connected with us, please login here
             </p>
             <button>Sign In</button>
           </div>
@@ -227,7 +246,10 @@ function LoginForm() {
             <button>Sign Up</button>
           </div>
         </div>
-        <button onClick={() => dispatch(clearSessionErrors())} id="overlayBtn"></button>
+        <button
+          onClick={() => dispatch(clearSessionErrors())}
+          id="overlayBtn"
+        ></button>
       </div>
     </div>
   );

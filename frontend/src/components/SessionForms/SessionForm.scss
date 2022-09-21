@@ -4,13 +4,13 @@
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 :root {
-  --linear-grad: linear-gradient(to right, #141e30, #243b55);
-  --grad-clr1: #141e30;
-  --grad-clr2: #243b55;
+  --linear-grad: linear-gradient(to right, #E4983E, #FDD250 );
+  --grad-clr1: #E4983E;
+  --grad-clr2: #FDD250 ;
 }
 
 .outer-form-container {
@@ -72,7 +72,7 @@
   border-radius: 20px;
   border: 1px solid var(--grad-clr1);
   background: var(--grad-clr2);
-  color: #fff;
+  color: black;
   font-size: 12px;
   font-weight: bold;
   padding: 12px 45px;
@@ -118,25 +118,26 @@
 .overlay {
   position: relative;
   background: var(--linear-grad);
-  color: #FFF;
+  color: #fff;
   left: -150%;
   height: 100%;
   width: 250%;
   transition: transform 0.6s ease-in-out;
-
 }
 
 .overlay-panel {
-  position: absolute; 
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 0px 40px 35px;
+  padding: 0px 40px 45px;
   text-align: center;
   height: 100%;
   width: 340px;
-  transition: 0.6s ease-in-out
+  transition: 0.6s ease-in-out;
+  color: black;
+  font-size: 26px;
 }
 
 .overlay-left {
@@ -149,12 +150,8 @@
   transform: translateX(0%);
 }
 
-.overlay-panel h1 {
-  color: #FFF;
-}
-
 .overlay-panel p {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 300;
   line-height: 20px;
   letter-spacing: 0.5px;
@@ -164,6 +161,7 @@
 .overlay-panel button {
   border: none;
   background-color: transparent;
+  color: black;
 }
 
 .right-panel-active .overlay-container {
@@ -195,11 +193,13 @@
 }
 
 @keyframes show {
-  0%, 50% {
+  0%,
+  50% {
     opacity: 0;
     z-index: 1;
   }
-  50.1%, 100% {
+  50.1%,
+  100% {
     opacity: 0;
     z-index: 5;
   }
