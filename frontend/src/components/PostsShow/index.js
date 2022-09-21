@@ -18,12 +18,11 @@ const PostsShow = () => {
   // Exit out for first render
   if (!post) return null;
 
-  console.log(post)
-
 
   return (
     <>
       <div id="post-show">
+        {post.title}
       </div>
     </>
   );
