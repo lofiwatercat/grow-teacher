@@ -29,7 +29,7 @@ router.get('/current', restoreUser, (req, res) => {
   });
 })
 
-router.post('/register',validateRegisterInput, async (req, res) => {
+router.post('/register',validateRegisterInput, async (req, res, next) => {
   // Check to make sure nobody has already registered with a duplicate email
   // or username
   const user = await User.findOne({
