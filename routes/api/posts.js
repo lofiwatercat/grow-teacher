@@ -1,5 +1,29 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');          
+const Aws = require('aws-sdk');
+const multers3 = require('multer-s3')
+
+// const upload = multer({ storage: storage, fileFilter: filefilter })
+const upload = (bucketName) => multer ({
+    storage: multers3({
+        s3,
+        bucket: bucketName,
+        metadata: function(req, file, cb) {
+            cb(null, {fieldName: file.fieldname});
+        },
+        key: function(req, file, cb) {
+            cb(null, `image-${Date.now()}.jpeg`); //add timestamps to make sure we uploading even if it's the same image type
+        },
+    }),
+});
+
+const s3 = new Aws.S3({
+    accessKeyId: process.env.S3_ACCESS_KEY,              // accessKeyId that is stored in .env file
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,       // secretAccessKey is also store in .env file
+    region: process.env.S3_BUCKET_REGION,
+})
+
 const mongoose = require('mongoose');
 const passport = require('passport');
 
@@ -55,21 +79,29 @@ router.get("/:id", (req, res) => {
 })
 
 //post a post
-router.post('/',requireUser, validatePostInput, async(req, res, next) => {
+router.post('/',requireUser, validatePostInput, upload("grow-teacher-dev").single("image-upload"), async(req, res, next) => {
     if (!isProduction) {
         const csrfToken = req.csrfToken();
         res.cookie("CSRF-TOKEN", csrfToken);
-        // console.log(res)
     }
     try {
         const newPost = new Post({
         title: req.body.title,
         body: req.body.body,
         items: req.body.items,
-        author: req.user._id
+        author: req.user._id,
+        imageUrl: req.file.location
       });
-    //   console.log(newPost, "HELLLOEEE")
 
+
+    //   if(req.file) {
+    //         const uploadSingle = upload("grow-teacher-dev").single("image-upload");
+    //         uploadSingle(req, res, async(err) => {
+    //         if(err) return res.status(400).json({success: false, message: err.message});
+    //         await Post.create({imageUrl: req.file.location})
+    //         res.status(200).json({data: req.file.location})
+    //   }); 
+    //   }
       let post = await newPost.save();
       post = await post.sort({ createdAt: -1 }).populate('author', '_id username email');
       return res.json(post);
@@ -80,14 +112,23 @@ router.post('/',requireUser, validatePostInput, async(req, res, next) => {
   }
 )
 
+/*
+const uploadSingle = upload ("grow-teacher-dev").single("image-upload");
+uploadsingle(req, res, async(err) => {
+    if(err) return res.status(400).json({success: false, message: err.message});
+    await Post.create({imageUrl: req.file.location})
+    res.status(200).json({data: req.file.location})
+}); 
+*/
+
 //update a post
-router.patch('/:id',requireUser, validatePostInput, async(req, res, next) => {
+router.patch('/:id',requireUser, validatePostInput, upload("grow-teacher-dev").single("image-upload"), async(req, res, next) => {
     if (!isProduction) {
         const csrfToken = req.csrfToken();
         res.cookie("CSRF-TOKEN", csrfToken);
     }
     Post.findOneAndUpdate({_id: req.params.id},
-        req.body,
+        {...req.body, imageUrl: req.file.location},
         { new: true, useFindAndModify: false },
         (err, post) => {
             if (err) return res.status(500).send(err);
