@@ -18,7 +18,7 @@ function NavBar() {
         <div className="links-nav">
           <Link to={"/posts"}>All Posts</Link>
           <Link to={"/profile"}>Profile</Link>
-          <Link to={"/posts/new"}>Write a Post</Link>
+          <Link to={"/posts/create"}>Write a Post</Link>
           <button onClick={logoutUser}>Logout</button>
         </div>
       );
