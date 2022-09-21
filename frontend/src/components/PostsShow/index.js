@@ -31,16 +31,17 @@ const PostsShow = () => {
     // history.push('/posts')
   }
 
-
   // Total cost of all the items, or goal of the go fund me
   let totalCost = 0;
 
   post.items.forEach(item => {
     totalCost += item.totalCost;
   })
-  console.log("post_author", post.author)
-  console.log("Post", post)
 
+  const handleEdit = (e) => {
+    e.preventDefault()
+    history.push(`/posts/${postId}/edit`)
+  }
 
   return (
     <>
@@ -50,7 +51,7 @@ const PostsShow = () => {
           <p>POST IMAGE HERE</p>
           <p>{post.body}</p>
           <button onClick={handleDelete}>DELETE POST</button>
-          <button>UPDATE POST</button>
+          <button onClick={handleEdit}>EDIT POST</button>
         </div>
 
         <div id="post-show-right">
