@@ -38,6 +38,8 @@ const PostsShow = () => {
   post.items.forEach(item => {
     totalCost += item.totalCost;
   })
+  console.log("post_author", post.author)
+  console.log("Post", post)
 
 
   return (

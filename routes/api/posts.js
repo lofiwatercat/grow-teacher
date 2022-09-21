@@ -85,7 +85,7 @@ router.patch('/:id',requireUser, validatePostInput, async(req, res, next) => {
     }
     Post.findOneAndUpdate({_id: req.params.id},
         req.body,
-        { new: true, useFindAndModify: false },
+        { new: true, useFindAndModify: false, populate: { path: 'author' }},
         (err, post) => {
             if (err) return res.status(500).send(err);
             return res.json(post);

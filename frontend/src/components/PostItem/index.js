@@ -10,34 +10,32 @@ const PostItem = ({ post, item, authorId}) => {
 
 
   useEffect(() => {
-  }, [itemStatus])
-
-  let statusText = "needed"
-  if (item.status) {
-    statusText = "fufilled"
-  }
-
-
-  // Switch the item's status
-  console.log("First itemStatus", itemStatus)
-  const handleStatus = (e) => {
-    newItemStatus(!itemStatus);
-
     // Change the item in the post data
-    console.log("ItemStatus", itemStatus)
     for (let i = 0; i < post.items.length; i++) {
       let arrayItem = post.items[i];
       if (arrayItem._id === item._id) {
         post.items[i].status = itemStatus;
-        console.log(post.items[i].status)
       }
     }
-
     dispatch(updatePost(post))
+  }, [itemStatus])
 
+  let statusText = "needed"
+    if (item.status) {
+      statusText = "fufilled"
+    }
+
+
+  // Switch the item's status
+  const handleStatus = (e) => {
+    newItemStatus(!itemStatus);
   }
 
 
+  // If current user is post creator, allow them to edit item status
+  console.log("authorId", authorId)
+  console.log("curr", currentUserId)
+  if (authorId === currentUserId) {
   return (
   <div className="post-item">
       <p>{item.name}</p>
@@ -46,7 +44,15 @@ const PostItem = ({ post, item, authorId}) => {
       <p>{statusText}</p>
       <button onClick={handleStatus} >Toggle status</button>
   </div>
-  )
+    )} else {
+  return (
+  <div className="post-item">
+      <p>{item.name}</p>
+      <p>{item.amount}</p>
+      <p>${item.totalCost}</p>
+      <p>{statusText}</p>
+  </div>
+    )}
 }
 
 export default PostItem;
