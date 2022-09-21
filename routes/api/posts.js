@@ -45,13 +45,12 @@ router.get("/:id", (req, res) => {
         const csrfToken = req.csrfToken();
         res.cookie("CSRF-TOKEN", csrfToken);
     }
-    Post.findOne({_id: req.params.id})
-    .then(async post => 
-    {
-        await post.sort({ createdAt: -1 }).populate('author', '_id username email')
-        return res.json(post);
-    })
-    .catch(err => res.status(404).json({nopostsfound: 'No posts found with that ID'}));
+    Post.findById(req.params.id)
+        .populate("author", "_id username email")
+        .then(post => res.json(post))
+        .catch(err =>
+            res.status(404).json({ nopostfound: 'No post found with that ID' })
+        );
 })
 
 //post a post
@@ -59,7 +58,6 @@ router.post('/',requireUser, validatePostInput, async(req, res, next) => {
     if (!isProduction) {
         const csrfToken = req.csrfToken();
         res.cookie("CSRF-TOKEN", csrfToken);
-        // console.log(res)
     }
     try {
         const newPost = new Post({
@@ -68,10 +66,9 @@ router.post('/',requireUser, validatePostInput, async(req, res, next) => {
         items: req.body.items,
         author: req.user._id
       });
-    //   console.log(newPost, "HELLLOEEE")
 
       let post = await newPost.save();
-      post = await post.sort({ createdAt: -1 }).populate('author', '_id username email');
+      post = await post.populate('author', '_id username email');
       return res.json(post);
     }
     catch(err) {
