@@ -54,7 +54,6 @@ function NavBar() {
         </Link>
         {getLinks()}
       </header>
-      <section className="banner"></section>
     </>
   );
 }

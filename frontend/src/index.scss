@@ -127,16 +127,6 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
-html {
-  height: 100vh;
-}
-
 body {
-  height: 100vh;
-}
-
-#root {
-  height: 100vh;
-  background-color: #e8e6e9
+  background-color: #e8e6e9 !important;
 }

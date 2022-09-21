@@ -131,7 +131,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 0px 40px 45px;
+  padding: 0px 40px 95px;
   text-align: center;
   height: 100%;
   width: 340px;
@@ -143,6 +143,7 @@
 .overlay-left {
   right: 60%;
   transform: translateX(-12%);
+  padding-bottom: 75px;
 }
 
 .overlay-right {
@@ -219,4 +220,8 @@
   100% {
     width: 143.67px;
   }
+}
+
+.page-container {
+  height: calc(100vh - 64px);
 }

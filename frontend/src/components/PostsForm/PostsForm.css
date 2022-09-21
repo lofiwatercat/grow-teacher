@@ -1,12 +1,8 @@
 .posts-form-container {
-  width: 100%;
+  width: 60%;
   height: 100%;
-  position: relative;
-}
-
-.posts-form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: auto;
+  padding-top: 70px;
+  min-width: 850px;
+  
 }

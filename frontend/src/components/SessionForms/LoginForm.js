@@ -107,10 +107,11 @@ function LoginForm() {
   }, []);
 
   return (
+    <div className="page-container">
     <div className="outer-form-container" id="outer-form-container">
       <div className="form-container sign-in-container">
         <form className="session-form" action="#" onSubmit={handleSubmit}>
-          <h1>Sign in to Grow Teacher</h1>
+          <h1>Sign in to GrowTeacher</h1>
           <div className="infield">
             <TextField
               className="input-auth-field"
@@ -156,7 +157,7 @@ function LoginForm() {
       </div>
       <div className="form-container sign-up-container">
         <form className="session-form" action="#" onSubmit={usernameSubmit}>
-          <h1>Sign Up for Grow Teacher</h1>
+          <h1>Sign Up for GrowTeacher</h1>
           <div className="infield">
             <TextField
               className="input-auth-field"
@@ -234,7 +235,7 @@ function LoginForm() {
       <div className="overlay-container" id="overlayCon">
         <div className="overlay">
           <div className="overlay-panel overlay-left">
-            <h1>Welcome Back!</h1>
+            <h1>Welcome!</h1>
             <p>To keep connected with us, please login here</p>
             <button>Sign In</button>
           </div>
@@ -249,6 +250,7 @@ function LoginForm() {
           id="overlayBtn"
         ></button>
       </div>
+    </div>
     </div>
   );
 }
