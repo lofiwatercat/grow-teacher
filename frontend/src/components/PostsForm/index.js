@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createPost, createPostWithImage } from "../../store/reducers/posts_reducer";
+import {
+  createPost,
+  createPostWithImage,
+} from "../../store/reducers/posts_reducer";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
 import "./PostsForm.scss";
 
 const PostsForm = () => {
@@ -80,7 +86,7 @@ const PostsForm = () => {
     data.append("items", copy.items);
     data.append("imageUrl", imageUrl);
 
-    dispatch(createPostWithImage( ))
+    dispatch(createPostWithImage(data));
   };
 
   return (
@@ -127,17 +133,22 @@ const PostsForm = () => {
               onChange={(e) => setNewPost({ ...newPost, body: e.target.value })}
               required
             />
-            <input
-              type="file"
-              onChange={handleFile}
-              accept=".gif,.jpg,.jpeg,.png,.tiff,.raw"
-              required
-            />
+            <Button variant="contained" component="label">
+              Upload Image
+              <input
+                type="file"
+                onChange={handleFile}
+                accept=".gif,.jpg,.jpeg,.png,.tiff,.raw"
+                required
+                hidden
+              />
+            </Button>
+
             {imagePreview && <img src={imagePreview} alt="preview" />}
             <h3>Items:</h3>
             {itemFields.map((input, index) => {
               return (
-                <div key={index}>
+                <div className="item-container" key={index}>
                   <TextField
                     error={!(input.name.length === 0 || input.name.length >= 1)}
                     label="Name"
@@ -159,7 +170,7 @@ const PostsForm = () => {
                     helperText={
                       input.totalCost <= 0
                         ? "Invalid amount"
-                        : "Please enter a number in dollars"
+                        : ""
                     }
                   />
                   <TextField
@@ -171,9 +182,7 @@ const PostsForm = () => {
                     value={input.amount}
                     required
                     type="number"
-                    helperText={
-                      input.amount <= 0 ? "Amount cannot be less than 1" : ""
-                    }
+                    helperText={input.amount <= 0 ? "Amount cannot be less than 1" : ""}
                   />
                   <TextField
                     label="Details"
@@ -182,12 +191,26 @@ const PostsForm = () => {
                     onChange={(e) => handleItemChange(e, index)}
                     value={input.details}
                   />
-                  <button onClick={(e) => removeItem(e, index)}>Remove</button>
+                  <Button
+                    variant="outlined"
+                    startIcon={<DeleteIcon />}
+                    onClick={(e) => removeItem(e, index)}
+                  >
+                    Remove
+                  </Button>
                 </div>
               );
             })}
-            <button onClick={addItems}>Add item</button>
-            <button onClick={handleSubmit}>Create</button>
+            <Button
+              variant="outlined"
+              startIcon={<AddIcon />}
+              onClick={addItems}
+            >
+              Add item
+            </Button>
+            <Button variant="contained" onClick={handleSubmit}>
+              Create
+            </Button>
           </Box>
         </div>
       )}
