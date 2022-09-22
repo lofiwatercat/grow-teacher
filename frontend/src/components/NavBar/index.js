@@ -39,7 +39,9 @@ function NavBar() {
       return (
         <ul className="links-auth">
           <li>
-            <Link className="login-button" to={"/login"}>Login/Signup</Link>
+            <Link className="login-button" to={"/login"}>
+              Login/Signup
+            </Link>
           </li>
         </ul>
       );
@@ -49,9 +51,11 @@ function NavBar() {
   return (
     <>
       <header className="navbar">
-        <Link to="/" className="logo">
-          GrowTeacher
-        </Link>
+        <p>
+          <Link to="/" className="logo">
+            GrowTeacher
+          </Link>
+        </p>
         {getLinks()}
       </header>
     </>

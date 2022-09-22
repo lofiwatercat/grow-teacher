@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../../store/reducers/posts_reducer";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import "./PostsForm.css";
+import "./PostsForm.scss";
 
 const PostsForm = () => {
   const sessionUser = useSelector((state) => state.session.user);
@@ -93,56 +93,52 @@ const PostsForm = () => {
             <h3>Items:</h3>
             {itemFields.map((input, index) => {
               return (
-                <>
-                  <div key={index}>
-                    <TextField
-                      label="Name"
-                      name="name"
-                      variant="outlined"
-                      onChange={(e) => handleItemChange(e, index)}
-                      value={input.name}
-                      required
-                    />
-                    <TextField
-                      label="Total Cost"
-                      name="totalCost"
-                      variant="outlined"
-                      onChange={(e) => handleItemChange(e, index)}
-                      value={input.totalCost}
-                      required
-                      type="number"
-                      error={input.totalCost <= 0}
-                      helperText={
-                        input.totalCost <= 0
-                          ? "Invalid amount"
-                          : "Please enter a number in dollars"
-                      }
-                    />
-                    <TextField
-                      error={input.amount <= 0}
-                      label="Amount"
-                      name="amount"
-                      variant="outlined"
-                      onChange={(e) => handleItemChange(e, index)}
-                      value={input.amount}
-                      required
-                      type="number"
-                      helperText={
-                        input.amount <= 0 ? "Amount cannot be less than 1" : ""
-                      }
-                    />
-                    <TextField
-                      label="Details"
-                      name="details"
-                      variant="outlined"
-                      onChange={(e) => handleItemChange(e, index)}
-                      value={input.details}
-                    />
-                    <button onClick={(e) => removeItem(e, index)}>
-                      Remove
-                    </button>
-                  </div>
-                </>
+                <div key={index}>
+                  <TextField
+                    label="Name"
+                    name="name"
+                    variant="outlined"
+                    onChange={(e) => handleItemChange(e, index)}
+                    value={input.name}
+                    required
+                  />
+                  <TextField
+                    label="Total Cost"
+                    name="totalCost"
+                    variant="outlined"
+                    onChange={(e) => handleItemChange(e, index)}
+                    value={input.totalCost}
+                    required
+                    type="number"
+                    error={input.totalCost <= 0}
+                    helperText={
+                      input.totalCost <= 0
+                        ? "Invalid amount"
+                        : "Please enter a number in dollars"
+                    }
+                  />
+                  <TextField
+                    error={input.amount <= 0}
+                    label="Amount"
+                    name="amount"
+                    variant="outlined"
+                    onChange={(e) => handleItemChange(e, index)}
+                    value={input.amount}
+                    required
+                    type="number"
+                    helperText={
+                      input.amount <= 0 ? "Amount cannot be less than 1" : ""
+                    }
+                  />
+                  <TextField
+                    label="Details"
+                    name="details"
+                    variant="outlined"
+                    onChange={(e) => handleItemChange(e, index)}
+                    value={input.details}
+                  />
+                  <button onClick={(e) => removeItem(e, index)}>Remove</button>
+                </div>
               );
             })}
             <button onClick={addItems}>Add item</button>

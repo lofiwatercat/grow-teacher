@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts, getPosts } from "../../store/reducers/posts_reducer"
 import PostsIndexItem from "../PostsIndexItem"
+import "./PostIndex.scss";
 
 const PostsIndex = () => {
   const dispatch = useDispatch()
@@ -16,9 +17,9 @@ const PostsIndex = () => {
 
   return (
     <>
-      <div>
+      <div className="posts-container">
         {posts.map(post => {
-          return <PostsIndexItem post={post} />
+          return <PostsIndexItem post={post} key={post._id} />
         })
       }
       </div>
