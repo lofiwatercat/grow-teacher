@@ -32,11 +32,14 @@ const postSchema = Schema({
     },
     body: {
         type: String,
-        required: true
+        required: true,
     },
     items: [itemsSchema],
-    
+    imageUrl: { 
+        type: String,
+        required: true
+    },
 },{
-    timestamps: true
+    timestamps: true,
 })
 module.exports = mongoose.model('Post', postSchema);

@@ -1,5 +1,8 @@
-module.exports = {
-    secretOrKey: process.env.SECRET_OR_KEY,
-    mongoURI: process.env.MONGO_URI,
-    isProduction: process.env.NODE_ENV === 'production'
-};
+isProduction: process.env.NODE_ENV === 'production'
+
+if (process.env.NODE_ENV === 'production') {
+    module.exports = require('./key_prod');
+} else {
+    module.exports = require('./key_dev');
+}
+ 
