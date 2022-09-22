@@ -71,6 +71,7 @@ const PostsShow = () => {
       <div id="post-show">
         <div id="post-show-container">
         <div id="post-show-left">
+          <h2>{post.title}</h2>
           <p>POST IMAGE HERE</p>
           <p>{post.body}</p>
           <button onClick={handleDelete}>DELETE POST</button>
@@ -78,7 +79,6 @@ const PostsShow = () => {
         </div>
 
         <div id="post-show-right">
-          <h2>{post.title}</h2>
           <h2>${currentProgress} <span>raised of ${totalCost}</span></h2>
           <ProgressBar now={currentProgress/totalCost * 100}/>
 

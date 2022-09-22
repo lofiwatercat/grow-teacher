@@ -20,6 +20,12 @@
   height: 100%;
   width: 50%;
   padding: 10px;
+  margin: 15px;
+  border-radius: 15px;
+
+  h2 {
+    text-transform: capitalize;
+  }
 }
 
 #post-show-right {
