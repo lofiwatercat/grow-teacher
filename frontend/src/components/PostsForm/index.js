@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../../store/reducers/posts_reducer";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
 import "./PostsForm.scss";
 
 const PostsForm = () => {
@@ -78,8 +81,7 @@ const PostsForm = () => {
               error={
                 !(
                   newPost.title.length === 0 ||
-                  newPost.title.length >= 2 &&
-                  newPost.title.length <= 60
+                  (newPost.title.length >= 2 && newPost.title.length <= 60)
                 )
               }
               id="outlined-basic"
@@ -92,11 +94,10 @@ const PostsForm = () => {
               helperText="Title must be between 2 and 60 characters"
             />
             <TextField
-            error={
+              error={
                 !(
                   newPost.body.length === 0 ||
-                  newPost.body.length >= 2 &&
-                  newPost.body.length <= 255
+                  (newPost.body.length >= 2 && newPost.body.length <= 255)
                 )
               }
               helperText="Body must be between 2 and 255 characters"
@@ -109,7 +110,7 @@ const PostsForm = () => {
             <h3>Items:</h3>
             {itemFields.map((input, index) => {
               return (
-                <div key={index}>
+                <div className="item-container" key={index}>
                   <TextField
                     error={!(input.name.length === 0 || input.name.length >= 1)}
                     label="Name"
@@ -128,11 +129,7 @@ const PostsForm = () => {
                     required
                     type="number"
                     error={input.totalCost <= 0}
-                    helperText={
-                      input.totalCost <= 0
-                        ? "Invalid amount"
-                        : "Please enter a number in dollars"
-                    }
+                    helperText={input.totalCost <= 0 ? "Invalid amount" : ""}
                   />
                   <TextField
                     error={input.amount <= 0}
@@ -154,12 +151,26 @@ const PostsForm = () => {
                     onChange={(e) => handleItemChange(e, index)}
                     value={input.details}
                   />
-                  <button onClick={(e) => removeItem(e, index)}>Remove</button>
+                  <Button
+                    variant="outlined"
+                    startIcon={<DeleteIcon />}
+                    onClick={(e) => removeItem(e, index)}
+                  >
+                    Remove
+                  </Button>
                 </div>
               );
             })}
-            <button onClick={addItems}>Add item</button>
-            <button onClick={handleSubmit}>Create</button>
+            <Button
+              variant="outlined"
+              startIcon={<AddIcon />}
+              onClick={addItems}
+            >
+              Add item
+            </Button>
+            <Button variant="contained" onClick={handleSubmit}>
+              Create
+            </Button>
           </Box>
         </div>
       )}
