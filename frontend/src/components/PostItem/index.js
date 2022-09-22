@@ -33,8 +33,6 @@ const PostItem = ({ post, item, authorId}) => {
 
 
   // If current user is post creator, allow them to edit item status
-  console.log("authorId", authorId)
-  console.log("curr", currentUserId)
   if (authorId === currentUserId) {
   return (
   <div className="post-item">

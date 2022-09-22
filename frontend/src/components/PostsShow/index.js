@@ -16,6 +16,7 @@ const PostsShow = () => {
   const history = useHistory();
 
   const post = useSelector(getPost(postId)) 
+  const [currentProgress, setCurrentProgress] = useState(0)
 
   useEffect(() => {
     dispatch(fetchPost(postId))
@@ -38,10 +39,25 @@ const PostsShow = () => {
     totalCost += item.totalCost;
   })
 
+  // Make progress bar fill up based on status
+
   const handleEdit = (e) => {
     e.preventDefault()
     history.push(`/posts/${postId}/edit`)
   }
+
+  // Evaluate what the current progress is and call it in the use effect
+  const calcCurrentProgress = () => {
+    // A counter to set the current progress to
+    let amount = 0;
+    for (let i = 0; i < post.items.length; i++) {
+      let arrayItem = post.items[i];
+      if (arrayItem.status) {
+        amount += arrayItem.totalCost;
+      }
+    }
+  }
+
 
   return (
     <>
