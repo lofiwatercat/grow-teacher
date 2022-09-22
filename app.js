@@ -35,6 +35,25 @@ if (!isProduction) {
     app.use(cors());
 }
 
+  
+app.use(
+    csurf({
+      cookie: {
+        secure: isProduction,
+        sameSite: isProduction && "Lax",
+        httpOnly: true
+      }
+    })
+  );
+
+const csrfRouter = require('./routes/api/csrf');
+
+// app.use('/', indexRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/csrf', csrfRouter);
+app.use('/api/posts', postsRouter);
+app.use('/api/comments', commentsRouter);
+
 // Production, deploying to heroku
 if (isProduction) {
   const path = require('path');
@@ -57,27 +76,6 @@ if (isProduction) {
     );
   });
 }
-  
-app.use(
-    csurf({
-      cookie: {
-        secure: isProduction,
-        sameSite: isProduction && "Lax",
-        httpOnly: true
-      }
-    })
-  );
-
-const csrfRouter = require('./routes/api/csrf');
-
-// app.use('/', indexRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/csrf', csrfRouter);
-app.use('/api/posts', postsRouter);
-app.use('/api/comments', commentsRouter);
-
-
-
 
 app.use((req, res, next) => {
     const err = new Error('Not Found');
