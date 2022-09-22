@@ -3,10 +3,13 @@ import thunk from "redux-thunk";
 import sessionReducer from "./reducers/session_reducer";
 import errors from "./reducers/errors_reducer";
 import posts from "./reducers/posts_reducer";
+import commentsReducer from "./reducers/comments_reducer";
+
 
 // For the entities slice of state
 const entitiesReducer = combineReducers({
-  posts
+  posts,
+  comments: commentsReducer
 });
 
 const rootReducer = combineReducers({
