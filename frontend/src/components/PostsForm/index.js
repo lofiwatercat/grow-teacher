@@ -75,6 +75,13 @@ const PostsForm = () => {
             autoComplete="off"
           >
             <TextField
+              error={
+                !(
+                  newPost.title.length === 0 ||
+                  newPost.title.length >= 2 &&
+                  newPost.title.length <= 60
+                )
+              }
               id="outlined-basic"
               label="Title"
               variant="outlined"
@@ -82,8 +89,17 @@ const PostsForm = () => {
                 setNewPost({ ...newPost, title: e.target.value })
               }
               required
+              helperText="Title must be between 2 and 60 characters"
             />
             <TextField
+            error={
+                !(
+                  newPost.body.length === 0 ||
+                  newPost.body.length >= 2 &&
+                  newPost.body.length <= 255
+                )
+              }
+              helperText="Body must be between 2 and 255 characters"
               id="outlined-basic"
               label="Body"
               variant="outlined"
@@ -95,6 +111,7 @@ const PostsForm = () => {
               return (
                 <div key={index}>
                   <TextField
+                    error={!(input.name.length === 0 || input.name.length >= 1)}
                     label="Name"
                     name="name"
                     variant="outlined"
