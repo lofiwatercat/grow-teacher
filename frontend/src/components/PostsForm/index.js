@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createPost } from "../../store/reducers/posts_reducer";
+import { createPost, createPostWithImage } from "../../store/reducers/posts_reducer";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import "./PostsForm.scss";
@@ -10,6 +10,8 @@ const PostsForm = () => {
   const [itemFields, setItemFields] = useState([
     { name: "", totalCost: 1.0, amount: 1, details: "", status: false },
   ]);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const dispatch = useDispatch();
 
   let post = {
@@ -44,6 +46,19 @@ const PostsForm = () => {
     setItemFields(data);
   };
 
+  const handleFile = (e) => {
+    const file = e.currentTarget.files[0];
+    setImageUrl(file);
+
+    const fileReader = new FileReader();
+    fileReader.onloadend = () => {
+      setImagePreview(fileReader.result);
+    };
+    if (file) {
+      fileReader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -57,7 +72,15 @@ const PostsForm = () => {
     // thus, have to make a copy of newPost, and reassign the items field
     let copy = newPost;
     copy.items = itemFields;
-    dispatch(createPost(copy));
+    // dispatch(createPost(copy));
+
+    const data = new FormData();
+    data.append("title", copy.title);
+    data.append("body", copy.body);
+    data.append("items", copy.items);
+    data.append("imageUrl", imageUrl);
+
+    dispatch(createPostWithImage( ))
   };
 
   return (
@@ -78,8 +101,7 @@ const PostsForm = () => {
               error={
                 !(
                   newPost.title.length === 0 ||
-                  newPost.title.length >= 2 &&
-                  newPost.title.length <= 60
+                  (newPost.title.length >= 2 && newPost.title.length <= 60)
                 )
               }
               id="outlined-basic"
@@ -92,11 +114,10 @@ const PostsForm = () => {
               helperText="Title must be between 2 and 60 characters"
             />
             <TextField
-            error={
+              error={
                 !(
                   newPost.body.length === 0 ||
-                  newPost.body.length >= 2 &&
-                  newPost.body.length <= 255
+                  (newPost.body.length >= 2 && newPost.body.length <= 255)
                 )
               }
               helperText="Body must be between 2 and 255 characters"
@@ -106,6 +127,13 @@ const PostsForm = () => {
               onChange={(e) => setNewPost({ ...newPost, body: e.target.value })}
               required
             />
+            <input
+              type="file"
+              onChange={handleFile}
+              accept=".gif,.jpg,.jpeg,.png,.tiff,.raw"
+              required
+            />
+            {imagePreview && <img src={imagePreview} alt="preview" />}
             <h3>Items:</h3>
             {itemFields.map((input, index) => {
               return (

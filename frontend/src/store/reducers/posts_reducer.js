@@ -58,11 +58,11 @@ export const fetchPost = (id) => async (dispatch) => {
   }
 };
 
-export const createPostWithImage = (post) => async (dispatch) => {
+export const createPostWithImage = (data) => async (dispatch) => {
   debugger
   const res = await jwtImageFetch(`/api/posts`, {
     method: "POST",
-    body: post,
+    body: data,
   });
 
   if (res.ok) {
