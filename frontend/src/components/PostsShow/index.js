@@ -16,18 +16,36 @@ const PostsShow = () => {
   const history = useHistory();
 
   const post = useSelector(getPost(postId)) 
+  // Progress bar status
   const [currentProgress, setCurrentProgress] = useState(0)
 
+  // Evaluate what the current progress is and call it in the use effect
+  const calcCurrentProgress = () => {
+    // A counter to set the current progress to
+    if (!post) return;
+    let amount = 0;
+    for (let i = 0; i < post.items.length; i++) {
+      let arrayItem = post.items[i];
+      if (arrayItem.status) {
+        amount += arrayItem.totalCost;
+      }
+    }
+    console.log(amount)
+    return amount;
+  }
+
+
   useEffect(() => {
-    dispatch(fetchPost(postId))
-  }, [])
+    setCurrentProgress(calcCurrentProgress())
+    dispatch(fetchPost(postId) )
+  }, [currentProgress])
 
   // Exit out for first render
   if (!post) return null;
 
   const handleDelete = (e) => {
     e.preventDefault()
-    dispatch(deletePost(postId))
+    dispatch(deletePost(postId)) 
     // After deletion, the deleted post is still in index until refresh
     // history.push('/posts')
   }
@@ -46,17 +64,6 @@ const PostsShow = () => {
     history.push(`/posts/${postId}/edit`)
   }
 
-  // Evaluate what the current progress is and call it in the use effect
-  const calcCurrentProgress = () => {
-    // A counter to set the current progress to
-    let amount = 0;
-    for (let i = 0; i < post.items.length; i++) {
-      let arrayItem = post.items[i];
-      if (arrayItem.status) {
-        amount += arrayItem.totalCost;
-      }
-    }
-  }
 
 
   return (
@@ -72,13 +79,13 @@ const PostsShow = () => {
 
         <div id="post-show-right">
           <h2>{post.title}</h2>
-          <h2>{totalCost}</h2>
-          <ProgressBar now={60}/>
+          <h2>${currentProgress} <span>raised of ${totalCost}</span></h2>
+          <ProgressBar now={currentProgress/totalCost * 100}/>
 
 
           {post.items.map(item => {
             return (
-              <PostItem  post={post} item={item} authorId={post.author._id} key={`${item._id}`}/>
+              <PostItem  currentProgress={currentProgress} setCurrentProgress={setCurrentProgress} post={post} item={item} authorId={post.author._id} key={`${item._id}`}/>
             )
           })}
         </div>

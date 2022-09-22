@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import { updatePost } from "../../store/reducers/posts_reducer"
 
-const PostItem = ({ post, item, authorId}) => {
+const PostItem = ({ currentProgress, setCurrentProgress, post, item, authorId}) => {
   let currentUserId = useSelector(state => state.session.user._id)
   let dispatch = useDispatch()
 
@@ -15,6 +15,12 @@ const PostItem = ({ post, item, authorId}) => {
       let arrayItem = post.items[i];
       if (arrayItem._id === item._id) {
         post.items[i].status = itemStatus;
+        // Update current progress
+        if (itemStatus === true) {
+          setCurrentProgress(currentProgress + arrayItem.totalCost)
+        } else {
+          setCurrentProgress(currentProgress - arrayItem.totalCost)
+        }
       }
     }
     dispatch(updatePost(post))
@@ -28,6 +34,7 @@ const PostItem = ({ post, item, authorId}) => {
 
   // Switch the item's status
   const handleStatus = (e) => {
+    e.preventDefault();
     newItemStatus(!itemStatus);
   }
 
