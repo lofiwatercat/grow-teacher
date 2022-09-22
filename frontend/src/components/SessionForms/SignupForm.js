@@ -6,6 +6,7 @@ import {
   clearSessionErrors,
   login,
 } from "../../store/reducers/session_reducer";
+import { useHistory } from "react-router-dom";
 
 function SignupForm() {
   const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ function SignupForm() {
   const [password2, setPassword2] = useState("");
   const errors = useSelector((state) => state.errors.session);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     return () => {
@@ -62,64 +64,79 @@ function SignupForm() {
 
   return (
     <>
-      <div id="signup-page">
-        <div id="signup-text">
-          <p>Filler Text</p>
-          <p>Help your teachers</p>
-          <p>Help your kids</p>
-          <p>Filler image</p>
-        </div>
-        <div id="signup-form-container">
-          <form className="session-form" onSubmit={usernameSubmit}>
-            <h2>Sign Up</h2>
+      <div className="container" id="container">
+        <div className="form-container sign-up-container">
+          <form action="#" onSubmit={usernameSubmit}>
+            <h1>Sign Up</h1>
             <div className="errors">{errors?.email}</div>
-            <label>
+            <div className="infield">
               <input
                 type="text"
                 value={email}
                 onChange={update("email")}
                 placeholder="Email"
               />
-            </label>
+              <label></label>
+            </div>
             <div className="errors">{errors?.username}</div>
-            <label>
+            <div className="infield">
               <input
                 type="text"
                 value={username}
                 onChange={update("username")}
                 placeholder="Username"
               />
-            </label>
+              <label></label>
+            </div>
             <div className="errors">{errors?.password}</div>
-            <label>
+            <div className="infield">
               <input
                 type="password"
                 value={password}
                 onChange={update("password")}
                 placeholder="Password"
               />
-            </label>
+              <label></label>
+            </div>
             <div className="errors">
               {password !== password2 && "Confirm Password field must match"}
             </div>
-            <label>
+            <div className="infield">
               <input
                 type="password"
                 value={password2}
                 onChange={update("password2")}
                 placeholder="Confirm Password"
               />
-            </label>
-            <input
+              <label></label>
+            </div>
+            <button
               className="sessionform-button"
-              type="submit"
-              value="Sign Up"
               disabled={
                 !email || !username || !password || password !== password2
               }
-            />
-            <input type="submit" value="Demo Login" onClick={handleDemoLogin} />
+            >
+              Sign Up
+            </button>
+            <button value="Demo Login" onClick={handleDemoLogin} />
           </form>
+        </div>
+        <div className="overlay-container" id="overlayCon">
+          <div className="overlay">
+            <div className="overlay-panel overlay-left">
+              <h1>Welcome Back!</h1>
+              <p>
+                To keep connected with us please login with your personal info
+              </p>
+              <button>Sign In</button>
+            </div>
+            <div className="overlay-panel overlay-right">
+              <h1>Hello, Friend!</h1>
+              <p>Enter your personal details and start journey with us</p>
+              <button>Sign Up</button>
+            </div>
+          </div>
+          <button id="overlayBtn"></button>
         </div>
       </div>
     </>

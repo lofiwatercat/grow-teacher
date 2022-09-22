@@ -1,4 +1,5 @@
 import jwtFetch from "../jwt";
+import { jwtImageFetch } from "../jwt";
 
 export const RECEIVE_POST = "posts/RECEIVE_POST";
 export const RECEIVE_POSTS = "posts/RECEIVE_POSTS";
@@ -35,8 +36,6 @@ export const getPost = (postId) => (state) => {
   } else if (!state.entities.posts) {
     return null;
   } else {
-    console.log(postId)
-    console.log(state.entities.posts)
     return state.entities.posts[postId];
   }
 };
@@ -59,6 +58,19 @@ export const fetchPost = (id) => async (dispatch) => {
   }
 };
 
+export const createPostWithImage = (post) => async (dispatch) => {
+  debugger
+  const res = await jwtImageFetch(`/api/posts`, {
+    method: "POST",
+    body: post,
+  });
+
+  if (res.ok) {
+    const newPost = await res.json();
+    return dispatch(receivePost(newPost));
+  }
+};
+
 export const createPost = (post) => async (dispatch) => {
   const res = await jwtFetch(`/api/posts`, {
     method: "POST",
@@ -72,7 +84,7 @@ export const createPost = (post) => async (dispatch) => {
 };
 
 export const updatePost = (post) => async (dispatch) => {
-  const res = await jwtFetch(`/api/posts/${post.id}`, {
+  const res = await jwtFetch(`/api/posts/${post._id}`, {
     method: "PATCH",
     body: JSON.stringify(post),
   });
@@ -95,7 +107,7 @@ export const deletePost = (postId) => async (dispatch) => {
 
 const postsReducer = (state = {}, action) => {
   Object.freeze(state);
-  
+
   let nextState = { ...state };
   switch (action.type) {
     case RECEIVE_POSTS:

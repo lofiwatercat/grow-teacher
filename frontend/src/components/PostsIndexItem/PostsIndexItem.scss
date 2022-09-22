@@ -1,32 +1,7 @@
-.posts-index-item {
-  display: flex;
-  background-color: #d2bfdb;
-  padding: 20px;
-  margin: 20px;
-  border-radius: 5px;
-  width: 100%;
-  height: 10vh;
+.post-index-item:hover {
+  scale: 1.01;
+}
 
-  .item-image {
-    margin-right: 10px;
-  }
-
-  .item-text {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-    a {
-      text-decoration: none;
-      color: black;
-
-      background-color: white;
-      padding: 5px;
-      border-radius: 5px;
-    }
-
-    * {
-      padding: 10px;
-    }
-  }
+.post-index-item {
+  text-decoration: none;
 }

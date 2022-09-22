@@ -12,32 +12,52 @@ function NavBar() {
     dispatch(logout());
   };
 
+  window.addEventListener("scroll", () => {
+    const header = document.querySelector(".navbar");
+    header.classList.toggle("sticky", window.scrollY > 0);
+  });
+
   const getLinks = () => {
     if (loggedIn) {
       return (
-        <div className="links-nav">
-          <Link to={"/posts"}>All Posts</Link>
-          <Link to={"/profile"}>Profile</Link>
-          <Link to={"/posts/create"}>Write a Post</Link>
-          <button onClick={logoutUser}>Logout</button>
-        </div>
+        <ul className="links-nav">
+          <li>
+            <Link to={"/posts"}>All Posts</Link>
+          </li>
+          <li>
+            <Link to={"/profile"}>Profile</Link>
+          </li>
+          <li>
+            <Link to={"/posts/new"}>Write a Post</Link>
+          </li>
+          <li>
+            <button onClick={logoutUser}>Logout</button>
+          </li>
+        </ul>
       );
     } else {
       return (
-        <div className="links-auth">
-          <Link to={"/login"}>Login</Link>
-          <Link to={"/signup"}>Signup</Link>
-        </div>
+        <ul className="links-auth">
+          <li>
+            <Link className="login-button" to={"/login"}>
+              Login/Signup
+            </Link>
+          </li>
+        </ul>
       );
     }
   };
 
   return (
     <>
-      <div className="NavBar">
-        <Link id="home-link" to={'/'}>Home</Link>
+      <header className="navbar">
+        <p>
+          <Link to="/" className="logo">
+            GrowTeacher
+          </Link>
+        </p>
         {getLinks()}
-      </div>
+      </header>
     </>
   );
 }

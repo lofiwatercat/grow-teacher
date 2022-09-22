@@ -30,11 +30,12 @@ function App() {
         <Switch>
           <AuthRoute exact path="/" component={SplashPage}/>
           <AuthRoute exact path="/login" component={LoginForm} />
-          <AuthRoute exact path="/signup" component={SignupForm} />
+          <AuthRoute exact path="/signup" component={LoginForm} />
           <ProtectedRoute exact path="/posts" component={PostsIndexPage} />
           <ProtectedRoute exact path="/testing" component={Testing} />
-          <ProtectedRoute exact path="/posts/create" component={PostsFormPage} />
+          <ProtectedRoute exact path="/posts/new" component={PostsFormPage} />
           <ProtectedRoute exact path="/posts/:postId" component={PostsShowPage} />
+          <ProtectedRoute exact path="/posts/:postId/edit" component={PostsFormPage} />
           <Redirect to="/" />
         </Switch>
       </>
