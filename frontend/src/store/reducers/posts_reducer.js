@@ -79,7 +79,8 @@ export const createPost = (post) => async (dispatch) => {
 
   if (res.ok) {
     const newPost = await res.json();
-    return dispatch(receivePost(newPost));
+    dispatch(receivePost(newPost));
+    return newPost;
   }
 };
 

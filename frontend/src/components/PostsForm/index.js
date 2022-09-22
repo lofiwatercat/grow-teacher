@@ -15,6 +15,7 @@ const PostsForm = () => {
     { name: "", totalCost: 1.0, amount: 1, details: "", status: false },
   ]);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   let post = {
     title: "",
@@ -48,7 +49,7 @@ const PostsForm = () => {
     setItemFields(data);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setNewPost({
@@ -61,8 +62,8 @@ const PostsForm = () => {
     // thus, have to make a copy of newPost, and reassign the items field
     let copy = newPost;
     copy.items = itemFields;
-    dispatch(createPost(copy));
-    // history.push(`/posts/${postId}`)
+    let postId = await dispatch(createPost(copy));
+    history.push(`/posts/${postId._id}`)
   };
 
   return (
