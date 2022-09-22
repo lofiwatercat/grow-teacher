@@ -35,7 +35,10 @@ const postSchema = Schema({
         required: true,
     },
     items: [itemsSchema],
-    imageUrl: { type: String },
+    imageUrl: { 
+        type: String,
+        required: true
+    },
 },{
     timestamps: true,
 })
