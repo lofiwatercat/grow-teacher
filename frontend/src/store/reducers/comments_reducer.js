@@ -97,8 +97,6 @@ const commentsReducer = (state = {}, action) => {
   
   let nextState = { ...state };
   switch (action.type) {
-    case RECEIVE_COMMENTS:
-      return action.comments;
     case RECEIVE_COMMENT:
       nextState[action.comment._id] = action.comment;
       return nextState;
@@ -106,7 +104,7 @@ const commentsReducer = (state = {}, action) => {
       delete nextState[action.comment.id];
       return nextState;
     default:
-      return nextState;
+      return state;
   }
 };
 

@@ -5,24 +5,26 @@ const Aws = require('aws-sdk');
 const multers3 = require('multer-s3')
 
 // const upload = multer({ storage: storage, fileFilter: filefilter })
-const upload = (bucketName) => multer ({
-    storage: multers3({
-        s3,
-        bucket: bucketName,
-        metadata: function(req, file, cb) {
-            cb(null, {fieldName: file.fieldname});
-        },
-        key: function(req, file, cb) {
-            cb(null, `image-${Date.now()}.jpeg`); //add timestamps to make sure we uploading even if it's the same image type
-        },
-    }),
-});
+// const upload = (bucketName) => multer ({
+//     storage: multers3({
+//         s3,
+//         bucket: bucketName,
+//         metadata: function(req, file, cb) {
+//             cb(null, {fieldName: file.fieldname});
+//         },
+//         key: function(req, file, cb) {
+//             cb(null, `image-${Date.now()}.jpeg`); //add timestamps to make sure we uploading even if it's the same image type
+//         },
+//     }),
+// });
 
-const s3 = new Aws.S3({
-    accessKeyId: process.env.S3_ACCESS_KEY,              // accessKeyId that is stored in .env file
-    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,       // secretAccessKey is also store in .env file
-    region: process.env.S3_BUCKET_REGION,
-})
+// const s3 = new Aws.S3({
+//     accessKeyId: process.env.S3_ACCESS_KEY,              // accessKeyId that is stored in .env file
+//     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,       // secretAccessKey is also store in .env file
+//     region: process.env.S3_BUCKET_REGION,
+// })
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const mongoose = require('mongoose');
 const passport = require('passport');
@@ -78,62 +80,134 @@ router.get("/:id", (req, res) => {
 })
 
 //post a post
-router.post('/',requireUser, validatePostInput, upload("grow-teacher-dev").single("image-upload"), async(req, res, next) => {
+router.post('/',requireUser, validatePostInput, upload.single("file"), async(req, res, next) => {
     if (!isProduction) {
         const csrfToken = req.csrfToken();
         res.cookie("CSRF-TOKEN", csrfToken);
     }
-    try {
+    const file = req.file;
+    if (file) {
+        const s3FileURL = process.env.AWS_Uploaded_File_URL_LINK;
+    
+        let s3bucket = new AWS.S3({
+          accessKeyId: process.env.S3_ACCESS_KEY,
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+          region: process.env.S3_BUCKET_REGION
+        });
+    
+        const params = {
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Key: file.originalname,
+          Body: file.buffer,
+          ContentType: file.mimetype,
+          ACL: "public-read"
+        };
+   
+        let newFileUploaded = {};
+    
+        s3bucket.upload(params, function(err, data) {
+          if (err) {
+            res.status(500).json({ error: true, Message: err });
+          } else {
+            newFileUploaded = {
+              fileLink: s3FileURL + file.originalname,
+              s3_key: params.Key
+            };
+    
+            const newPost = new Post({
+                title: req.body.title,
+                body: req.body.body,
+                items: req.body.items,
+                author: req.user._id,
+                imageUrl: newFileUploaded.fileLink
+            });
+    
+            let post = newPost.save();
+            post = post.sort({ createdAt: -1 }).populate('author', '_id username email');
+            post.then(post => res.json(post))
+          }
+        });
+    } else {
         const newPost = new Post({
-        title: req.body.title,
-        body: req.body.body,
-        items: req.body.items,
-        author: req.user._id,
-        imageUrl: req.file.location
-      });
-
-
-    //   if(req.file) {
-    //         const uploadSingle = upload("grow-teacher-dev").single("image-upload");
-    //         uploadSingle(req, res, async(err) => {
-    //         if(err) return res.status(400).json({success: false, message: err.message});
-    //         await Post.create({imageUrl: req.file.location})
-    //         res.status(200).json({data: req.file.location})
-    //   }); 
-    //   }
-      let post = await newPost.save();
-      post = await post.populate('author', '_id username email');
-      return res.json(post);
-    }
-    catch(err) {
-      next(err);
-    }
-  }
-)
-
-/*
-const uploadSingle = upload ("grow-teacher-dev").single("image-upload");
-uploadsingle(req, res, async(err) => {
-    if(err) return res.status(400).json({success: false, message: err.message});
-    await Post.create({imageUrl: req.file.location})
-    res.status(200).json({data: req.file.location})
-}); 
-*/
+            title: req.body.title,
+            body: req.body.body,
+            items: req.body.items,
+            author: req.user._id,
+        });
+  
+        let post = newPost.save();
+        post = post.sort({ createdAt: -1 }).populate('author', '_id username email');
+        post.then(post => res.json(post))
+        
+      
+    }}
+  )
 
 //update a post
-router.patch('/:id',requireUser, validatePostInput, upload("grow-teacher-dev").single("image-upload"), async(req, res, next) => {
+router.patch('/:id',requireUser, validatePostInput, upload.single("file"), async(req, res, next) => {
     if (!isProduction) {
         const csrfToken = req.csrfToken();
         res.cookie("CSRF-TOKEN", csrfToken);
     }
-    Post.findOneAndUpdate({_id: req.params.id},
-        {...req.body, imageUrl: req.file.location},
-        { new: true, useFindAndModify: false },
-        (err, post) => {
-            if (err) return res.status(500).send(err);
-            return res.json(post);
-        })
-})
+
+    const file = req.file;  
+
+    if (file) {
+      const s3FileURL = process.env.AWS_Uploaded_File_URL_LINK;
+  
+      let s3bucket = new AWS.S3({
+          accessKeyId: process.env.S3_ACCESS_KEY,
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+          region: process.env.S3_BUCKET_REGION
+      });
+  
+      const params = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: file.originalname,
+        Body: file.buffer,
+        ContentType: file.mimetype,
+        ACL: "public-read"
+      };
+  
+      let newFileUploaded = {};
+  
+      s3bucket.upload(params, function(err, data) {
+        if (err) {
+          res.status(500).json({ error: true, Message: err });
+        } else {
+          newFileUploaded = {
+            fileLink: s3FileURL + file.originalname,
+            s3_key: params.Key
+          };
+  
+          Post.findByIdAndUpdate(
+            req.body.id, 
+            {$set: req.body, pictureUrl: newFileUploaded.fileLink }, 
+            {new: true}, 
+            (err, result) => {
+              if(err) {
+                return res.status(400).json(err);
+              }
+              res.send("Updated");
+            }
+          );
+        }
+    })
+    } else {
+        Post.findByIdAndUpdate(
+        req.body.id, 
+        {$set: req.body } ,
+        {new: true}, 
+        (err, result) => {
+            if(err) {
+            return res.status(400).json(err);
+            }
+            res.send("Updated");
+        }
+        );
+    }
+}
+);
 
 //delete a post
 router.delete('/:id',requireUser, (req, res) => {
