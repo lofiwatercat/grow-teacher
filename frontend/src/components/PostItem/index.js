@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import { updatePost } from "../../store/reducers/posts_reducer"
 
-const PostItem = ({ post, item, authorId}) => {
+const PostItem = ({ currentProgress, setCurrentProgress, post, item, authorId}) => {
   let currentUserId = useSelector(state => state.session.user._id)
   let dispatch = useDispatch()
 
@@ -15,6 +15,12 @@ const PostItem = ({ post, item, authorId}) => {
       let arrayItem = post.items[i];
       if (arrayItem._id === item._id) {
         post.items[i].status = itemStatus;
+        // Update current progress
+        if (itemStatus === true) {
+          setCurrentProgress(currentProgress + arrayItem.totalCost)
+        } else {
+          setCurrentProgress(currentProgress - arrayItem.totalCost)
+        }
       }
     }
     dispatch(updatePost(post))
@@ -28,21 +34,26 @@ const PostItem = ({ post, item, authorId}) => {
 
   // Switch the item's status
   const handleStatus = (e) => {
+    e.preventDefault();
     newItemStatus(!itemStatus);
+  }
+
+  // Button text
+  let buttontext = "check"
+  if (itemStatus) {
+    let buttonText = "uncheck"
   }
 
 
   // If current user is post creator, allow them to edit item status
-  console.log("authorId", authorId)
-  console.log("curr", currentUserId)
   if (authorId === currentUserId) {
   return (
   <div className="post-item">
-      <p>{item.name}</p>
+      <p className="first-p">{item.name}</p>
       <p>{item.amount}</p>
       <p>${item.totalCost}</p>
       <p>{statusText}</p>
-      <button onClick={handleStatus} >Toggle status</button>
+      <button className="toggle-button" onClick={handleStatus} >Toggle</button>
   </div>
     )} else {
   return (
