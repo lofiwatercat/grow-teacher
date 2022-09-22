@@ -13,7 +13,7 @@ const debug = require('debug');
 const cors = require('cors');
 const csurf = require('csurf');
 
-const indexRouter = require('./routes/index');
+// const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/api/users');
 const postsRouter = require('./routes/api/posts');
 const commentsRouter = require('./routes/api/comments');
@@ -47,7 +47,7 @@ app.use(
 
 const csrfRouter = require('./routes/api/csrf');
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/csrf', csrfRouter);
 app.use('/api/posts', postsRouter);
