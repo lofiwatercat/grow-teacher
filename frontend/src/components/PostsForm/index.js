@@ -4,6 +4,7 @@ import { createPost } from "../../store/reducers/posts_reducer";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import "./PostsForm.scss";
+import { useHistory } from "react-router-dom"
 
 const PostsForm = () => {
   const sessionUser = useSelector((state) => state.session.user);
@@ -58,6 +59,7 @@ const PostsForm = () => {
     let copy = newPost;
     copy.items = itemFields;
     dispatch(createPost(copy));
+    // history.push(`/posts/${postId}`)
   };
 
   return (
