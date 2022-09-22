@@ -38,16 +38,22 @@ const PostItem = ({ currentProgress, setCurrentProgress, post, item, authorId}) 
     newItemStatus(!itemStatus);
   }
 
+  // Button text
+  let buttontext = "check"
+  if (itemStatus) {
+    let buttonText = "uncheck"
+  }
+
 
   // If current user is post creator, allow them to edit item status
   if (authorId === currentUserId) {
   return (
   <div className="post-item">
-      <p>{item.name}</p>
+      <p className="first-p">{item.name}</p>
       <p>{item.amount}</p>
       <p>${item.totalCost}</p>
       <p>{statusText}</p>
-      <button onClick={handleStatus} >Toggle status</button>
+      <button className="toggle-button" onClick={handleStatus} >Toggle</button>
   </div>
     )} else {
   return (

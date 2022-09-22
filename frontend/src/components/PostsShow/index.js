@@ -83,6 +83,12 @@ const PostsShow = () => {
           <ProgressBar now={currentProgress/totalCost * 100}/>
 
 
+          <div className="item-labels">
+              <p></p>
+              <p>Amount</p>
+              <p id="label-2">Total Cost</p>
+              <p>Status</p>
+            </div>
           {post.items.map(item => {
             return (
               <PostItem  currentProgress={currentProgress} setCurrentProgress={setCurrentProgress} post={post} item={item} authorId={post.author._id} key={`${item._id}`}/>
