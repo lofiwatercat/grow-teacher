@@ -79,12 +79,20 @@ const PostsForm = () => {
     let copy = newPost;
     copy.items = itemFields;
     // dispatch(createPost(copy));
+    console.log(imageUrl)
 
     const data = new FormData();
     data.append("title", copy.title);
     data.append("body", copy.body);
-    data.append("items", copy.items);
+    // data.append("items", copy.items);
+    for (let i = 0; i < copy.items.length; i++) {
+      data.append('items[]', copy.items[i])
+    }
     data.append("imageUrl", imageUrl);
+    // Display the key/value pairs
+    // for (let pair of data.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
 
     dispatch(createPostWithImage(data));
   };
@@ -167,11 +175,7 @@ const PostsForm = () => {
                     required
                     type="number"
                     error={input.totalCost <= 0}
-                    helperText={
-                      input.totalCost <= 0
-                        ? "Invalid amount"
-                        : ""
-                    }
+                    helperText={input.totalCost <= 0 ? "Invalid amount" : ""}
                   />
                   <TextField
                     error={input.amount <= 0}
@@ -182,7 +186,9 @@ const PostsForm = () => {
                     value={input.amount}
                     required
                     type="number"
-                    helperText={input.amount <= 0 ? "Amount cannot be less than 1" : ""}
+                    helperText={
+                      input.amount <= 0 ? "Amount cannot be less than 1" : ""
+                    }
                   />
                   <TextField
                     label="Details"

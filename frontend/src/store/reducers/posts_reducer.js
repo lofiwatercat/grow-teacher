@@ -1,5 +1,5 @@
 import jwtFetch from "../jwt";
-import { jwtImageFetch } from "../jwt";
+import { jwtImageFetch, getCookie } from "../jwt";
 
 export const RECEIVE_POST = "posts/RECEIVE_POST";
 export const RECEIVE_POSTS = "posts/RECEIVE_POSTS";
@@ -59,10 +59,16 @@ export const fetchPost = (id) => async (dispatch) => {
 };
 
 export const createPostWithImage = (data) => async (dispatch) => {
-  debugger
-  const res = await jwtImageFetch(`/api/posts`, {
+  const jwtToken = localStorage.getItem("jwtToken");
+  const auth = "Bearer " + jwtToken;
+  // debugger
+  const res = await fetch(`/api/posts`, {
     method: "POST",
     body: data,
+    headers: {
+      "Authorization": auth,
+      "CSRF-Token": getCookie("CSRF-TOKEN"),
+    }
   });
 
   if (res.ok) {

@@ -1,4 +1,4 @@
-const { check } = require("express-validator");
+const { body, check } = require("express-validator");
 const handleValidationErrors = require('./handleValidationErrors');
 
 const validatePostInput = [

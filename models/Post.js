@@ -7,7 +7,7 @@ const noReqString = {
     type: String,
     required: false
 }
-const itemsSchema = Schema(
+const itemsSchema = new Schema(
     {
         name: String,
         totalCost: Number,
@@ -20,7 +20,7 @@ const itemsSchema = Schema(
     },
 )
 
-const postSchema = Schema({
+const postSchema = new Schema({
     author: {
         type: ObjectId,
         required: true,
@@ -37,7 +37,7 @@ const postSchema = Schema({
     items: [itemsSchema],
     imageUrl: { 
         type: String,
-        required: true
+        required: false
     },
 },{
     timestamps: true,
