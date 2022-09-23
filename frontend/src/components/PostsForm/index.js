@@ -6,14 +6,16 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
+import { Pane, Dialog } from "evergreen-ui";
+import { useHistory } from "react-router-dom";
 import "./PostsForm.scss";
-import { useHistory } from "react-router-dom"
 
 const PostsForm = () => {
   const sessionUser = useSelector((state) => state.session.user);
   const [itemFields, setItemFields] = useState([
     { name: "", totalCost: 1.0, amount: 1, details: "", status: false },
   ]);
+  const [showErrors, setShowErrors] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -63,7 +65,11 @@ const PostsForm = () => {
     let copy = newPost;
     copy.items = itemFields;
     let postId = await dispatch(createPost(copy));
-    history.push(`/posts/${postId._id}`)
+    if (postId === -1) {
+      setShowErrors(true);
+    } else {
+      history.push(`/posts/${postId._id}`);
+    }
   };
 
   return (
@@ -176,6 +182,18 @@ const PostsForm = () => {
             </Button>
           </Box>
         </div>
+      )}
+      {showErrors && (
+        <Pane>
+          <Dialog
+            isShown={showErrors}
+            title="Please fill in all required fields"
+            onCloseComplete={() => setShowErrors(false)}
+            preventBodyScrolling
+            confirmLabel="Got it!"
+            minHeightContent={0}
+          ></Dialog>
+        </Pane>
       )}
     </>
   );
