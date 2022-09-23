@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import "./NavBar.scss";
 import { logout } from "../../store/reducers/session_reducer";
+import logo from "../../assets/images/pencil.svg";
 
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);
@@ -51,12 +52,21 @@ function NavBar() {
   return (
     <>
       <header className="navbar">
-        <p>
-          <Link to="/" className="logo">
-            GrowTeacher
-          </Link>
-        </p>
-        {getLinks()}
+        <div>
+          <p>
+            <Link to="/" className="logo">
+              <img
+                className="logo-image"
+                height={"24px"}
+                width={"24px"}
+                src={logo}
+                alt="logo"
+              />
+              GrowTeacher
+            </Link>
+          </p>
+        </div>
+        <div>{getLinks()}</div>
       </header>
     </>
   );
