@@ -75,11 +75,14 @@ export const createPost = (post) => async (dispatch) => {
   const res = await jwtFetch(`/api/posts`, {
     method: "POST",
     body: JSON.stringify(post),
-  });
+  }).catch(res => {return -1});
 
   if (res.ok) {
     const newPost = await res.json();
-    return dispatch(receivePost(newPost));
+    dispatch(receivePost(newPost));
+    return newPost;
+  } else {
+    return -1;
   }
 };
 
