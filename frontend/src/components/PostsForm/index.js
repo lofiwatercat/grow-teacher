@@ -160,26 +160,32 @@ const PostsForm = () => {
                     onChange={(e) => handleItemChange(e, index)}
                     value={input.details}
                   />
-                  <Button
-                    variant="outlined"
-                    startIcon={<DeleteIcon />}
-                    onClick={(e) => removeItem(e, index)}
-                  >
-                    Remove
-                  </Button>
+                  <div className="remove-item-button">
+                    <Button
+                      variant="outlined"
+                      startIcon={<DeleteIcon />}
+                      onClick={(e) => removeItem(e, index)}
+                    >
+                      Remove
+                    </Button>
+                  </div>
                 </div>
               );
             })}
-            <Button
-              variant="outlined"
-              startIcon={<AddIcon />}
-              onClick={addItems}
-            >
-              Add item
-            </Button>
-            <Button variant="contained" onClick={handleSubmit}>
-              Create
-            </Button>
+            <div className="add-item-button">
+              <Button
+                variant="outlined"
+                startIcon={<AddIcon />}
+                onClick={addItems}
+              >
+                Add item
+              </Button>
+            </div>
+            <div className="create-button">
+              <Button variant="contained" onClick={handleSubmit}>
+                Create
+              </Button>
+            </div>
           </Box>
         </div>
       )}
