@@ -1,29 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createPost } from "../../store/reducers/posts_reducer";
+import { updatePost, fetchPost, getPost } from "../../store/reducers/posts_reducer";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
-import { Pane, Dialog } from "evergreen-ui";
-import { useHistory } from "react-router-dom";
-import "./PostsForm.scss";
+import "./PostsFormEdit.scss";
+import { useHistory, useParams } from "react-router-dom"
 
 const PostsForm = () => {
   const sessionUser = useSelector((state) => state.session.user);
   const [itemFields, setItemFields] = useState([
-    { name: "", totalCost: 1.0, amount: 1, details: "", status: false },
   ]);
-  const [showErrors, setShowErrors] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
+  const { postId } = useParams()
 
-  let post = {
-    title: "",
-    body: "",
-    items: [],
+  // Function that we call in the use effect to populate the items
+  const populateItems = (i) => {
+    let newItem = post.items[i] 
+    setItemFields([...itemFields, newItem]);
   };
+
+
+  useEffect( () => {
+    // Fetch the post info
+    for (let i = 0; i < post.items.length; i++) {
+      populateItems(i);
+    }
+    dispatch(fetchPost(postId))
+  }, [])
+
+  let post = useSelector(getPost(postId))
+  if (!post) {
+    post = {
+      title: "",
+      body: "",
+      items: []
+    }
+  }
+
   const [newPost, setNewPost] = useState(post);
 
   const handleItemChange = (e, index) => {
@@ -32,6 +49,7 @@ const PostsForm = () => {
     setItemFields(data);
   };
 
+  // Loop through the item array and populate their fields
   const addItems = (e) => {
     e.preventDefault();
     let newItem = {
@@ -43,6 +61,7 @@ const PostsForm = () => {
     };
     setItemFields([...itemFields, newItem]);
   };
+
 
   const removeItem = (e, index) => {
     e.preventDefault();
@@ -64,19 +83,15 @@ const PostsForm = () => {
     // thus, have to make a copy of newPost, and reassign the items field
     let copy = newPost;
     copy.items = itemFields;
-    let postId = await dispatch(createPost(copy));
-    if (postId === -1) {
-      setShowErrors(true);
-    } else {
-      history.push(`/posts/${postId._id}`);
-    }
+    let postId = await dispatch(updatePost(copy));
+    history.push(`/posts/${postId._id}`)
   };
 
   return (
     <>
       {sessionUser && (
         <div className="posts-form-container">
-          <h1>Create a new post!</h1>
+          <h1>Edit your post</h1>
           <Box
             className="posts-form"
             component="form"
@@ -99,6 +114,7 @@ const PostsForm = () => {
               onChange={(e) =>
                 setNewPost({ ...newPost, title: e.target.value })
               }
+              value={post.title}
               required
               helperText="Title must be between 2 and 60 characters"
             />
@@ -113,6 +129,7 @@ const PostsForm = () => {
               id="outlined-basic"
               label="Body"
               variant="outlined"
+              value={post.body}
               onChange={(e) => setNewPost({ ...newPost, body: e.target.value })}
               required
             />
@@ -178,22 +195,10 @@ const PostsForm = () => {
               Add item
             </Button>
             <Button variant="contained" onClick={handleSubmit}>
-              Create
+              Update
             </Button>
           </Box>
         </div>
-      )}
-      {showErrors && (
-        <Pane>
-          <Dialog
-            isShown={showErrors}
-            title="Please fill in all required fields"
-            onCloseComplete={() => setShowErrors(false)}
-            preventBodyScrolling
-            confirmLabel="Got it!"
-            minHeightContent={0}
-          ></Dialog>
-        </Pane>
       )}
     </>
   );

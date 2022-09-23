@@ -38,13 +38,6 @@ const PostItem = ({ currentProgress, setCurrentProgress, post, item, authorId}) 
     newItemStatus(!itemStatus);
   }
 
-  // Button text
-  let buttontext = "check"
-  if (itemStatus) {
-    let buttonText = "uncheck"
-  }
-
-
   // If current user is post creator, allow them to edit item status
   if (authorId === currentUserId) {
   return (
