@@ -25,13 +25,13 @@ function NavBar() {
             <Link to={"/posts"}>All Posts</Link>
           </li>
           <li>
-            <Link to={"/profile"}>Profile</Link>
-          </li>
-          <li>
             <Link to={"/posts/new"}>Write a Post</Link>
           </li>
           <li>
-            <button onClick={logoutUser}>Logout</button>
+            <Link to={"/profile"}>Profile</Link>
+          </li>
+          <li>
+            <Link onClick={logoutUser}>Logout</Link>
           </li>
         </ul>
       );
