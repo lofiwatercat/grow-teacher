@@ -23,16 +23,23 @@ const PostsForm = () => {
     setItemFields([...itemFields, newItem]);
   };
 
+  let post = useSelector(getPost(postId))
 
   useEffect( () => {
     // Fetch the post info
-    for (let i = 0; i < post.items.length; i++) {
-      populateItems(i);
-    }
     dispatch(fetchPost(postId))
+    let postItems = []
+    console.log(post)
+    if (post.title) {
+      for (let i = 0; i < post.items.length; i++) {
+        postItems.push(post.items[i])
+      }
+      if (itemFields.length !== postItems.length) {
+        setItemFields(postItems)
+      }
+    }
   }, [])
 
-  let post = useSelector(getPost(postId))
   if (!post) {
     post = {
       title: "",
@@ -40,6 +47,8 @@ const PostsForm = () => {
       items: []
     }
   }
+
+  // Make an array of the post items, and set the itemFields to it
 
   const [newPost, setNewPost] = useState(post);
 
@@ -84,7 +93,7 @@ const PostsForm = () => {
     let copy = newPost;
     copy.items = itemFields;
     let postId = await dispatch(updatePost(copy));
-    history.push(`/posts/${postId._id}`)
+    history.push(`/posts/${post._id}`)
   };
 
   return (
@@ -114,7 +123,7 @@ const PostsForm = () => {
               onChange={(e) =>
                 setNewPost({ ...newPost, title: e.target.value })
               }
-              value={post.title}
+              value={newPost.title}
               required
               helperText="Title must be between 2 and 60 characters"
             />
@@ -129,7 +138,7 @@ const PostsForm = () => {
               id="outlined-basic"
               label="Body"
               variant="outlined"
-              value={post.body}
+              value={newPost.body}
               onChange={(e) => setNewPost({ ...newPost, body: e.target.value })}
               required
             />
