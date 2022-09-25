@@ -138,17 +138,19 @@ router.patch(
       const csrfToken = req.csrfToken();
       res.cookie("CSRF-TOKEN", csrfToken);
     }
-
+console.log(req, 'req')
     const file = req.file;
+    
           Post.findByIdAndUpdate(
             req.body.id,
-            { imageUrl: req.file.location },
+            
+            { imageUrl: req.location },
             { new: true },
             (err, result) => {
               if (err) {
                 return res.status(400).json(err);
               }
-              res.send("Updated");
+            //   res.send("updated");
             }
         );
     }
