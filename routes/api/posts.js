@@ -13,6 +13,7 @@ const validateCommentInput = require('../../validation/comment.js');
 const { requireUser } = require('../../config/passport');
 const { isProduction } = require('../../config/keys');
 const { get } = require('http');
+const { getPost } = require('../../frontend/src/store/reducers/posts_reducer');
 
 // get all posts
 router.get("/", async(req, res) => {
@@ -122,15 +123,16 @@ router.get('/user/:user_id', (req, res) => {
         )
     );
 });
-//get all comments of one post
 
 
-//post a comment
-router.post('/:id/comments',requireUser, async(req, res, next) => {
+//create a comment
+router.post('/:id/comment',requireUser, async(req, res, next) => {
     if (!isProduction) {
         const csrfToken = req.csrfToken();
         res.cookie("CSRF-TOKEN", csrfToken);
     }
+    //find a post
+    const post = await Post.findOne({ _id: req.params.id})
     try {
         const newComment = new Comment({
         body: req.body.body,
@@ -138,9 +140,13 @@ router.post('/:id/comments',requireUser, async(req, res, next) => {
         author: req.user.id,
         replies: req.body.replies,
       });
-
+      comment.post = post._id
       let comment = await newComment.save();
-      comment = await comment.sort({ createdAt: -1 }).populate('author', 'username');
+      //associate post w/ comment
+      post.comments.push(comment._id)
+      await post.save()
+
+      comment = await comment.populate('author', 'username');
       return res.json(comment);
     }
     catch(err) {
@@ -148,6 +154,11 @@ router.post('/:id/comments',requireUser, async(req, res, next) => {
     }
   }
 )
+/////read a comment(don't know if you'll need that one)
+router.get('/:id/comment', async (req, res) => {
+    const post = await post.findOne({_id: req.params.id}).populate('comments');
+    res.send(post);
+})
 //update a comment
 router.patch('/:id/comment/:commentId/Edit',requireUser, async(req, res, next) => {
     if (!isProduction) {
@@ -185,28 +196,28 @@ router.delete('/:id/comment/:commentId', requireUser, (req, res) => {
 });
 
 //reply to a comment
-router.post('/:id/comments/:commentId',requireUser, async(req, res, next) => {
-    if (!isProduction) {
-        const csrfToken = req.csrfToken();
-        res.cookie("CSRF-TOKEN", csrfToken);
-    }
-    try {
-        const newComment = new Comment({
-        body: req.body.body,
-        post: req.params.id,
-        author: req.user.id,
-        replies: req.body.replies,
-      });
+// router.post('/:id/comments/:commentId',requireUser, async(req, res, next) => {
+//     if (!isProduction) {
+//         const csrfToken = req.csrfToken();
+//         res.cookie("CSRF-TOKEN", csrfToken);
+//     }
+//     try {
+//         const newComment = new Comment({
+//         body: req.body.body,
+//         post: req.params.id,
+//         author: req.user.id,
+//         replies: req.body.replies,
+//       });
 
-      let comment = await newComment.save();
-      comment = await comment.sort({ createdAt: -1 }).populate('author', 'username');
-      return res.json(comment);
-    }
-    catch(err) {
-      next(err);
-    }
-  }
-)
+//       let comment = await newComment.save();
+//       comment = await comment.sort({ createdAt: -1 }).populate('author', 'username');
+//       return res.json(comment);
+//     }
+//     catch(err) {
+//       next(err);
+//     }
+//   }
+// )
 //reply to a comment
 
 
