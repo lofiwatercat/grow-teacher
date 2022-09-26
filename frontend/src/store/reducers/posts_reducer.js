@@ -59,7 +59,7 @@ export const fetchPost = (id) => async (dispatch) => {
 };
 
 export const createPostWithImage = (post) => async (dispatch) => {
-  debugger
+  debugger;
   const res = await jwtImageFetch(`/api/posts`, {
     method: "POST",
     body: post,
@@ -75,7 +75,9 @@ export const createPost = (post) => async (dispatch) => {
   const res = await jwtFetch(`/api/posts`, {
     method: "POST",
     body: JSON.stringify(post),
-  }).catch(res => {return -1});
+  }).catch((res) => {
+    return -1;
+  });
 
   if (res.ok) {
     const newPost = await res.json();

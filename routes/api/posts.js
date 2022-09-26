@@ -13,7 +13,6 @@ const validateCommentInput = require('../../validation/comment.js');
 const { requireUser } = require('../../config/passport');
 const { isProduction } = require('../../config/keys');
 const { get } = require('http');
-const { getPost } = require('../../frontend/src/store/reducers/posts_reducer');
 
 // get all posts
 router.get("/", async(req, res) => {
@@ -29,7 +28,7 @@ router.get("/", async(req, res) => {
                 p.body = post.body
                 p.items = post.items
                 p.author_name = await User.findOne({ _id: post.author }).then((res) => { 
-                    return "test_name";
+                    return res.username;
                 })
                 p._id = post._id;
                 return p;
@@ -126,7 +125,7 @@ router.get('/user/:user_id', (req, res) => {
 
 
 //create a comment
-router.post('/:id/comment',requireUser, async(req, res, next) => {
+router.post('/:id/comments',requireUser, async(req, res, next) => {
     if (!isProduction) {
         const csrfToken = req.csrfToken();
         res.cookie("CSRF-TOKEN", csrfToken);
@@ -140,10 +139,12 @@ router.post('/:id/comment',requireUser, async(req, res, next) => {
         author: req.user.id,
         replies: req.body.replies,
       });
-      comment.post = post._id
+      newComment.post = post._id
       let comment = await newComment.save();
       //associate post w/ comment
+      post.comments ||= [];
       post.comments.push(comment._id)
+      console.log(post.comments)
       await post.save()
 
       comment = await comment.populate('author', 'username');
@@ -155,12 +156,12 @@ router.post('/:id/comment',requireUser, async(req, res, next) => {
   }
 )
 /////read a comment(don't know if you'll need that one)
-router.get('/:id/comment', async (req, res) => {
-    const post = await post.findOne({_id: req.params.id}).populate('comments');
+router.get('/:id/comments', async (req, res) => {
+    const post = await Post.findOne({_id: req.params.id}).populate('comments');
     res.send(post);
 })
 //update a comment
-router.patch('/:id/comment/:commentId/Edit',requireUser, async(req, res, next) => {
+router.patch('/:id/comments/:commentId/edit',requireUser, async(req, res, next) => {
     if (!isProduction) {
         const csrfToken = req.csrfToken();
         res.cookie("CSRF-TOKEN", csrfToken);
@@ -174,7 +175,7 @@ router.patch('/:id/comment/:commentId/Edit',requireUser, async(req, res, next) =
         })
 })
 //delete a comment
-router.delete('/:id/comment/:commentId', requireUser, (req, res) => {
+router.delete('/:id/comments/:commentId', requireUser, (req, res) => {
     if (!isProduction) {
         const csrfToken = req.csrfToken();
         res.cookie("CSRF-TOKEN", csrfToken);

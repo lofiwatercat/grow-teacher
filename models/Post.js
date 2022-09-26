@@ -35,7 +35,6 @@ const postSchema = Schema({
         required: true
     },
     items: [itemsSchema],
-    
 },{
     timestamps: true
 })
