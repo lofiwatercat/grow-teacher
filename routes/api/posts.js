@@ -186,7 +186,7 @@ router.get("/user/:user_id", (req, res) => {
 });
 //get all comments of one post
 
-//create a comment(route)
+// create a comment(route)
 router.post("/:id/comment", requireUser, async (req, res, next) => {
   if (!isProduction) {
     const csrfToken = req.csrfToken();
