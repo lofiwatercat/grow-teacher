@@ -26,6 +26,11 @@ const postSchema = Schema({
         required: true,
         ref: "User"
     },
+    comments: {
+        type: ObjectId,
+        required: false,
+        ref: "Comment"
+    },
     title: {
         type: String,
         required: true
