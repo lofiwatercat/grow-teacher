@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updatePost, fetchPost, getPost } from "../../store/reducers/posts_reducer";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import TextareaAutosize from "@mui/base/TextareaAutosize"
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
@@ -127,7 +128,9 @@ const PostsForm = () => {
               required
               helperText="Title must be between 2 and 60 characters"
             />
-            <TextField
+            <TextareaAutosize
+              minRows={5}
+              style={{ width: 400 }}
               error={
                 !(
                   newPost.body.length === 0 ||
