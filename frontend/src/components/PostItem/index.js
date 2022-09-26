@@ -27,9 +27,14 @@ const PostItem = ({ currentProgress, setCurrentProgress, post, item, authorId}) 
   }, [itemStatus])
 
   let statusText = "needed"
-    if (item.status) {
-      statusText = "fufilled"
-    }
+  if (item.status) {
+    statusText = "fufilled"
+  }
+
+  let statusColor = "red";
+  if (item.status) {
+    statusColor = "green";
+  }
 
 
   // Switch the item's status
@@ -46,6 +51,7 @@ const PostItem = ({ currentProgress, setCurrentProgress, post, item, authorId}) 
       <p>{item.amount}</p>
       <p>${item.totalCost}</p>
       <p>{statusText}</p>
+      <span className={`status-circle ${statusColor}`}></span>
       <button className="toggle-button" onClick={handleStatus} >Toggle</button>
   </div>
     )} else {
@@ -54,7 +60,7 @@ const PostItem = ({ currentProgress, setCurrentProgress, post, item, authorId}) 
       <p>{item.name}</p>
       <p>{item.amount}</p>
       <p>${item.totalCost}</p>
-      <p>{statusText}</p>
+      <span className={`status-circle ${statusColor}`}></span>
   </div>
     )}
 }
