@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../../store/reducers/posts_reducer";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import TextareaAutosize from "@mui/base/TextareaAutosize"
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
@@ -102,7 +103,10 @@ const PostsForm = () => {
               required
               helperText="Title must be between 2 and 60 characters"
             />
-            <TextField
+            <TextareaAutosize
+              placeholder="body"
+              minRows={5}
+              style={{ width: 400 }}
               error={
                 !(
                   newPost.body.length === 0 ||
@@ -160,26 +164,32 @@ const PostsForm = () => {
                     onChange={(e) => handleItemChange(e, index)}
                     value={input.details}
                   />
-                  <Button
-                    variant="outlined"
-                    startIcon={<DeleteIcon />}
-                    onClick={(e) => removeItem(e, index)}
-                  >
-                    Remove
-                  </Button>
+                  <div className="remove-item-button">
+                    <Button
+                      variant="outlined"
+                      startIcon={<DeleteIcon />}
+                      onClick={(e) => removeItem(e, index)}
+                    >
+                      Remove
+                    </Button>
+                  </div>
                 </div>
               );
             })}
-            <Button
-              variant="outlined"
-              startIcon={<AddIcon />}
-              onClick={addItems}
-            >
-              Add item
-            </Button>
-            <Button variant="contained" onClick={handleSubmit}>
-              Create
-            </Button>
+            <div className="add-item-button">
+              <Button
+                variant="outlined"
+                startIcon={<AddIcon />}
+                onClick={addItems}
+              >
+                Add item
+              </Button>
+            </div>
+            <div className="create-button">
+              <Button variant="contained" onClick={handleSubmit}>
+                Create
+              </Button>
+            </div>
           </Box>
         </div>
       )}

@@ -71,14 +71,14 @@ const PostsShow = () => {
       <div id="post-show">
         <div id="post-show-container">
         <div id="post-show-left">
+          <h2>{post.title}</h2>
           <p>POST IMAGE HERE</p>
           <p>{post.body}</p>
-          <button onClick={handleDelete}>DELETE POST</button>
-          <button onClick={handleEdit}>EDIT POST</button>
+          <button class="post-show-link" onClick={handleDelete}>delete post</button>
+          <button class="post-show-link" onClick={handleEdit}>edit post</button>
         </div>
 
         <div id="post-show-right">
-          <h2>{post.title}</h2>
           <h2>${currentProgress} <span>raised of ${totalCost}</span></h2>
           <ProgressBar now={currentProgress/totalCost * 100}/>
 
@@ -86,8 +86,6 @@ const PostsShow = () => {
           <div className="item-labels">
               <p></p>
               <p>Amount</p>
-              <p id="label-2">Total Cost</p>
-              <p>Status</p>
             </div>
           {post.items.map(item => {
             return (

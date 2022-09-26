@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import "./NavBar.scss";
 import { logout } from "../../store/reducers/session_reducer";
+import logo from "../../assets/images/pencil.svg";
 
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);
@@ -25,13 +26,13 @@ function NavBar() {
             <Link to={"/posts"}>All Posts</Link>
           </li>
           <li>
-            <Link to={"/profile"}>Profile</Link>
-          </li>
-          <li>
             <Link to={"/posts/new"}>Write a Post</Link>
           </li>
           <li>
-            <button onClick={logoutUser}>Logout</button>
+            <Link to={"/profile"}>Profile</Link>
+          </li>
+          <li>
+            <Link to="/login" onClick={logoutUser}>Logout</Link>
           </li>
         </ul>
       );
@@ -51,12 +52,21 @@ function NavBar() {
   return (
     <>
       <header className="navbar">
-        <p>
-          <Link to="/posts" className="logo">
-            GrowTeacher
-          </Link>
-        </p>
-        {getLinks()}
+        <div>
+          <p>
+            <Link to="/" className="logo">
+              <img
+                className="logo-image"
+                height={"24px"}
+                width={"24px"}
+                src={logo}
+                alt="logo"
+              />
+              GrowTeacher
+            </Link>
+          </p>
+        </div>
+        <div>{getLinks()}</div>
       </header>
     </>
   );
