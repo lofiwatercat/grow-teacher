@@ -52,7 +52,7 @@ function NavBar() {
     <>
       <header className="navbar">
         <p>
-          <Link to="/" className="logo">
+          <Link to="/posts" className="logo">
             GrowTeacher
           </Link>
         </p>
