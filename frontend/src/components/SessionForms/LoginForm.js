@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import TextField from "@mui/material/TextField";
 import isEmail from "validator/lib/isEmail";
 import "./SessionForm.scss";
+import { useHistory } from "react-router-dom"
 
 import {
   signup,
@@ -23,6 +24,7 @@ function LoginForm() {
   const [username, setUsername] = useState("");
   const [passwordSignUp, setPasswordSignUp] = useState("");
   const [password2, setPassword2] = useState("");
+  const history = useHistory();
 
   const dispatch = useDispatch();
 
@@ -75,6 +77,7 @@ function LoginForm() {
   const handleDemoLogin = (e) => {
     e.preventDefault();
     dispatch(login({ email: "demo1@user.io", password: "password" }));
+    history.push("/posts")
   };
 
   const usernameSubmit = (e) => {
@@ -91,6 +94,7 @@ function LoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login({ email, password }));
+    history.push("/posts")
   };
 
   useEffect(() => {
