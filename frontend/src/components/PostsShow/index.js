@@ -74,8 +74,8 @@ const PostsShow = () => {
           <h2>{post.title}</h2>
           <p>POST IMAGE HERE</p>
           <p>{post.body}</p>
-          <button onClick={handleDelete}>DELETE POST</button>
-          <button onClick={handleEdit}>EDIT POST</button>
+          <button class="post-show-link" onClick={handleDelete}>delete post</button>
+          <button class="post-show-link" onClick={handleEdit}>edit post</button>
         </div>
 
         <div id="post-show-right">
@@ -86,8 +86,6 @@ const PostsShow = () => {
           <div className="item-labels">
               <p></p>
               <p>Amount</p>
-              <p id="label-2">Total Cost</p>
-              <p>Status</p>
             </div>
           {post.items.map(item => {
             return (
