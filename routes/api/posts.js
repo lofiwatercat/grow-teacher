@@ -46,8 +46,8 @@ router.get("/:id", (req, res) => {
         res.cookie("CSRF-TOKEN", csrfToken);
     }
     Post.findById(req.params.id)
-        .populate("author", "_id username email")
-        .populate("comments", "_id author body")
+    .populate("comments", "_id author body")
+    .populate("author", "_id username email")
         .then(post => res.json(post))
         .catch(err =>
             res.status(404).json({ nopostfound: 'No post found with that ID' })
@@ -132,6 +132,7 @@ router.post('/:id/comments',requireUser, async(req, res, next) => {
         res.cookie("CSRF-TOKEN", csrfToken);
     }
     //find a post
+    // console.log("taylor swift", req.body.body)
     const post = await Post.findOne({ _id: req.params.id})
     try {
         const newComment = new Comment({
@@ -140,15 +141,22 @@ router.post('/:id/comments',requireUser, async(req, res, next) => {
         author: req.user.id,
         replies: req.body.replies,
       });
-      newComment.post = post._id
-      let comment = await newComment.save();
+      newComment.post = post;
+      await newComment.save();
+    //   console.log(comment, "this is the comment")
       //associate post w/ comment
-      post.comments ||= [];
-      post.comments.push(comment._id)
-      console.log(post.comments)
-      await post.save()
+    //   if(!post.comment) {
+    //     return [];
+    //   }
+    //   post.comments ||= [];
+      const newPost = await Post.findOneAndUpdate({ _id: req.params.id}, {comments: [newComment]})
 
-      comment = await comment.populate('author', 'username');
+    //   newPost.comments.push(newComment)
+    //   await newPost.save()
+    //   console.log(newPost, 'this is the post');
+    //   debugger;
+
+      comment = await newComment.populate('author', 'username');
       return res.json(comment);
     }
     catch(err) {

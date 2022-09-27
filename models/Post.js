@@ -7,7 +7,7 @@ const noReqString = {
     type: String,
     required: false
 }
-const itemsSchema = Schema(
+const itemsSchema = new Schema(
     {
         name: String,
         totalCost: Number,
@@ -20,17 +20,17 @@ const itemsSchema = Schema(
     },
 )
 
-const postSchema = Schema({
+const postSchema = new Schema({
     author: {
         type: ObjectId,
         required: true,
         ref: "User"
     },
-    comments: {
+    comments: [{
         type: ObjectId,
         required: false,
         ref: "Comment"
-    },
+    }],
     title: {
         type: String,
         required: true

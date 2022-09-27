@@ -9,12 +9,12 @@ const authorId = {
     ref: 'User'
 }
 
-const repliesSchema = Schema({
+const repliesSchema = new Schema({
         
         author: authorId,
         body: {
             type: String,
-            required: true,
+            // required: true,
        },
     },
        {
@@ -22,7 +22,7 @@ const repliesSchema = Schema({
     },
 )
 
-const commentSchema = Schema({
+const commentSchema = new Schema({
     author: {
         type: ObjectId,
         required: true,

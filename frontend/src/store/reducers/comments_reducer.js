@@ -59,11 +59,11 @@ export const getComment = (commentId) => (state) => {
 
 //create a comment
 export const createComment = (comment, postId) => async (dispatch) => {
+  // debugger
   const res = await jwtFetch(`/api/posts/${postId}/comments`, {
     method: "POST",
     body: JSON.stringify(comment, postId),
   });
-
   if (res.ok) {
     const newComment = await res.json();
     return dispatch(receiveComment(newComment));

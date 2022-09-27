@@ -27,7 +27,7 @@ const PostsShow = () => {
   // Evaluate what the current progress is and call it in the use effect
   const calcCurrentProgress = () => {
     // A counter to set the current progress to
-    if (!post) return;
+    if (!post?.author) return;
     let amount = 0;
     for (let i = 0; i < post.items.length; i++) {
       let arrayItem = post.items[i];
@@ -45,7 +45,7 @@ const PostsShow = () => {
   }, [currentProgress]);
 
   // Exit out for first render
-  if (!post) return null;
+  if (!post?.author) return null;
 
   const handleDelete = (e) => {
     e.preventDefault();
@@ -69,7 +69,7 @@ const PostsShow = () => {
   };
 
   let comments = {};
-
+  console.log(post);
   return (
     <>
       <div id="post-show">

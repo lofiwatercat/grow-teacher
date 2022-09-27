@@ -59,7 +59,7 @@ export const fetchPost = (id) => async (dispatch) => {
 };
 
 export const createPostWithImage = (post) => async (dispatch) => {
-  debugger;
+  // debugger;
   const res = await jwtImageFetch(`/api/posts`, {
     method: "POST",
     body: post,
@@ -116,7 +116,8 @@ const postsReducer = (state = {}, action) => {
   let nextState = { ...state };
   switch (action.type) {
     case RECEIVE_POSTS:
-      return action.posts;
+      action.posts.forEach(post => nextState[post._id] = post);
+      return nextState;
     case RECEIVE_POST:
       nextState[action.post._id] = action.post;
       return nextState;
