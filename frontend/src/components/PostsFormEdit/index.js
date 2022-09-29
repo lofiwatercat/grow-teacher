@@ -1,38 +1,56 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createPost,
-  createPostWithImage,
-} from "../../store/reducers/posts_reducer";
+import { updatePost, fetchPost, getPost } from "../../store/reducers/posts_reducer";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-
 import TextareaAutosize from "@mui/base/TextareaAutosize"
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
-import { Pane, Dialog } from "evergreen-ui";
-import { useHistory } from "react-router-dom";
-
-import "./PostsForm.scss";
+import "./PostsFormEdit.scss";
+import { useHistory, useParams } from "react-router-dom"
 
 const PostsForm = () => {
   const sessionUser = useSelector((state) => state.session.user);
   const [itemFields, setItemFields] = useState([
-    { name: "", totalCost: 1.0, amount: 1, details: "", status: false },
   ]);
-
-  const [imageUrl, setImageUrl] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
-  const [showErrors, setShowErrors] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
+  const { postId } = useParams()
 
-  let post = {
-    title: "",
-    body: "",
-    items: [],
+  // Function that we call in the use effect to populate the items
+  const populateItems = (i) => {
+    let newItem = post.items[i] 
+    setItemFields([...itemFields, newItem]);
   };
+
+  let post = useSelector(getPost(postId))
+
+  useEffect( () => {
+    // Fetch the post info
+    dispatch(fetchPost(postId))
+    let postItems = []
+    console.log(post)
+    if (post.title) {
+      for (let i = 0; i < post.items.length; i++) {
+        postItems.push(post.items[i])
+      }
+      if (itemFields.length !== postItems.length) {
+        setItemFields(postItems)
+      }
+    }
+  }, [])
+
+  if (!post) {
+    post = {
+      title: "",
+      body: "",
+      items: []
+    }
+  }
+
+  // Make an array of the post items, and set the itemFields to it
+
   const [newPost, setNewPost] = useState(post);
 
   const handleItemChange = (e, index) => {
@@ -41,6 +59,7 @@ const PostsForm = () => {
     setItemFields(data);
   };
 
+  // Loop through the item array and populate their fields
   const addItems = (e) => {
     e.preventDefault();
     let newItem = {
@@ -53,24 +72,12 @@ const PostsForm = () => {
     setItemFields([...itemFields, newItem]);
   };
 
+
   const removeItem = (e, index) => {
     e.preventDefault();
     let data = [...itemFields];
     data.splice(index, 1);
     setItemFields(data);
-  };
-
-  const handleFile = (e) => {
-    const file = e.currentTarget.files[0];
-    setImageUrl(file);
-
-    const fileReader = new FileReader();
-    fileReader.onloadend = () => {
-      setImagePreview(fileReader.result);
-    };
-    if (file) {
-      fileReader.readAsDataURL(file);
-    }
   };
 
   const handleSubmit = async (e) => {
@@ -86,35 +93,15 @@ const PostsForm = () => {
     // thus, have to make a copy of newPost, and reassign the items field
     let copy = newPost;
     copy.items = itemFields;
-    // dispatch(createPost(copy));
-    console.log(imageUrl)
-
-    const data = new FormData();
-    data.append("title", copy.title);
-    data.append("body", copy.body);
-    // data.append("items", copy.items);
-    for (let i = 0; i < copy.items.length; i++) {
-      data.append('items[]', copy.items[i])
-    }
-    data.append("imageUrl", imageUrl);
-    // Display the key/value pairs
-    // for (let pair of data.entries()) {
-    //   console.log(pair[0] + ", " + pair[1]);
-    // }
-
-    let postId = await dispatch(createPostWithImage(data));
-    if (postId === -1) {
-      setShowErrors(true);
-    } else {
-      history.push(`/posts/${postId._id}`);
-    }
+    let postId = await dispatch(updatePost(copy));
+    history.push(`/posts/${post._id}`)
   };
 
   return (
     <>
       {sessionUser && (
         <div className="posts-form-container">
-          <h1>Create a new post!</h1>
+          <h1>Edit your post</h1>
           <Box
             className="posts-form"
             component="form"
@@ -137,15 +124,13 @@ const PostsForm = () => {
               onChange={(e) =>
                 setNewPost({ ...newPost, title: e.target.value })
               }
+              value={newPost.title}
               required
               helperText="Title must be between 2 and 60 characters"
             />
-
             <TextareaAutosize
-              placeholder="body"
               minRows={5}
               style={{ width: 400 }}
-
               error={
                 !(
                   newPost.body.length === 0 ||
@@ -156,21 +141,10 @@ const PostsForm = () => {
               id="outlined-basic"
               label="Body"
               variant="outlined"
+              value={newPost.body}
               onChange={(e) => setNewPost({ ...newPost, body: e.target.value })}
               required
             />
-            <Button variant="contained" component="label">
-              Upload Image
-              <input
-                type="file"
-                onChange={handleFile}
-                accept=".gif,.jpg,.jpeg,.png,.tiff,.raw"
-                required
-                hidden
-              />
-            </Button>
-
-            {imagePreview && <img src={imagePreview} alt="preview" />}
             <h3>Items:</h3>
             {itemFields.map((input, index) => {
               return (
@@ -215,47 +189,28 @@ const PostsForm = () => {
                     onChange={(e) => handleItemChange(e, index)}
                     value={input.details}
                   />
-
-                  <div className="remove-item-button">
-                    <Button
-                      variant="outlined"
-                      startIcon={<DeleteIcon />}
-                      onClick={(e) => removeItem(e, index)}
-                    >
-                      Remove
-                    </Button>
-                  </div>
+                  <Button
+                    variant="outlined"
+                    startIcon={<DeleteIcon />}
+                    onClick={(e) => removeItem(e, index)}
+                  >
+                    Remove
+                  </Button>
                 </div>
               );
             })}
-            <div className="add-item-button">
-              <Button
-                variant="outlined"
-                startIcon={<AddIcon />}
-                onClick={addItems}
-              >
-                Add item
-              </Button>
-            </div>
-            <div className="create-button">
-              <Button variant="contained" onClick={handleSubmit}>
-                Create
-              </Button>
-            </div>
+            <Button
+              variant="outlined"
+              startIcon={<AddIcon />}
+              onClick={addItems}
+            >
+              Add item
+            </Button>
+            <Button variant="contained" onClick={handleSubmit}>
+              Update
+            </Button>
           </Box>
         </div>
-      )}
-      {showErrors && (
-        <Pane>
-          <Dialog
-            isShown={showErrors}
-            title="Please fill in all required fields"
-            onCloseComplete={() => setShowErrors(false)}
-            preventBodyScrolling
-            confirmLabel="Got it!"
-            minHeightContent={0}
-          ></Dialog>
-        </Pane>
       )}
     </>
   );

@@ -162,6 +162,8 @@ router.patch(
     }
 );
 
+// smal change
+
 //delete a post
 router.delete("/:id", requireUser, (req, res) => {
   if (!isProduction) {

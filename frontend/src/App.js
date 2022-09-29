@@ -13,6 +13,7 @@ import SplashPage from "./views/SplashPage";
 import PostsFormPage from "./views/PostsFormPage";
 import PostsShowPage from "./views/PostsShowPage";
 import PostsIndexPage from "./views/PostsIndexPage";
+import PostsFormEditPage from "./views/PostsFormEditPage";
 
 import Testing from './components/testing'
 
@@ -35,8 +36,8 @@ function App() {
           <ProtectedRoute exact path="/testing" component={Testing} />
           <ProtectedRoute exact path="/posts/new" component={PostsFormPage} />
           <ProtectedRoute exact path="/posts/:postId" component={PostsShowPage} />
-          <ProtectedRoute exact path="/posts/:postId/edit" component={PostsFormPage} />
-          <Redirect to="/" />
+          <ProtectedRoute exact path="/posts/:postId/edit" component={PostsFormEditPage} />
+          <Redirect to="/posts" />
         </Switch>
       </>
     )

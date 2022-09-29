@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 const { secretOrKey } = require('./keys');
 const passport = require('passport');
 
-
 passport.use(new LocalStrategy({
     session: false,
     usernameField: 'email',

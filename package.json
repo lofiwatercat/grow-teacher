@@ -1,10 +1,16 @@
 {
-  "name": "backend",
+  "name": "grow-teacher",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "dotenv nodemon ./bin/www --inspect"
+    "dev": "dotenv nodemon ./bin/www --inspect",
+    "backend-install": "npm install",
+    "backend": "npm run dev",
+    "frontend-install": "npm install --prefix frontend",
+    "frontend": "npm start --prefix frontend",
+    "frontend-build": "npm run build --prefix frontend",
+    "build": "npm run backend-install && npm run frontend-install && npm run frontend-build"
   },
   "dependencies": {
     "aws-sdk": "^2.1221.0",
@@ -34,5 +40,20 @@
     "faker": "^5.5.3",
     "nodemon": "^2.0.20",
     "redux-logger": "^3.0.6"
+  },
+  "description": "Teachers in public schools need to use their personal finances to make up for the lack of school materials that their students need. To remedy this issue, this application allows teachers to create posts with a funding goal and equipment checklist. Parents can either make a direct donation or pick up the supplies and give them directly to the teacher, checking that item off from the post adding to the funding goal.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loFiWaterCat/grow-teacher.git"
+  },
+  "keywords": [],
+  "author": "lofiWaterCat, zoumus, deli123",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/loFiWaterCat/grow-teacher/issues"
+  },
+  "homepage": "https://github.com/loFiWaterCat/grow-teacher#readme",
+  "engines": {
+    "node": "16.x"
   }
 }
