@@ -53,7 +53,6 @@ const PostsForm = () => {
   };
 
   const handleFile = (e) => {
-    console.log('zuzu')
     const file = e.currentTarget.files[0];
     setImageUrl(file);
 

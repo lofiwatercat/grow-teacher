@@ -5,6 +5,8 @@ const Aws = require("aws-sdk");
 const multers3 = require("multer-s3");
 
 // const upload = multer({ storage: storage, fileFilter: filefilter })
+
+//AWS stuff
 const s3 = new Aws.S3({
     accessKeyId: process.env.S3_ACCESS_KEY,              // accessKeyId that is stored in .env file
     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,       // secretAccessKey is also store in .env file
@@ -24,6 +26,7 @@ const upload = multer({
         },
     }),
 });
+//Aws stuff
 
 // const storage = multer.memoryStorage();
 // const upload = multer({ storage: storage });
@@ -91,7 +94,7 @@ router.post("/",
   requireUser,
   upload.single("imageUrl"),
   async (req, res, next) => {
-    console.log(req.body);
+    // console.log(req.body);
     if (!isProduction) {
       const csrfToken = req.csrfToken();
       res.cookie("CSRF-TOKEN", csrfToken);
@@ -133,24 +136,27 @@ router.patch(
   "/:id",
   requireUser,
   upload.single("imageUrl"),
-  async (req, res, next) => {
+  async(req, res) => {
     if (!isProduction) {
       const csrfToken = req.csrfToken();
       res.cookie("CSRF-TOKEN", csrfToken);
     }
-console.log(req, 'req')
-    const file = req.file;
+// console.log(req, 'req')
+    // const file = req.file;
     
-          Post.findByIdAndUpdate(
-            req.body.id,
-            
-            { imageUrl: req.location },
-            { new: true },
-            (err, result) => {
+          Post.findOneAndUpdate(
+            {id: req.params.id},
+            {all: req.body,
+
+            //condition
+             imageUrl: req.location },
+            { new: true, useFindAndModify: false },
+            (err, post) => {
               if (err) {
-                return res.status(400).json(err);
+                return res.status(400).send(err);
               }
-            //   res.send("updated");
+              // res.send({"status": "updated"});
+              return res.json(post);
             }
         );
     }
