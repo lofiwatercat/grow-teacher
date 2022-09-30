@@ -101,19 +101,27 @@ router.post("/",
     }
     const file = req.file;
     // console.log(file);
+    // req.body.items.forEach( el => {
+    //   console.log(JSON.parse(el))
+    // })
+    // console.log(JSON.parse(req.body.items))
+    console.log(req.body.title)
     
           const newPost = new Post({
             title: req.body.title,
             body: req.body.body,
-            items: req.body.items.map(
-                (item) =>
-                  new Item({
+            items: JSON.parse(req.body.items).map(
+              
+                (item) => {
+
+                console.log(JSON.stringify(item))
+                  return ({
                     name: item.name,
                     totalCost: item.totalCost,
                     amount: item.amount,
                     details: item.details,
                     status: false,
-                  })
+                  })}
               ),
             author: req.user._id,
             imageUrl: s3.getSignedUrl('getObject', {
@@ -146,10 +154,32 @@ router.patch(
     
           Post.findOneAndUpdate(
             {id: req.params.id},
-            {all: req.body,
+            {
+              title: req.body.title,
+              body: req.body.body,
+              items: JSON.parse(req.body.items).map(
+
+                (item) => {
+
+                  console.log(JSON.stringify(item))
+                  return ({
+                    name: item.name,
+                    totalCost: item.totalCost,
+                    amount: item.amount,
+                    details: item.details,
+                    status: false,
+                  })
+                }
+              ),
+              author: req.user._id,
+              imageUrl: s3.getSignedUrl('getObject', {
+                Bucket: 'grow-teacher-dev',
+                Key: req.file.key,
+                Expires: null
+              }),
 
             //condition
-             imageUrl: req.location },
+             },
             { new: true, useFindAndModify: false },
             (err, post) => {
               if (err) {

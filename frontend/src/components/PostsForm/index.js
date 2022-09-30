@@ -87,15 +87,14 @@ const PostsForm = () => {
     let copy = newPost;
     copy.items = itemFields;
     // dispatch(createPost(copy));
-    console.log(imageUrl)
 
     const data = new FormData();
     data.append("title", copy.title);
     data.append("body", copy.body);
-    // data.append("items", copy.items);
-    for (let i = 0; i < copy.items.length; i++) {
-      data.append('items[]', copy.items[i])
-    }
+    data.append("items", JSON.stringify(copy.items));
+    // for (let i = 0; i < copy.items.length; i++) {
+    //   data.append('items[]', copy.items[i])
+    // }
     data.append("imageUrl", imageUrl);
     // Display the key/value pairs
     // for (let pair of data.entries()) {

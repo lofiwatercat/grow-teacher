@@ -14,6 +14,8 @@ const PostsForm = () => {
   const sessionUser = useSelector((state) => state.session.user);
   const [itemFields, setItemFields] = useState([
   ]);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const dispatch = useDispatch();
   const history = useHistory();
   const { postId } = useParams()
@@ -70,6 +72,19 @@ const PostsForm = () => {
       status: false,
     };
     setItemFields([...itemFields, newItem]);
+  };
+
+  const handleFile = (e) => {
+    const file = e.currentTarget.files[0];
+    setImageUrl(file);
+
+    const fileReader = new FileReader();
+    fileReader.onloadend = () => {
+      setImagePreview(fileReader.result);
+    };
+    if (file) {
+      fileReader.readAsDataURL(file);
+    }
   };
 
 
@@ -145,6 +160,17 @@ const PostsForm = () => {
               onChange={(e) => setNewPost({ ...newPost, body: e.target.value })}
               required
             />
+            <Button variant="contained" component="label">
+              Upload Image
+              <input
+                type="file"
+                onChange={handleFile}
+                accept=".gif,.jpg,.jpeg,.png,.tiff,.raw"
+                required
+                hidden
+              />
+            </Button>
+
             <h3>Items:</h3>
             {itemFields.map((input, index) => {
               return (
