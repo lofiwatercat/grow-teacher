@@ -18,7 +18,7 @@ import PostsFormEditPage from "./views/PostsFormEditPage";
 import Testing from './components/testing'
 
 function App() {
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCurrentUser()).then(() => setLoaded(true));

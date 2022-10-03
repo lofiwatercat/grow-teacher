@@ -20,7 +20,7 @@ const CommentsForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // debugger
-    dispatch(createComment(comment, postId));
+    dispatch(createComment({...comment, post: postId}, postId));
     setComment(payload);
   };
 

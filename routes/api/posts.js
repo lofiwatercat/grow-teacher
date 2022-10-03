@@ -46,7 +46,7 @@ router.get("/:id", (req, res) => {
         res.cookie("CSRF-TOKEN", csrfToken);
     }
     Post.findById(req.params.id)
-    .populate("comments", "_id author body")
+    .populate("comments")
     .populate("author", "_id username email")
         .then(post => res.json(post))
         .catch(err =>
@@ -149,14 +149,18 @@ router.post('/:id/comments',requireUser, async(req, res, next) => {
     //     return [];
     //   }
     //   post.comments ||= [];
-      const newPost = await Post.findOneAndUpdate({ _id: req.params.id}, {comments: [newComment]})
+    let comments = post.comments;
+    comments.push(newComment);
+    // console.log(comments)
+      const newPost = await Post.findOneAndUpdate({ _id: req.params.id}, {comments})
+
 
     //   newPost.comments.push(newComment)
     //   await newPost.save()
     //   console.log(newPost, 'this is the post');
     //   debugger;
 
-      comment = await newComment.populate('author', 'username');
+      comment = await newComment.populate('post', '_id');
       return res.json(comment);
     }
     catch(err) {
@@ -191,7 +195,7 @@ router.delete('/:id/comments/:commentId', requireUser, (req, res) => {
     }
         Comment.findById(req.params.commentId)
         .then(comment => {
-          if (comment.user.toString() === req.user.id){
+          if (comment.author.toString() === req.user.id){
             Comment.findByIdAndRemove(req.params.commentId, (err, comment) => {
               return res.status(200).json(`sucessfully deleted comment`)
             })

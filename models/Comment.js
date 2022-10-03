@@ -28,11 +28,11 @@ const commentSchema = new Schema({
         required: true,
         ref: "User"
     },
-    // post: {
-    //     type: ObjectId,
-    //     required: true,
-    //     ref: "Post"
-    // },
+    post: {
+        type: ObjectId,
+        required: true,
+        ref: "Post"
+    },
     body: {
         type: String,
         required: true

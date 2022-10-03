@@ -13,6 +13,7 @@ import PostItem from "../PostItem";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CommentsIndex from "../CommentsIndex";
+import { getComments } from "../../store/reducers/comments_reducer";
 
 const PostsShow = () => {
   const sessionUser = useSelector((state) => state.session.user);
@@ -21,6 +22,7 @@ const PostsShow = () => {
   const history = useHistory();
 
   const post = useSelector(getPost(postId));
+  const comments = useSelector(getComments);
   // Progress bar status
   const [currentProgress, setCurrentProgress] = useState(0);
 
@@ -35,14 +37,14 @@ const PostsShow = () => {
         amount += arrayItem.totalCost;
       }
     }
-    console.log(amount);
+    // console.log(amount);
     return amount;
   };
 
   useEffect(() => {
     setCurrentProgress(calcCurrentProgress());
     dispatch(fetchPost(postId));
-  }, [currentProgress]);
+  }, [currentProgress, postId]);
 
   // Exit out for first render
   if (!post?.author) return null;
@@ -68,8 +70,6 @@ const PostsShow = () => {
     history.push(`/posts/${postId}/edit`);
   };
 
-  let comments = {};
-  console.log(post);
   return (
     <>
       <div id="post-show">
@@ -108,7 +108,7 @@ const PostsShow = () => {
             })}
           </div>
         </div>
-        {sessionUser && <CommentsIndex comments={comments}/>}
+        {sessionUser && comments && <CommentsIndex comments={comments}/>}
       </div>
     </>
   );

@@ -1,13 +1,13 @@
 import CommentsForm from "../CommentsForm";
 import CommentsIndexItem from "../CommentsIndexItem";
 
-const CommentsIndex = () => {
+const CommentsIndex = ({comments}) => {
   return (
     <>
     <div className="comments-container">
-      {/* {comments && comments.map(comment => {
+      {comments && comments.map(comment => {
         return <CommentsIndexItem comment={comment}/>
-      })} */}
+      })}
       <CommentsForm />
     </div>
     </>
