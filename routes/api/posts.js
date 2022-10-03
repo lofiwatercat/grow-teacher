@@ -100,7 +100,6 @@ router.post("/",
       res.cookie("CSRF-TOKEN", csrfToken);
     }
     const file = req.file;
-    // console.log(file);
     // req.body.items.forEach( el => {
     //   console.log(JSON.parse(el))
     // })
@@ -144,52 +143,27 @@ router.patch(
   "/:id",
   requireUser,
   upload.single("imageUrl"),
-  async(req, res) => {
+  async (req, res) => {
     if (!isProduction) {
       const csrfToken = req.csrfToken();
       res.cookie("CSRF-TOKEN", csrfToken);
     }
-// console.log(req, 'req')
+    console.log("REQUEST", req.body)
     // const file = req.file;
-    
-          Post.findOneAndUpdate(
-            {id: req.params.id},
-            {
-              title: req.body.title,
-              body: req.body.body,
-              items: JSON.parse(req.body.items).map(
 
-                (item) => {
-
-                  console.log(JSON.stringify(item))
-                  return ({
-                    name: item.name,
-                    totalCost: item.totalCost,
-                    amount: item.amount,
-                    details: item.details,
-                    status: false,
-                  })
-                }
-              ),
-              author: req.user._id,
-              imageUrl: s3.getSignedUrl('getObject', {
-                Bucket: 'grow-teacher-dev',
-                Key: req.file.key,
-                Expires: null
-              }),
-
-            //condition
-             },
-            { new: true, useFindAndModify: false },
-            (err, post) => {
-              if (err) {
-                return res.status(400).send(err);
-              }
-              // res.send({"status": "updated"});
-              return res.json(post);
-            }
-        );
-    }
+    Post.findOneAndUpdate(
+      { _id: req.params.id },
+      req.body,
+      { new: true, useFindAndModify: false },
+      (post, err) => {
+        if (err) {
+          return res.status(400).send(err);
+        }
+        // res.send({"status": "updated"});
+        return res.json(post);
+      }
+    );
+  }
 );
 
 // smal change

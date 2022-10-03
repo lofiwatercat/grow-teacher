@@ -23,7 +23,7 @@ const PostItem = ({ currentProgress, setCurrentProgress, post, item, authorId}) 
         }
       }
     }
-    dispatch(updatePost(post))
+    dispatch(updatePost(post, post.imageUrl))
   }, [itemStatus])
 
   let statusText = "needed"

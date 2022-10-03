@@ -108,7 +108,7 @@ const PostsForm = () => {
     // thus, have to make a copy of newPost, and reassign the items field
     let copy = newPost;
     copy.items = itemFields;
-    let postId = await dispatch(updatePost(copy));
+    let postId = await dispatch(updatePost(copy, imageUrl));
     history.push(`/posts/${post._id}`)
   };
 

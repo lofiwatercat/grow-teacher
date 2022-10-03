@@ -101,7 +101,7 @@ const PostsForm = () => {
     //   console.log(pair[0] + ", " + pair[1]);
     // }
 
-    let postId = await dispatch(createPostWithImage(data));
+    let postId = await dispatch(createPostWithImage(data, imageUrl));
     if (postId === -1) {
       setShowErrors(true);
     } else {

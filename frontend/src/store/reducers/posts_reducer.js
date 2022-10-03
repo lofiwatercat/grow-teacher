@@ -80,10 +80,11 @@ export const createPostWithImage = (data) => async (dispatch) => {
   }
 };
 
-export const createPost = (post) => async (dispatch) => {
+export const createPost = (post, imageUrl) => async (dispatch) => {
   const res = await jwtFetch(`/api/posts`, {
     method: "POST",
     body: JSON.stringify(post),
+    file: imageUrl
   }).catch(res => {return -1});
 
   if (res.ok) {
@@ -95,10 +96,12 @@ export const createPost = (post) => async (dispatch) => {
   }
 };
 
-export const updatePost = (post) => async (dispatch) => {
+export const updatePost = (post, imageUrl) => async (dispatch) => {
   const res = await jwtFetch(`/api/posts/${post._id}`, {
     method: "PATCH",
     body: JSON.stringify(post),
+    file: imageUrl,
+    test: "Hello there"
   });
 
   if (res.ok) {
