@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
-import { updatePost } from "../../store/reducers/posts_reducer"
+import { updatePost, fetchPost } from "../../store/reducers/posts_reducer"
 
 const PostItem = ({ currentProgress, setCurrentProgress, post, item, authorId}) => {
   let currentUserId = useSelector(state => state.session.user._id)
@@ -24,6 +24,7 @@ const PostItem = ({ currentProgress, setCurrentProgress, post, item, authorId}) 
       }
     }
     dispatch(updatePost(post, post.imageUrl))
+    dispatch(fetchPost(post._id))
   }, [itemStatus])
 
   let statusText = "needed"
