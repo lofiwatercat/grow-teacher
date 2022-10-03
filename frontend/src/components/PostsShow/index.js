@@ -14,6 +14,7 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CommentsIndex from "../CommentsIndex";
 import { getComments } from "../../store/reducers/comments_reducer";
+import placeholder from "../../assets/images/image-placeholder.png";
 
 const PostsShow = () => {
   const sessionUser = useSelector((state) => state.session.user);
@@ -73,16 +74,20 @@ const PostsShow = () => {
   return (
     <>
       <div id="post-show">
+        <div className="post-show-title">
+          <h1>{post.title}</h1>
+        </div>
         <div id="post-show-container">
           <div id="post-show-left">
-            <p>POST IMAGE HERE</p>
+            <div className="post-image-container">
+              <img className="post-image" src={placeholder} alt="photo" />
+            </div>
             <p>{post.body}</p>
             <button onClick={handleDelete}>DELETE POST</button>
             <button onClick={handleEdit}>EDIT POST</button>
           </div>
 
           <div id="post-show-right">
-            <h2>{post.title}</h2>
             <h2>
               ${currentProgress} <span>raised of ${totalCost}</span>
             </h2>
@@ -108,7 +113,12 @@ const PostsShow = () => {
             })}
           </div>
         </div>
-        {sessionUser && comments && <CommentsIndex comments={comments}/>}
+        <div className="post-show-bottom">
+          <div className="post-show-author">
+            <h6>Author</h6>
+          </div>
+        {sessionUser && comments && <CommentsIndex comments={comments} />}
+        </div>
       </div>
     </>
   );
