@@ -35,11 +35,10 @@ const CommentsIndexItem = ({ comment }) => {
     setShowDelete(false);
   };
 
-  const close = () => {};
-
-  const handleDelete = (e) => {
-    e.preventDefault();
-    dispatch(deleteComment(comment._id, postId));
+  const handleClose = () => {
+    setShowEdit(false);
+    setShowDelete(false);
+    setBody(comment.body);
   };
 
   return (
@@ -62,6 +61,7 @@ const CommentsIndexItem = ({ comment }) => {
             title={showEdit ? "Edit Comment" : "Delete Comment"}
             intent={showDelete ? "danger" : ""}
             preventBodyScrolling
+            onCloseComplete={() => handleClose()}
             confirmLabel={showEdit ? "Edit" : "Delete"}
             onConfirm={() => handleSubmit()}
           >
