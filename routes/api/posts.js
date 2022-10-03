@@ -148,14 +148,13 @@ router.patch(
       const csrfToken = req.csrfToken();
       res.cookie("CSRF-TOKEN", csrfToken);
     }
-    console.log("REQUEST", req.body)
     // const file = req.file;
 
     Post.findOneAndUpdate(
       { _id: req.params.id },
       req.body,
       { new: true, useFindAndModify: false },
-      (post, err) => {
+      (err, post) => {
         if (err) {
           return res.status(400).send(err);
         }
