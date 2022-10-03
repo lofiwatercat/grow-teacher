@@ -6,6 +6,7 @@ import {
 } from "../../store/reducers/comments_reducer";
 import { useParams } from "react-router-dom";
 import { Pane, Dialog } from "evergreen-ui";
+import "./CommentsIndexItem.scss";
 
 const CommentsIndexItem = ({ comment }) => {
   const sessionUser = useSelector((state) => state.session.user);
@@ -65,11 +66,15 @@ const CommentsIndexItem = ({ comment }) => {
             onConfirm={() => handleSubmit()}
           >
             {showEdit ? (
-              <form onSubmit={handleSubmit}>
-                <input type="text" value={body} onChange={handleChange} />
-              </form>
+              <div className="comment-modal">
+                <form onSubmit={handleSubmit}>
+                  <input type="text" value={body} onChange={handleChange} />
+                </form>
+              </div>
             ) : (
-              "Are you sure you want to delete this comment?"
+              <div className="comment-modal">
+                Are you sure you want to delete this comment?
+              </div>
             )}
           </Dialog>
         </Pane>
