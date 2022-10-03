@@ -1,39 +1,45 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { deleteComment, updateComment } from "../../store/reducers/comments_reducer";
+import {
+  deleteComment,
+  updateComment,
+} from "../../store/reducers/comments_reducer";
 import { useParams } from "react-router-dom";
+import { Pane, Dialog } from "evergreen-ui";
 
 const CommentsIndexItem = ({ comment }) => {
   const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
-  const [showForm, setShowForm] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
   const [body, setBody] = useState(comment.body);
   const { postId } = useParams();
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    setShowForm(true);
-  };
-
-  const handleChange = (e) =>{
+  const handleChange = (e) => {
     e.preventDefault();
     setBody(e.target.value);
-  }
+  };
+
+  const handleSubmit = () => {
+    if (showEdit) {
+      if (body.length <= 1) {
+        window.alert("body must be at least 2 characters");
+      } else {
+        dispatch(updateComment({ ...comment, body }, postId));
+      }
+    } else {
+      dispatch(deleteComment(comment._id, postId));
+    }
+    setShowEdit(false);
+    setShowDelete(false);
+  };
+
+  const close = () => {};
 
   const handleDelete = (e) => {
     e.preventDefault();
     dispatch(deleteComment(comment._id, postId));
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (body.length <= 1) {
-      window.alert("body must be at least 2 characters")
-    } else {
-      dispatch(updateComment({...comment, body}, postId))
-    }
-    setShowForm(false);
-  }
+  };
 
   return (
     <>
@@ -42,16 +48,32 @@ const CommentsIndexItem = ({ comment }) => {
         <div>
           {sessionUser && sessionUser._id === comment.author && (
             <>
-            <button onClick={handleClick}>Edit</button>
-            <button onClick={handleDelete}>Delete</button>
+              <button onClick={() => setShowEdit(true)}>Edit</button>
+              <button onClick={() => setShowDelete(true)}>Delete</button>
             </>
           )}
-          {showForm && <form onSubmit={handleSubmit}>
-            <input type="text" value={body} onChange={handleChange} />
-            <button>Submit</button>
-            </form>}
         </div>
       </div>
+      {(showEdit || showDelete) && (
+        <Pane>
+          <Dialog
+            isShown={showEdit || showDelete}
+            title={showEdit ? "Edit Comment" : "Delete Comment"}
+            intent={showDelete ? "danger" : ""}
+            preventBodyScrolling
+            confirmLabel={showEdit ? "Edit" : "Delete"}
+            onConfirm={() => handleSubmit()}
+          >
+            {showEdit ? (
+              <form onSubmit={handleSubmit}>
+                <input type="text" value={body} onChange={handleChange} />
+              </form>
+            ) : (
+              "Are you sure you want to delete this comment?"
+            )}
+          </Dialog>
+        </Pane>
+      )}
     </>
   );
 };

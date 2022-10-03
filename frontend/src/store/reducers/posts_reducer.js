@@ -1,6 +1,10 @@
 import jwtFetch from "../jwt";
 import { jwtImageFetch } from "../jwt";
-import { RECEIVE_COMMENT, REMOVE_COMMENT, UPDATE_COMMENT } from "./comments_reducer";
+import {
+  RECEIVE_COMMENT,
+  REMOVE_COMMENT,
+  UPDATE_COMMENT,
+} from "./comments_reducer";
 
 export const RECEIVE_POST = "posts/RECEIVE_POST";
 export const RECEIVE_POSTS = "posts/RECEIVE_POSTS";
@@ -134,9 +138,7 @@ const postsReducer = (state = {}, action) => {
       let comments = nextState[currentComment.post].comments;
       for (let i = 0; i < comments.length; i++) {
         if (currentComment._id === comments[i]._id) {
-          console.log("old: ", comments[i].body);
           comments[i] = currentComment;
-          console.log("new :", comments[i].body);
         }
       }
       return nextState;

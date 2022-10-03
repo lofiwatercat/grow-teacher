@@ -100,9 +100,9 @@ const commentsReducer = (state = {}, action) => {
       return nextState;
     case RECEIVE_POST:
       nextState = {};
-      action.post.comments.forEach(comment => {
-        return nextState[comment._id] = comment;
-      })
+      action.post.comments.forEach((comment) => {
+        return (nextState[comment._id] = comment);
+      });
       return nextState;
     default:
       return nextState;
