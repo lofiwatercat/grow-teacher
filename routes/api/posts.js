@@ -49,7 +49,9 @@ router.get("/:id", (req, res) => {
     let newPost = Post.findById(req.params.id)
 
 
-    newPost.populate("comments.comment.author")
+    newPost.populate("comments")
+    .populate("comments.comment.author")
+    .populate("author", "_id username email")
         .then(post => res.json(post))
         .catch(err =>
             res.status(404).json({ nopostfound: 'No post found with that ID' })
@@ -143,7 +145,6 @@ router.post('/:id/comments',requireUser, async(req, res, next) => {
         author: req.user.id,
         replies: req.body.replies,
       });
-      newComment.populate('author', '_id username email createdAt updatedAt');
       newComment.post = post;
       await newComment.save();
     //   console.log(comment, "this is the comment")
