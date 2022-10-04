@@ -126,7 +126,7 @@ router.post("/",
             imageUrl: s3.getSignedUrl('getObject', {
                 Bucket: 'grow-teacher-dev',
                 Key: req.file.key,
-                Expires: null
+                // Expires: null
             }),
           });
 
@@ -268,28 +268,39 @@ router.delete("/:id/comment/:commentId", requireUser, (req, res) => {
 });
 
 //reply to a comment
-router.post("/:id/comments/:commentId", requireUser, async (req, res, next) => {
-  if (!isProduction) {
-    const csrfToken = req.csrfToken();
-    res.cookie("CSRF-TOKEN", csrfToken);
-  }
-  try {
-    const newComment = new Comment({
-      body: req.body.body,
-      post: req.params.id,
-      author: req.user.id,
-      replies: req.body.replies,
-    });
+// router.post("/:id/comments/:commentId", requireUser, async (req, res, next) => {
+//   if (!isProduction) {
+//     const csrfToken = req.csrfToken();
+//     res.cookie("CSRF-TOKEN", csrfToken);
+//   }
+//   try {
+//     const newComment = new Comment({
+//       body: req.body.body,
+//       post: req.params.id,
+//       author: req.user.id,
+//       replies: req.body.replies,
+//     });
 
-    let comment = await newComment.save();
-    comment = await comment
-      .sort({ createdAt: -1 })
-      .populate("author", "username");
-    return res.json(comment);
-  } catch (err) {
-    next(err);
-  }
-});
+//     let comment = await newComment.save();
+//     comment = await comment
+//       .sort({ createdAt: -1 })
+//       .populate("author", "username");
+//     return res.json(comment);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 //reply to a comment
+
+// `/api/posts/search/${query}`
+
+router.get('/search/:query', (req, res) => {
+  // console.log(req.params.query, 'this should be the query')
+  Post.find({ "title" : { $regex: req.params.query, $options: 'i' } })
+      .then(posts => {
+          res.json(formatPosts(posts));
+      })
+      .catch(err => res.status(404).json( { nopostsfound: 'No posts found with that query'}));
+})
 
 module.exports = router;
