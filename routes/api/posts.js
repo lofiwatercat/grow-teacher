@@ -22,7 +22,9 @@ const upload = multer({
         // },
         key: function(req, file, cb) {
             console.log(file);
-            cb(null, `image-${Date.now()}.jpeg`); //add timestamps to make sure we uploading even if it's the same image type
+            //cb(null, `image-${Date.now()}.jpeg`); //add timestamps to make sure we uploading even if it's the same image type
+            cb(null, `image.jpeg`); //add timestamps to make sure we uploading even if it's the same image type
+            
         },
     }),
 });
@@ -126,7 +128,7 @@ router.post("/",
             imageUrl: s3.getSignedUrl('getObject', {
                 Bucket: 'grow-teacher-dev',
                 Key: req.file.key,
-                Expires: null
+                Expires: 0
             }),
           });
 
