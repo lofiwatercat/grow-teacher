@@ -46,9 +46,10 @@ router.get("/:id", (req, res) => {
         const csrfToken = req.csrfToken();
         res.cookie("CSRF-TOKEN", csrfToken);
     }
-    Post.findById(req.params.id)
-    .populate("comments")
-    .populate("author", "_id username email")
+    let newPost = Post.findById(req.params.id)
+
+
+    newPost.populate("comments.comment.author")
         .then(post => res.json(post))
         .catch(err =>
             res.status(404).json({ nopostfound: 'No post found with that ID' })
