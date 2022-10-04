@@ -39,23 +39,35 @@ router.get("/", async(req, res) => {
         )
         .catch(err => res.status(404).json({nopostsfound: 'No posts found'}));
 })
-
 // get one post
 router.get("/:id", (req, res) => {
-    if (!isProduction) {
-        const csrfToken = req.csrfToken();
-        res.cookie("CSRF-TOKEN", csrfToken);
-    }
-    let newPost = Post.findById(req.params.id)
+  if (!isProduction) {
+    const csrfToken = req.csrfToken();
+    res.cookie("CSRF-TOKEN", csrfToken);
+  }
+  let newPost = Post.findById(req.params.id)
 
-
-    newPost.populate("comments")
-    .populate("comments.comment.author")
+  newPost
     .populate("author", "_id username email")
-        .then(post => res.json(post))
-        .catch(err =>
-            res.status(404).json({ nopostfound: 'No post found with that ID' })
-        );
+    .populate("comments")
+    .then(post => {
+      let newPost = post
+      newPost.comments.forEach((comment, ind) => {
+        let newComment = Comment.findById(comment._id)
+        newComment
+          .populate("author")
+          .then(
+            comment => {
+              newPost.comments[ind] = comment
+            }
+          )
+      })
+      console.log("NEWPOST", newPost)
+      return res.json(newPost)
+    })
+    .catch(err =>
+      res.status(404).json({ nopostfound: 'No post found with that ID' })
+    );
 })
 
 //post a post
@@ -71,6 +83,7 @@ router.post('/',requireUser, validatePostInput, async(req, res, next) => {
         items: req.body.items,
         author: req.user._id
       });
+
 
       let post = await newPost.save();
       post = await post.populate('author', '_id username email');
@@ -129,7 +142,7 @@ router.get('/user/:user_id', (req, res) => {
 });
 
 
-//create a comment
+// create a comment
 router.post('/:id/comments',requireUser, async(req, res, next) => {
     if (!isProduction) {
         const csrfToken = req.csrfToken();
@@ -154,7 +167,7 @@ router.post('/:id/comments',requireUser, async(req, res, next) => {
     //   }
     //   post.comments ||= [];
     let comments = post.comments;
-    comments.push(newComment);
+    comments.push(newComment._id);
     // console.log(comments)
       const newPost = await Post.findOneAndUpdate({ _id: req.params.id}, {comments})
 
