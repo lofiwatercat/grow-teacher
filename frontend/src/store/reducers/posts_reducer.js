@@ -120,6 +120,12 @@ export const deletePost = (postId) => async (dispatch) => {
     return dispatch(removePost(postId));
   }
 };
+//serachBar
+export const fetchPostsBySearch = query => dispatch => {
+  return listingApiUtils.fetchSearchListings(query)
+          .then(listings => dispatch(receivePost(posts.data)))
+}
+//searchBar
 
 const postsReducer = (state = {}, action) => {
   Object.freeze(state);
