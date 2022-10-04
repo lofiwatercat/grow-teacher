@@ -129,7 +129,13 @@ table {
 }
 body {
   background-color: #f3f5f6 !important;
+  font-family: "ProductSans", "Trebuchet MS", "Lucida Sans Unicode",
+  "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
 #root {
   overflow: visible;
+}
+@font-face {
+  font-family: "ProductSans";
+  src: url(../src/assets/fonts/ProductSans-Regular.ttf);
 }
