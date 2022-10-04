@@ -11,6 +11,7 @@ import { CgProfile } from "react-icons/cg";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import "./CommentsIndexItem.scss";
+import { cuteTimeAgo } from "../../utils/dateUtil";
 
 const CommentsIndexItem = ({ comment }) => {
   const sessionUser = useSelector((state) => state.session.user);
@@ -50,10 +51,13 @@ const CommentsIndexItem = ({ comment }) => {
       <div className="comments-index-item">
         <div className="comments-item-header">
           <div className="comments-item-pic">
-            <CgProfile width={"100%"} fontSize={"2.5rem"} />
+            <CgProfile width={"100%"} fontSize={"2.25rem"} />
           </div>
           <div className="comments-author">
-            <p>username</p>
+            <div className="comments-author-inner">
+              <p>username</p>
+              <p className="comments-time">{cuteTimeAgo(comment.updatedAt)}</p>
+            </div>
             <div className="comments-item-buttons">
               {sessionUser && sessionUser._id === comment.author && (
                 <>
