@@ -18,7 +18,9 @@
   margin-top: 1%;
   width: 100%;
   display: flex;
+  justify-content: space-between;
 }
+
 #post-show-left {
   background-color: yellow;
   width: 65%;
@@ -36,6 +38,10 @@
 }
 
 #post-show-right {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 60px;
+  align-self: flex-start;
   background-color: white;
   margin-left: 1.5rem;
   border-radius: 15px;
