@@ -30,6 +30,7 @@ router.get("/", async(req, res) => {
                 p.author_name = await User.findOne({ _id: post.author }).then((res) => { 
                     return res.username;
                 })
+                p.comments = post.comments
                 p._id = post._id;
                 return p;
             }))
