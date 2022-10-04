@@ -28,16 +28,16 @@ const CommentsIndexItem = ({ comment }) => {
 
   const handleSubmit = () => {
     if (showEdit) {
-      if (body.length <= 1) {
-        window.alert("body must be at least 2 characters");
-      } else {
+      if (!(body.length < 2 || body.length > 255)) {
         dispatch(updateComment({ ...comment, body }, postId));
+        setShowEdit(false);
+        setShowDelete(false);
       }
     } else {
       dispatch(deleteComment(comment._id, postId));
+      setShowEdit(false);
+      setShowDelete(false);
     }
-    setShowEdit(false);
-    setShowDelete(false);
   };
 
   const handleClose = () => {
@@ -92,8 +92,8 @@ const CommentsIndexItem = ({ comment }) => {
                 <TextareaField
                   className="comment-edit-form"
                   validationMessage={
-                    body.length <= 1
-                      ? "Body must be at least 2 characters"
+                    body.length < 2 || body.length > 255
+                      ? "Body must be between 2 and 255 characters"
                       : null
                   }
                   label="Please type your new comment"

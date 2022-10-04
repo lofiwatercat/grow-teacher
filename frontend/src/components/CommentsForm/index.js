@@ -19,9 +19,10 @@ const CommentsForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // debugger
-    dispatch(createComment({...comment, post: postId}, postId));
-    setComment(payload);
+    if (comment.body.length >= 2 && comment.body.length <= 255) {
+      dispatch(createComment({ ...comment, post: postId }, postId));
+      setComment(payload);
+    }
   };
 
   return (

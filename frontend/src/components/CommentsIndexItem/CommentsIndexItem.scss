@@ -17,7 +17,7 @@
 
 .comments-item-header {
   display: flex;
-  height: 3rem;
+  height: 2.5rem;
   width: 100%;
 }
 
@@ -51,6 +51,7 @@
   font-weight: 0;
   width: 90%;
   margin-left: calc(2.5rem + 5px);
+  font-size: 1rem;
 }
 
 .comments-item-buttons {
