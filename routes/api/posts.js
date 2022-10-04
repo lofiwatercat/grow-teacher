@@ -142,6 +142,7 @@ router.post('/:id/comments',requireUser, async(req, res, next) => {
         author: req.user.id,
         replies: req.body.replies,
       });
+      newComment.populate('author', '_id username email createdAt updatedAt');
       newComment.post = post;
       await newComment.save();
     //   console.log(comment, "this is the comment")

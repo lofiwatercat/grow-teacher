@@ -46,7 +46,7 @@ const CommentsIndexItem = ({ comment }) => {
       <div className="comments-index-item">
         <p>{comment.body}</p>
         <div>
-          {sessionUser && sessionUser._id === comment.author && (
+          {sessionUser && sessionUser._id === comment.author._id && (
             <>
               <button onClick={() => setShowEdit(true)}>Edit</button>
               <button onClick={() => setShowDelete(true)}>Delete</button>
