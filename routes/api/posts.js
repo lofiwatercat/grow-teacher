@@ -292,15 +292,20 @@ router.delete("/:id/comment/:commentId", requireUser, (req, res) => {
 // });
 //reply to a comment
 
-// `/api/posts/search/${query}`
 
+//searchBar
+// `/api/posts/search/${query}`
 router.get('/search/:query', (req, res) => {
   // console.log(req.params.query, 'this should be the query')
-  Post.find({ "title" : { $regex: req.params.query, $options: 'i' } })
+  Post.find({ $or: [{ "title": { $regex: req.params.query, $options: 'i' }},
+                    { "body": { $regex: req.params.query, $options: 'i' }},
+                    { "item.name": { $regex: req.params.query, $options: 'i' }}]})
       .then(posts => {
-          res.json(formatPosts(posts));
+          res.json(posts);
       })
       .catch(err => res.status(404).json( { nopostsfound: 'No posts found with that query'}));
 })
+//searchBar
+
 
 module.exports = router;
