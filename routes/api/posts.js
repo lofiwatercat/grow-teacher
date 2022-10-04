@@ -62,7 +62,9 @@ router.get("/:id", (req, res) => {
             }
           )
       })
-      console.log("NEWPOST", newPost)
+      console.log("newPost", newPost)
+      // FUCK THIS ITS NOT MODIFYING THE FUCKING OBJECT FUCK FUCK I HATE THIS
+      // SOMEONE PLEASE FIX THIS PIECE OF SHIT
       return res.json(newPost)
     })
     .catch(err =>
