@@ -51,21 +51,20 @@ router.get("/:id", (req, res) => {
     .populate("author", "_id username email")
     .populate("comments")
     .then(post => {
-      let newPost = post
-      newPost.comments.forEach((comment, ind) => {
+      let finalPost = post.toJSON();
+      finalPost.comments.forEach((comment, ind) => {
         let newComment = Comment.findById(comment._id)
         newComment
-          .populate("author")
+          .populate("author", "username")
           .then(
             comment => {
-              newPost.comments[ind] = comment
+              finalPost.comments[ind] = comment
+              console.log("POST COMMENTS", finalPost.comments)
             }
           )
       })
-      console.log("newPost", newPost)
-      // FUCK THIS ITS NOT MODIFYING THE FUCKING OBJECT FUCK FUCK I HATE THIS
-      // SOMEONE PLEASE FIX THIS PIECE OF SHIT
-      return res.json(newPost)
+      console.log("FINALPOST", finalPost.comments)
+      return res.send(finalPost)
     })
     .catch(err =>
       res.status(404).json({ nopostfound: 'No post found with that ID' })
