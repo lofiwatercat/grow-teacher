@@ -36,7 +36,7 @@ const CommentsForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (comment.body.length >= 2 && comment.body.length <= 255) {
+    if (comment.body.length >= 2 && comment.body.length <= 500) {
       dispatch(createComment({ ...comment, post: postId }, postId));
       setComment(payload);
     }
@@ -47,8 +47,8 @@ const CommentsForm = () => {
       <div className="comments-form">
         <TextareaField
           validationMessage={
-            comment.body.length < 2 || comment.body.length > 255
-              ? "Comment must be between 2 and 255 characters"
+            comment.body.length < 2 || comment.body.length > 500
+              ? "Comment must be between 2 and 500 characters"
               : null
           }
           label="Have something to contribute?"

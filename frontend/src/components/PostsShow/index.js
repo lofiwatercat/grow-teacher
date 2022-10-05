@@ -14,7 +14,6 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CommentsIndex from "../CommentsIndex";
 import { getComments } from "../../store/reducers/comments_reducer";
-import placeholder from "../../assets/images/image-placeholder.png";
 
 const PostsShow = () => {
   const sessionUser = useSelector((state) => state.session.user);
@@ -80,7 +79,7 @@ const PostsShow = () => {
         <div className="post-show-container">
           <div className="post-show-left">
             <div className="post-image-container">
-              <img className="post-image" src={post.imageUrl} alt="photo" />
+              <img className="post-image" src={post.imageUrl} alt="post" />
             </div>
             <p>{post.body}</p>
             <button onClick={handleDelete}>DELETE POST</button>

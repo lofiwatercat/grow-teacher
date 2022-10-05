@@ -54,7 +54,7 @@ function NavBar() {
       <header className="navbar">
         <div className="navbar-left">
           <p>
-            <Link to="/posts" className="logo">
+            <Link to="/" className="logo">
               <img
                 className="logo-image"
                 height={"24px"}

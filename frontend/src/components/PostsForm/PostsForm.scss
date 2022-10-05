@@ -4,20 +4,65 @@
   margin: auto;
   margin-top: 110px;
   min-width: 850px;
-  background-color: #FFED91;
+  background-color: white;
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0px 0px 3px 3px gainsboro;
+  display: flex;
+  flex-direction: column;
 }
 
-.posts-form {
+.posts-form-header {
+  width: 100%;
+}
+
+.posts-form-topic-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.posts-form-topic {
+  width: 50%;
+  display: block;
+}
+
+.posts-form-title {
+  width: 100%;
+}
+
+.posts-form-body {
+  padding: 30px;
+  font-size: 1rem;
+  font: inherit;
+  min-height: 350px;
+}
+
+.posts-form-image-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.posts-form-image-container {
+  width: 50%;
   height: 100%;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.posts-form-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 500px;
+  max-height: 500px;
 }
 
 .item-container {
   display: flex;
   flex-direction: row;
-
   align-items: center;
   justify-content: space-between;
 }
@@ -39,4 +84,3 @@
   margin-top: 15px;
   margin-left: 10px;
 }
-
