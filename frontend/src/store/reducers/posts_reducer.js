@@ -102,7 +102,6 @@ export const createPost = (post, imageUrl) => async (dispatch) => {
 };
 
 export const updatePost = (post, imageUrl) => async (dispatch) => {
-  // debugger
   const res = await jwtFetch(`/api/posts/${post._id}`, {
     method: "PATCH",
     body: JSON.stringify(post),
@@ -115,6 +114,14 @@ export const updatePost = (post, imageUrl) => async (dispatch) => {
     return newPost;
   }
 };
+
+export const updatePostNoDispatch = (post, imageUrl) => async (dispatch) => {
+  const res = await jwtFetch(`/api/posts/${post._id}`, {
+    method: "PATCH",
+    body: JSON.stringify(post),
+    file: imageUrl,
+  });
+}
 
 export const deletePost = (postId) => async (dispatch) => {
   const res = await jwtFetch(`/api/posts/${postId}`, {

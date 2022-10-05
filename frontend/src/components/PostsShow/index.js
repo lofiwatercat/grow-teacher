@@ -42,10 +42,16 @@ const PostsShow = () => {
     return amount;
   };
 
+
+  // Load the post
   useEffect(() => {
-    setCurrentProgress(calcCurrentProgress());
     dispatch(fetchPost(postId));
-  }, [currentProgress, postId]);
+  }, []);
+
+  // Calculate current progress when post is loaded
+  useEffect( () => {
+    setCurrentProgress(calcCurrentProgress());
+  }, [post])
 
   // Exit out for first render
   if (!post?.author) return null;
