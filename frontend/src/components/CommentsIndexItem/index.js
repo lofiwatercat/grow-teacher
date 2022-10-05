@@ -55,7 +55,7 @@ const CommentsIndexItem = ({ comment }) => {
           </div>
           <div className="comments-author">
             <div className="comments-author-inner">
-              <p>username</p>
+              <p>{comment.username}</p>
               <p className="comments-time">{cuteTimeAgo(comment.updatedAt)}</p>
             </div>
             <div className="comments-item-buttons">
