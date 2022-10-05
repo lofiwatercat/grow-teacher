@@ -39,6 +39,7 @@ router.get("/", async(req, res) => {
         )
         .catch(err => res.status(404).json({nopostsfound: 'No posts found'}));
 })
+
 // get one post
 router.get("/:id", (req, res) => {
   if (!isProduction) {
@@ -51,20 +52,7 @@ router.get("/:id", (req, res) => {
     .populate("author", "_id username email")
     .populate("comments")
     .then(post => {
-      let finalPost = post.toJSON();
-      finalPost.comments.forEach((comment, ind) => {
-        let newComment = Comment.findById(comment._id)
-        newComment
-          .populate("author", "username")
-          .then(
-            comment => {
-              finalPost.comments[ind] = comment
-              console.log("POST COMMENTS", finalPost.comments)
-            }
-          )
-      })
-      console.log("FINALPOST", finalPost.comments)
-      return res.send(finalPost)
+      return res.json(post)
     })
     .catch(err =>
       res.status(404).json({ nopostfound: 'No post found with that ID' })
@@ -144,87 +132,80 @@ router.get('/user/:user_id', (req, res) => {
 
 
 // create a comment
-router.post('/:id/comments',requireUser, async(req, res, next) => {
-    if (!isProduction) {
-        const csrfToken = req.csrfToken();
-        res.cookie("CSRF-TOKEN", csrfToken);
-    }
-    //find a post
-    // console.log("taylor swift", req.body.body)
-    const post = await Post.findOne({ _id: req.params.id})
-    try {
-        const newComment = new Comment({
-        body: req.body.body,
-        post: req.params.id,
-        author: req.user.id,
-        replies: req.body.replies,
-      });
-      newComment.post = post;
-      await newComment.save();
-    //   console.log(comment, "this is the comment")
-      //associate post w/ comment
-    //   if(!post.comment) {
-    //     return [];
-    //   }
-    //   post.comments ||= [];
+router.post('/:id/comments', requireUser, async (req, res, next) => {
+  if (!isProduction) {
+    const csrfToken = req.csrfToken();
+    res.cookie("CSRF-TOKEN", csrfToken);
+  }
+
+  const post = await Post.findOne({ _id: req.params.id })
+  // Make the new comment with the request information
+  try {
+    const newComment = new Comment({
+      body: req.body.body,
+      post: req.params.id,
+      author: req.user.id,
+      replies: req.body.replies,
+      username: req.user.username
+    });
+    newComment.post = post;
+    await newComment.save();
     let comments = post.comments;
     comments.push(newComment._id);
     // console.log(comments)
-      const newPost = await Post.findOneAndUpdate({ _id: req.params.id}, {comments})
+    const newPost = await Post.findOneAndUpdate({ _id: req.params.id }, { comments })
 
 
-    //   newPost.comments.push(newComment)
-    //   await newPost.save()
-    //   console.log(newPost, 'this is the post');
-    //   debugger;
 
-      comment = await newComment.populate('post', '_id');
-      return res.json(comment);
-    }
-    catch(err) {
-      next(err);
-    }
+    comment = await newComment.populate('post', '_id');
+    return res.json(comment);
   }
+  catch (err) {
+    next(err);
+  }
+}
 )
+
 /////read a comment(don't know if you'll need that one)
 router.get('/:id/comments', async (req, res) => {
-    const post = await Post.findOne({_id: req.params.id}).populate('comments');
-    res.send(post);
+  const post = await Post.findOne({ _id: req.params.id }).populate('comments');
+  res.send(post);
 })
+
 //update a comment
-router.patch('/:id/comments/:commentId/edit',requireUser, async(req, res, next) => {
-    if (!isProduction) {
-        const csrfToken = req.csrfToken();
-        res.cookie("CSRF-TOKEN", csrfToken);
-    }
-    Comment.findOneAndUpdate({_id: req.params.commentId},
-        req.body,
-        { new: true, useFindAndModify: false },
-        (err, comment) => {
-            if (err) return res.status(500).send(err);
-            return res.json(comment);
-        })
+router.patch('/:id/comments/:commentId/edit', requireUser, async (req, res, next) => {
+  if (!isProduction) {
+    const csrfToken = req.csrfToken();
+    res.cookie("CSRF-TOKEN", csrfToken);
+  }
+  Comment.findOneAndUpdate({ _id: req.params.commentId },
+    req.body,
+    { new: true, useFindAndModify: false },
+    (err, comment) => {
+      if (err) return res.status(500).send(err);
+      return res.json(comment);
+    })
 })
+
 //delete a comment
 router.delete('/:id/comments/:commentId', requireUser, (req, res) => {
-    if (!isProduction) {
-        const csrfToken = req.csrfToken();
-        res.cookie("CSRF-TOKEN", csrfToken);
-    }
-        Comment.findById(req.params.commentId)
-        .then(comment => {
-          if (comment.author.toString() === req.user.id){
-            Comment.findByIdAndRemove(req.params.commentId, (err, comment) => {
-              return res.status(200).json(`sucessfully deleted comment`)
-            })
-          } else 
-          {
-            return res.status(422).json({ invalidcredentials: `invalid credentials for deleting comment` })
-          }
+  if (!isProduction) {
+    const csrfToken = req.csrfToken();
+    res.cookie("CSRF-TOKEN", csrfToken);
+  }
+  Comment.findById(req.params.commentId)
+    .then(comment => {
+      if (comment.author.toString() === req.user.id) {
+        Comment.findByIdAndRemove(req.params.commentId, (err, comment) => {
+          return res.status(200).json(`sucessfully deleted comment`)
         })
-        .catch(err => {
-          return res.status(422).json({ nocommentfound: `No comment found with that ID` })
-        })
+      } else {
+        return res.status(422).json({ invalidcredentials: `invalid credentials for deleting comment` })
+      }
+    })
+    .catch(err => {
+      return res.status(422).json({ nocommentfound: `No comment found with that ID` })
+    })
 });
 
 //reply to a comment
