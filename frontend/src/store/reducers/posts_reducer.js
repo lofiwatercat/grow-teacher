@@ -2,7 +2,6 @@ import jwtFetch from "../jwt";
 import { jwtImageFetch, getCookie } from "../jwt";
 import {
   RECEIVE_COMMENT,
-  REMOVE_COMMENT,
   UPDATE_COMMENT,
 } from "./comments_reducer";
 
@@ -102,7 +101,6 @@ export const createPost = (post, imageUrl) => async (dispatch) => {
 };
 
 export const updatePost = (post, imageUrl) => async (dispatch) => {
-  // debugger
   const res = await jwtFetch(`/api/posts/${post._id}`, {
     method: "PATCH",
     body: JSON.stringify(post),
@@ -123,6 +121,17 @@ export const deletePost = (postId) => async (dispatch) => {
 
   if (res.ok) {
     return dispatch(removePost(postId));
+  }
+};
+
+export const getSearchedPosts = (query) => async dispatch => {
+  const res = await jwtFetch(`/api/posts/search/${query}`)
+  if (res.status >= 400) throw res;
+
+  if (res.ok) {
+      const data = await res.json();
+      console.log('it worked');
+      dispatch(receivePosts(data));
   }
 };
 
