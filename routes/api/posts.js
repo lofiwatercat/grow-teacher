@@ -12,7 +12,7 @@ const s3 = new Aws.S3({
     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,       // secretAccessKey is also store in .env file
     region: process.env.S3_BUCKET_REGION,
 });
-
+const fileImage = `image-${Date.now()}.jpeg` || `image-${Date.now()}.png`
 const upload = multer({
     storage: multers3({
         s3,
@@ -23,8 +23,8 @@ const upload = multer({
         key: function(req, file, cb) {
             console.log(file);
             //cb(null, `image-${Date.now()}.jpeg`); //add timestamps to make sure we uploading even if it's the same image type
-            cb(null, `image.jpeg`); //add timestamps to make sure we uploading even if it's the same image type
-            
+            //cb(null, `image.jpeg`); //add timestamps to make sure we uploading even if it's the same image type
+            cb(null, file.fieldname + '-' + Date.now())
         },
     }),
 });
@@ -125,11 +125,12 @@ router.post("/",
                   })}
               ),
             author: req.user._id,
-            imageUrl: s3.getSignedUrl('getObject', {
-                Bucket: 'grow-teacher-dev',
-                Key: req.file.key,
-                Expires: 0
-            }),
+            // imageUrl: s3.getSignedUrl('getObject', {
+            //     Bucket: 'grow-teacher-dev',
+            //     Key: req.file.key,
+            //     Expires: 315360000
+            // }),
+            imageUrl: `https://grow-teacher-dev.s3.${process.env.S3_BUCKET_REGION}.amazonaws.com/${req.file.key}`
           });
 
           let post = await newPost.save();
@@ -166,8 +167,17 @@ router.patch(
     );
   }
 );
-
-// smal change
+//delete a file from AWS
+function deleteFileStream(fileKey, next) {
+  const deleteParams = {
+      Key: fileKey,
+      Bucket: process.env.AWS_BUCKET_NAME,
+  }
+  s3.deleteObject(deleteParams, (error, data) => {
+      next(error, data)
+  })
+}
+//delete a file from AW3
 
 //delete a post
 router.delete("/:id", requireUser, (req, res) => {
@@ -177,13 +187,20 @@ router.delete("/:id", requireUser, (req, res) => {
   }
   Post.findOneAndDelete({ _id: req.params.id }, (err, post) => {
     if (err) return res.status(500).send(err);
-    return res.json({
-      title: post.title,
-      _id: post._id,
-      body: req.body.body,
-      items: req.body.items,
-      author: req.user._id,
+
+    deleteFileStream(req.params.id, (error, data) => {
+        if (error) {
+            return res.send({ error: "Can not delete file, Please try again later" });
+        }
+        return res.send({ message: "File has been deleted successfully" });
     });
+    // return res.json({
+    //   title: post.title,
+    //   _id: post._id,
+    //   body: req.body.body,
+    //   items: req.body.items,
+    //   author: req.user._id
+    // });
   });
 });
 
