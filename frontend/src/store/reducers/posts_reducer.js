@@ -1,5 +1,10 @@
 import jwtFetch from "../jwt";
 import { jwtImageFetch, getCookie } from "../jwt";
+import {
+  RECEIVE_COMMENT,
+  REMOVE_COMMENT,
+  UPDATE_COMMENT,
+} from "./comments_reducer";
 
 export const RECEIVE_POST = "posts/RECEIVE_POST";
 export const RECEIVE_POSTS = "posts/RECEIVE_POSTS";
@@ -127,12 +132,26 @@ const postsReducer = (state = {}, action) => {
   let nextState = { ...state };
   switch (action.type) {
     case RECEIVE_POSTS:
-      return action.posts;
+      action.posts.forEach((post) => (nextState[post._id] = post));
+      return nextState;
     case RECEIVE_POST:
       nextState[action.post._id] = action.post;
       return nextState;
     case REMOVE_POST:
       delete nextState[action.postId];
+      return nextState;
+    case RECEIVE_COMMENT:
+      let newComment = action.comment;
+      nextState[action.comment.post._id].comments.push(newComment);
+      return nextState;
+    case UPDATE_COMMENT:
+      let currentComment = action.comment;
+      let comments = nextState[currentComment.post].comments;
+      for (let i = 0; i < comments.length; i++) {
+        if (currentComment._id === comments[i]._id) {
+          comments[i] = currentComment;
+        }
+      }
       return nextState;
     default:
       return nextState;

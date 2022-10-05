@@ -52,7 +52,7 @@ function NavBar() {
   return (
     <>
       <header className="navbar">
-        <div>
+        <div className="navbar-left">
           <p>
             <Link to="/posts" className="logo">
               <img
@@ -65,6 +65,7 @@ function NavBar() {
               GrowTeacher
             </Link>
           </p>
+          <p className="navbar-about"><Link to="/about">About</Link></p>
         </div>
         <div>{getLinks()}</div>
       </header>

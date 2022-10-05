@@ -1,0 +1,112 @@
+.dev-container {
+  display: block;
+  width: 30%;
+  margin: auto;
+  aspect-ratio: 1 / 1;
+  border: 1px solid black;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 3px 8px var(--grad-clr1);
+  transition: all 300ms ease-in-out;
+  font-family: "ProductSans", "Trebuchet MS", "Lucida Sans Unicode",
+    "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+}
+
+.dev-container:hover {
+  box-shadow: 0px 8px 30px var(--grad-clr2);
+  scale: 1.01;
+}
+
+.dev-profile {
+  display: block;
+  width: 100%;
+}
+
+.dev-image-container {
+  display: block;
+  width: 100%;
+  margin: auto;
+}
+
+.dev-image {
+  display: block;
+  margin: auto;
+  width: 66%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.dev-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.dev-details p {
+  font-size: 1.25rem;
+  color: rgba($color: #000000, $alpha: 0.8);
+}
+
+.dev-personal-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+  width: 100%;
+}
+
+.dev-personal-links li {
+  border-radius: 5px;
+}
+
+.dev-personal-links li:hover {
+  opacity: 0.7;
+  transition: 0s;
+}
+
+@media only screen and (max-width: 1500px) {
+  .dev-details {
+    h1 {
+      font-size: 24px;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .dev-container {
+    width: 80%;
+  }
+
+  .dev-details {
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    p {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .dev-container {
+    width: 100%;
+  }
+
+  .dev-details {
+    h1 {
+      font-size: 2rem;
+    }
+  }
+}

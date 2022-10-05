@@ -1,8 +1,10 @@
 import jwtFetch from "../jwt";
+import { RECEIVE_POST } from "./posts_reducer";
 
-export const RECEIVE_COMMENT = "posts/RECEIVE_COMMENT ";
 export const RECEIVE_COMMENTS = "posts/RECEIVE_COMMENTS";
-export const REMOVE_COMMENT  = "posts/REMOVE_COMMENT ";
+export const RECEIVE_COMMENT = "posts/RECEIVE_COMMENT";
+export const UPDATE_COMMENT = "posts/UPDATE_COMMENT";
+export const REMOVE_COMMENT = "posts/REMOVE_COMMENT";
 
 // Actions
 const receiveComments = (comments) => ({
@@ -15,9 +17,14 @@ const receiveComment = (comment) => ({
   comment,
 });
 
-const removeComment = (comment) => ({
-  type: REMOVE_COMMENT,
+const newComment = (comment) => ({
+  type: UPDATE_COMMENT,
   comment,
+});
+
+const removeComment = (commentId) => ({
+  type: REMOVE_COMMENT,
+  commentId,
 });
 
 // Selectors
@@ -39,72 +46,66 @@ export const getComment = (commentId) => (state) => {
   }
 };
 
-// export const fetchcomments = () => async (dispatch) => {
-//   const res = await fetch("/api/comments");
-
-//   if (res.ok) {
-//     const comments = await res.json();
-//     return dispatch(receiveComments(comments));
-//   }
-// };
-
-// export const fetchComment = (id) => async (dispatch) => {
-//   const res = await fetch(`/api/comments/${id}`);
-
-//   if (res.ok) {
-//     const comment = await res.json();
-//     return dispatch(receiveComment(comment));
-//   }
-// };
-
 //create a comment
 export const createComment = (comment, postId) => async (dispatch) => {
-  const res = await jwtFetch(`/api/posts/${postId}/comment`, {
+  const res = await jwtFetch(`/api/posts/${postId}/comments`, {
     method: "POST",
     body: JSON.stringify(comment, postId),
   });
-
   if (res.ok) {
     const newComment = await res.json();
     return dispatch(receiveComment(newComment));
   }
 };
 
-export const updatePost = (comment, postId) => async (dispatch) => {
-  const res = await jwtFetch(`/api/posts/${postId}/comment/${comment.id}/edit`, {
-    method: "PATCH",
-    body: JSON.stringify(comment, postId),
-  });
+export const updateComment = (comment, postId) => async (dispatch) => {
+  const res = await jwtFetch(
+    `/api/posts/${postId}/comments/${comment._id}/edit`,
+    {
+      method: "PATCH",
+      body: JSON.stringify(comment, postId),
+    }
+  );
 
   if (res.ok) {
     const comment = await res.json();
-    return dispatch(receiveComment(comment));
+    return dispatch(newComment(comment));
   }
 };
 
-export const deleteComment = (comment, postId) => async (dispatch) => {
-  const res = await jwtFetch(`/api/posts/${postId}/comment/${comment.id}`, {
+export const deleteComment = (commentId, postId) => async (dispatch) => {
+  const res = await jwtFetch(`/api/posts/${postId}/comments/${commentId}`, {
     method: "DELETE",
   });
 
   if (res.ok) {
-    return dispatch(removeComment(comment));
+    return dispatch(removeComment(commentId));
   }
 };
 
 const commentsReducer = (state = {}, action) => {
   Object.freeze(state);
-  
   let nextState = { ...state };
   switch (action.type) {
     case RECEIVE_COMMENT:
       nextState[action.comment._id] = action.comment;
       return nextState;
+    case UPDATE_COMMENT:
+      nextState[action.comment._id] = action.comment;
+      return nextState;
     case REMOVE_COMMENT:
-      delete nextState[action.comment.id];
+      delete nextState[action.commentId];
+      return nextState;
+    case RECEIVE_POST:
+      nextState = {};
+      if (action.post.comments) {
+        action.post.comments.forEach((comment) => {
+          return (nextState[comment._id] = comment);
+        });
+      }
       return nextState;
     default:
-      return state;
+      return nextState;
   }
 };
 

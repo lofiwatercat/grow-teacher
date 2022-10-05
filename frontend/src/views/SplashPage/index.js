@@ -1,9 +1,13 @@
 import splashImage from "../../assets/images/splash-bg.jpg";
 import "./SplashPage.scss";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const SplashPage = () => {
+  const sessionUser = useSelector((state) => !!state.session.user);
   const history = useHistory();
+
+  if (sessionUser) return <Redirect to="/posts" />;
 
   return (
     <>

@@ -26,6 +26,11 @@ const postSchema = new Schema({
         required: true,
         ref: "User"
     },
+    comments: [{
+        type: ObjectId,
+        required: false,
+        ref: "Comment"
+    }],
     title: {
         type: String,
         required: true
@@ -35,7 +40,6 @@ const postSchema = new Schema({
         required: true,
     },
     items: [itemsSchema],
-
     imageUrl: { 
         type: String,
         required: true

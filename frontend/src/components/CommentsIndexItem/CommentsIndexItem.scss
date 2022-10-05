@@ -1,0 +1,73 @@
+.comment-modal {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.comment-edit-form {
+  padding: 10px;
+}
+
+.comments-index-item {
+  width: 100%;
+}
+
+.comments-index-item:hover {
+  background-color: rgba($color: #000000, $alpha: 0.05)
+}
+
+.comments-item-header {
+  display: flex;
+  height: 2.5rem;
+  width: 100%;
+}
+
+.comments-item-pic {
+  height: 100%;
+  width: 2.5rem;
+}
+
+.comments-author {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-left: 5px;
+  font-weight: 600;
+}
+
+.comments-author-inner {
+  display: flex;
+  align-items: center;
+}
+
+.comments-time {
+  font-weight: 0;
+  font-size: 12px;
+  margin-left: 5px;
+  color:rgba($color: #000000, $alpha: 0.55)
+}
+
+.comments-item-body {
+  font-weight: 0;
+  width: 90%;
+  margin-left: calc(2.5rem + 5px);
+  font-size: 1rem;
+}
+
+.comments-item-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 3rem;
+}
+
+.comments-item-buttons button {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.comments-item-buttons button:hover {
+  background-color: rgba($color: #000000, $alpha: 0.1);
+}

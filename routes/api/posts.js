@@ -83,30 +83,29 @@ router.get("/:id", (req, res) => {
     const csrfToken = req.csrfToken();
     res.cookie("CSRF-TOKEN", csrfToken);
   }
-  Post.findById(req.params.id)
+  let newPost = Post.findById(req.params.id)
+
+  newPost
     .populate("author", "_id username email")
-    .then((post) => res.json(post))
-    .catch((err) =>
-      res.status(404).json({ nopostfound: "No post found with that ID" })
+    .populate("comments")
+    .then(post => {
+      return res.json(post)
+    })
+    .catch(err =>
+      res.status(404).json({ nopostfound: 'No post found with that ID' })
     );
-});
+})
 
 //post a post
 router.post("/",
   requireUser,
   upload.single("imageUrl"),
   async (req, res, next) => {
-    // console.log(req.body);
     if (!isProduction) {
       const csrfToken = req.csrfToken();
       res.cookie("CSRF-TOKEN", csrfToken);
     }
     const file = req.file;
-    // req.body.items.forEach( el => {
-    //   console.log(JSON.parse(el))
-    // })
-    // console.log(JSON.parse(req.body.items))
-    console.log(req.body.title)
     
           const newPost = new Post({
             title: req.body.title,
@@ -115,7 +114,6 @@ router.post("/",
               
                 (item) => {
 
-                console.log(JSON.stringify(item))
                   return ({
                     name: item.name,
                     totalCost: item.totalCost,
@@ -125,16 +123,10 @@ router.post("/",
                   })}
               ),
             author: req.user._id,
-            // imageUrl: s3.getSignedUrl('getObject', {
-            //     Bucket: 'grow-teacher-dev',
-            //     Key: req.file.key,
-            //     Expires: 315360000
-            // }),
             imageUrl: `https://grow-teacher-dev.s3.${process.env.S3_BUCKET_REGION}.amazonaws.com/${req.file.key}`
           });
 
           let post = await newPost.save();
-          console.log(post);
           post = post
             .populate("author", "_id username email");
           post.then((post) => res.json(post));
@@ -194,13 +186,6 @@ router.delete("/:id", requireUser, (req, res) => {
         }
         return res.send({ message: "File has been deleted successfully" });
     });
-    // return res.json({
-    //   title: post.title,
-    //   _id: post._id,
-    //   body: req.body.body,
-    //   items: req.body.items,
-    //   author: req.user._id
-    // });
   });
 });
 
@@ -214,101 +199,105 @@ router.get("/user/:user_id", (req, res) => {
       res.status(404).json({ nopostsfound: "No posts found from that user" })
     );
 });
-//get all comments of one post
 
-// create a comment(route)
-router.post("/:id/comment", requireUser, async (req, res, next) => {
+router.post('/:id/comments', requireUser, async (req, res, next) => {
   if (!isProduction) {
     const csrfToken = req.csrfToken();
     res.cookie("CSRF-TOKEN", csrfToken);
   }
+  const post = await Post.findOne({ _id: req.params.id })
+  // Make the new comment with the request information
   try {
     const newComment = new Comment({
       body: req.body.body,
       post: req.params.id,
       author: req.user.id,
       replies: req.body.replies,
+      username: req.user.username
     });
+    newComment.post = post;
+    await newComment.save();
+    let comments = post.comments;
+    comments.push(newComment._id);
+    // console.log(comments)
+    const newPost = await Post.findOneAndUpdate({ _id: req.params.id }, { comments })
 
-    let comment = await newComment.save();
-    comment = await comment
-      .sort({ createdAt: -1 })
-      .populate("author", "username");
+
+
+    comment = await newComment.populate('post', '_id');
     return res.json(comment);
-  } catch (err) {
+  }
+  catch (err) {
     next(err);
   }
-});
-//update a comment
-router.patch(
-  "/:id/comment/:commentId/Edit",
-  requireUser,
-  async (req, res, next) => {
-    if (!isProduction) {
-      const csrfToken = req.csrfToken();
-      res.cookie("CSRF-TOKEN", csrfToken);
-    }
-    Comment.findOneAndUpdate(
-      { _id: req.params.commentId },
-      req.body,
-      { new: true, useFindAndModify: false },
-      (err, comment) => {
-        if (err) return res.status(500).send(err);
-        return res.json(comment);
-      }
-    );
+}
+)
+
+// read a comment(don't know if you'll need that one)
+router.get('/:id/comments', async (req, res) => {
+  const post = await Post.findOne({ _id: req.params.id }).populate('comments');
+  res.send(post);
+})
+
+// update a comment
+router.patch('/:id/comments/:commentId/edit', requireUser, async (req, res, next) => {
+  if (!isProduction) {
+    const csrfToken = req.csrfToken();
+    res.cookie("CSRF-TOKEN", csrfToken);
   }
-);
-//delete a comment
-router.delete("/:id/comment/:commentId", requireUser, (req, res) => {
+  Comment.findOneAndUpdate({ _id: req.params.commentId },
+    req.body,
+    { new: true, useFindAndModify: false },
+    (err, comment) => {
+      if (err) return res.status(500).send(err);
+      return res.json(comment);
+    })
+})
+
+// delete a comment
+router.delete('/:id/comments/:commentId', requireUser, (req, res) => {
   if (!isProduction) {
     const csrfToken = req.csrfToken();
     res.cookie("CSRF-TOKEN", csrfToken);
   }
   Comment.findById(req.params.commentId)
-    .then((comment) => {
-      if (comment.user.toString() === req.user.id) {
+    .then(comment => {
+      if (comment.author.toString() === req.user.id) {
         Comment.findByIdAndRemove(req.params.commentId, (err, comment) => {
-          return res.status(200).json(`sucessfully deleted comment`);
-        });
+          return res.status(200).json(`sucessfully deleted comment`)
+        })
       } else {
-        return res
-          .status(422)
-          .json({
-            invalidcredentials: `invalid credentials for deleting comment`,
-          });
+        return res.status(422).json({ invalidcredentials: `invalid credentials for deleting comment` })
       }
     })
-    .catch((err) => {
-      return res
-        .status(422)
-        .json({ nocommentfound: `No comment found with that ID` });
-    });
+    .catch(err => {
+      return res.status(422).json({ nocommentfound: `No comment found with that ID` })
+    })
 });
 
 //reply to a comment
-router.post("/:id/comments/:commentId", requireUser, async (req, res, next) => {
-  if (!isProduction) {
-    const csrfToken = req.csrfToken();
-    res.cookie("CSRF-TOKEN", csrfToken);
-  }
-  try {
-    const newComment = new Comment({
-      body: req.body.body,
-      post: req.params.id,
-      author: req.user.id,
-      replies: req.body.replies,
-    });
+// router.post('/:id/comments/:commentId',requireUser, async(req, res, next) => {
+//     if (!isProduction) {
+//         const csrfToken = req.csrfToken();
+//         res.cookie("CSRF-TOKEN", csrfToken);
+//     }
+//     try {
+//         const newComment = new Comment({
+//         body: req.body.body,
+//         post: req.params.id,
+//         author: req.user.id,
+//         replies: req.body.replies,
+//       });
 
-    let comment = await newComment.save();
-    comment = await comment
-      .sort({ createdAt: -1 })
-      .populate("author", "username");
-    return res.json(comment);
-  } catch (err) {
-    next(err);
-  }
-});
+//       let comment = await newComment.save();
+//       comment = await comment.sort({ createdAt: -1 }).populate('author', 'username');
+//       return res.json(comment);
+//     }
+//     catch(err) {
+//       next(err);
+//     }
+//   }
+// )
 //reply to a comment
 
 module.exports = router;

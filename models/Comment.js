@@ -14,7 +14,7 @@ const repliesSchema = new Schema({
         author: authorId,
         body: {
             type: String,
-            required: true,
+            // required: true,
        },
     },
        {
@@ -23,23 +23,27 @@ const repliesSchema = new Schema({
 )
 
 const commentSchema = new Schema({
-    author: {
-        type: ObjectId,
-        required: true,
-        ref: "User"
-    },
-    post: {
-        type: ObjectId,
-        required: true,
-        ref: "Post"
-    },
-    body: {
-        type: String,
-        required: true
-    },
-    replies: [repliesSchema],
-    
-},{
-    timestamps: true
+  author: {
+    type: ObjectId,
+    required: true,
+    ref: "User"
+  },
+  username: {
+    type: String,
+    required: true 
+  },
+  post: {
+    type: ObjectId,
+    required: true,
+    ref: "Post"
+  },
+  body: {
+    type: String,
+    required: true
+  },
+  replies: [repliesSchema],
+}, {
+  timestamps: true
 })
-module.exports = mongoose.model('comment', commentSchema);
+
+module.exports = mongoose.model('Comment', commentSchema);
