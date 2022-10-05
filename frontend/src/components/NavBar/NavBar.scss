@@ -90,3 +90,25 @@
   position: relative;
   top: -4px;
 }
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-left a {
+  text-decoration: none;
+  color: black;
+}
+
+.navbar-about {
+  font-size: 16px;
+  letter-spacing: 2px;
+  font-weight: 500px;
+  transition: 0.5s;
+}
+
+.navbar-about a {
+  padding: 13.5px 10px 13.5px;
+}

@@ -6,23 +6,21 @@ import NavBar from "./components/NavBar"
 import { AuthRoute, ProtectedRoute } from "./components/Routes/Routes";
 
 import LoginForm from "./components/SessionForms/LoginForm";
-import SignupForm from "./components/SessionForms/SignupForm";
-
-import { getCurrentUser } from "./store/reducers/session_reducer";
 import SplashPage from "./views/SplashPage";
 import PostsFormPage from "./views/PostsFormPage";
 import PostsShowPage from "./views/PostsShowPage";
 import PostsIndexPage from "./views/PostsIndexPage";
 import PostsFormEditPage from "./views/PostsFormEditPage";
+import AboutPage from "./views/AboutPage/AboutPage";
 
 import Testing from './components/testing'
 
 function App() {
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getCurrentUser()).then(() => setLoaded(true));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getCurrentUser()).then(() => setLoaded(true));
+  // }, [dispatch]);
 
   return (
     loaded && (
@@ -37,6 +35,7 @@ function App() {
           <ProtectedRoute exact path="/posts/new" component={PostsFormPage} />
           <ProtectedRoute exact path="/posts/:postId" component={PostsShowPage} />
           <ProtectedRoute exact path="/posts/:postId/edit" component={PostsFormEditPage} />
+          <Route exact path="/about" component={AboutPage}/>
           <Redirect to="/" />
         </Switch>
       </>
