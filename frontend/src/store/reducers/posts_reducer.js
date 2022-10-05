@@ -122,7 +122,7 @@ export const deletePost = (postId) => async (dispatch) => {
 };
 //serachBar
 export const getSearchedPosts = (query) => async dispatch => {
-  const res = await csrfFetch(`/api/posts/search/${query}`)
+  const res = await jwtFetch(`/api/posts/search/${query}`)
   if (res.status >= 400) throw res;
 
   if (res.ok) {
