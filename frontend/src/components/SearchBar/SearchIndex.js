@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getPosts } from "../../store/reducers/posts_reducer";
-import { PostItem } from "./PostItem"
+import PostItem from "../PostItem"
 
 const SearchIndex = () => {
     const posts = useSelector(getPosts);

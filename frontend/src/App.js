@@ -14,6 +14,7 @@ import PostsFormPage from "./views/PostsFormPage";
 import PostsShowPage from "./views/PostsShowPage";
 import PostsIndexPage from "./views/PostsIndexPage";
 import PostsFormEditPage from "./views/PostsFormEditPage";
+import SearchIndex from "./components/SearchBar/SearchIndex";
 
 import Testing from './components/testing'
 
@@ -37,6 +38,7 @@ function App() {
           <ProtectedRoute exact path="/posts/new" component={PostsFormPage} />
           <ProtectedRoute exact path="/posts/:postId" component={PostsShowPage} />
           <ProtectedRoute exact path="/posts/:postId/edit" component={PostsFormEditPage} />
+          <ProtectedRoute exact path="/search" component={SearchIndex} />
           <Redirect to="/posts" />
         </Switch>
       </>

@@ -130,7 +130,7 @@ export const getSearchedPosts = (query) => async dispatch => {
       console.log('it worked');
       dispatch(receivePosts(data));
   }
-}
+};
 //searchBar
 
 const postsReducer = (state = {}, action) => {

@@ -24,6 +24,9 @@ function NavBar() {
       return (
         <ul className="links-nav">
           <li>
+
+          </li>
+          <li>
             <Link to={"/posts"}>All Posts</Link>
           </li>
           <li>
@@ -66,6 +69,9 @@ function NavBar() {
               GrowTeacher
             </Link>
           </p>
+            <div className="search-icon">
+              <SearchBar/>
+            </div>
         </div>
         <div>{getLinks()}</div>
       </header>

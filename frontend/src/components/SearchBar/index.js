@@ -9,7 +9,6 @@ import "./SearchBar.css";
 const SearchBar = () => {
     const dispatch = useDispatch();
     const [query, setQuery] = useState("");
-    // const [searchField, setSearchField] = useState("");
     const history = useHistory();
 
     const posts = useSelector(getPosts);
@@ -56,6 +55,7 @@ const SearchBar = () => {
             onChange={e => setQuery(e.target.value)}
             placeholder={`Search by title, body, and item`}
             autoFocus="autofocus"
+            //When present, it specifies that an <input> element should automatically get focus when the page loads.
           />
         </form>
         {/* <button onClick={handleSubmit} className="search-bar-icon">
