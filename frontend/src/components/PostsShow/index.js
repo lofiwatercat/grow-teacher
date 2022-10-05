@@ -73,21 +73,27 @@ const PostsShow = () => {
 
   return (
     <>
-      <div id="post-show">
+      <div className="post-show">
         <div className="post-show-title">
           <h1>{post.title}</h1>
         </div>
-        <div id="post-show-container">
-          <div id="post-show-left">
+        <div className="post-show-container">
+          <div className="post-show-left">
             <div className="post-image-container">
               <img className="post-image" src={placeholder} alt="photo" />
             </div>
             <p>{post.body}</p>
             <button onClick={handleDelete}>DELETE POST</button>
             <button onClick={handleEdit}>EDIT POST</button>
+            <div className="post-show-bottom">
+              <div className="post-show-author">
+                <h6>Author</h6>
+              </div>
+              {sessionUser && comments && <CommentsIndex comments={comments} />}
+            </div>
           </div>
 
-          <div id="post-show-right">
+          <div className="post-show-right">
             <h2>
               ${currentProgress} <span>raised of ${totalCost}</span>
             </h2>
@@ -112,12 +118,6 @@ const PostsShow = () => {
               );
             })}
           </div>
-        </div>
-        <div className="post-show-bottom">
-          <div className="post-show-author">
-            <h6>Author</h6>
-          </div>
-        {sessionUser && comments && <CommentsIndex comments={comments} />}
         </div>
       </div>
     </>

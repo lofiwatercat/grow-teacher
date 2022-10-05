@@ -1,8 +1,10 @@
-#post-show {
+.post-show {
   width: 60%;
   display: flex;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
   flex-wrap: wrap;
+  height: fit-content;
 }
 
 .post-show-title {
@@ -14,14 +16,14 @@
   margin-top: 10%;
 }
 
-#post-show-container {
+.post-show-container {
   margin-top: 1%;
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
-#post-show-left {
+.post-show-left {
   background-color: yellow;
   width: 65%;
   padding: 1px;
@@ -37,10 +39,10 @@
   height: 100%;
 }
 
-#post-show-right {
+.post-show-right {
   position: -webkit-sticky;
   position: sticky;
-  top: 60px;
+  top: 100px;
   align-self: flex-start;
   background-color: white;
   margin-left: 1.5rem;
@@ -50,6 +52,7 @@
   padding: 10px;
   display: flex;
   flex-direction: column;
+  z-index: 1;
 
   span {
     font-size: 20px;
@@ -113,7 +116,7 @@
   display: block;
   border-top: 1px solid #c8c8c8;
   border-bottom: 1px solid #c8c8c8;
-  width: 64%;
+  width: 100%;
   height: 60px;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;

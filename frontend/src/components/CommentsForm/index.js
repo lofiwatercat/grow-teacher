@@ -48,7 +48,7 @@ const CommentsForm = () => {
         <TextareaField
           validationMessage={
             comment.body.length < 2 || comment.body.length > 255
-              ? "Body must be between 2 and 255 characters"
+              ? "Comment must be between 2 and 255 characters"
               : null
           }
           label="Have something to contribute?"
