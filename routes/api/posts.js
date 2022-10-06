@@ -313,10 +313,6 @@ router.get('/search/:query', (req, res) => {
 
   Post.find(
     { title: new RegExp(req.params.query) })
-    .populate("author", {
-      select: "username",
-      match: { username: newRegExp(req.params.query)}
-    })
     .then(posts => {
       console.log("POSTS",posts)
       return res.json(posts);

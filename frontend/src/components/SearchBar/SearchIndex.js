@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { getPosts } from "../../store/reducers/posts_reducer";
 import { getSearchedPosts } from "../../store/reducers/posts_reducer";
 import PostsIndexItem from "../PostsIndexItem";
-import { getSearchedPosts } from "../../store/reducers/posts_reducer";
 
 const SearchIndex = () => {
   const posts = useSelector(getPosts);
