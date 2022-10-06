@@ -13,7 +13,6 @@
   padding-left: 30px;
   padding-right: 30px;
   width: 80%;
-  min-width: 850px;
   background: var(--grad-clr2);
   height: 48px;
 }
@@ -111,4 +110,10 @@
 
 .navbar-about a {
   padding: 13.5px 10px 13.5px;
+}
+
+@media only screen and (max-width: 1100px) {
+  .navbar {
+    width: 100%;
+  }
 }

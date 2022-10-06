@@ -24,7 +24,7 @@ const SearchBar = () => {
             placeholder={`Search by title and description`}
             autoFocus="autofocus"
           />
-          <a href="#">
+          <a href="#" onClick={handleSubmit}>
             <FaSearch />
           </a>
         </form>
