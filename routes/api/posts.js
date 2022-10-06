@@ -309,13 +309,16 @@ router.delete('/:id/comments/:commentId', requireUser, (req, res) => {
 // `/api/posts/search/${query}`
 router.get('/search/:query', (req, res) => {
   // console.log(req.params.query, 'this should be the query')
-  Post.find({
-    $or: [{ "title": { $regex: req.params.query, $options: 'i' } },
-    { "author_name": { $regex: req.params.query, $options: 'i' }},
-    ]
-  })
+  console.log(req.params.query)
+
+  Post.find(
+    { title: new RegExp(req.params.query) })
+    .populate("author", {
+      select: "username",
+      match: { username: newRegExp(req.params.query)}
+    })
     .then(posts => {
-      console.log(posts);
+      console.log("POSTS",posts)
       return res.json(posts);
     })
     .catch(err => res.status(404).json({ nopostsfound: 'No posts found with that query' }));
