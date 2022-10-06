@@ -23,9 +23,7 @@ function NavBar() {
     if (loggedIn) {
       return (
         <ul className="links-nav">
-          <li>
-
-          </li>
+          <li></li>
           <li>
             <Link to={"/posts"}>All Posts</Link>
           </li>
@@ -36,7 +34,9 @@ function NavBar() {
             <Link to={"/profile"}>Profile</Link>
           </li>
           <li>
-            <Link to="/login" onClick={logoutUser}>Logout</Link>
+            <Link to="/login" onClick={logoutUser}>
+              Logout
+            </Link>
           </li>
         </ul>
       );
@@ -69,10 +69,12 @@ function NavBar() {
               GrowTeacher
             </Link>
           </p>
-          <p className="navbar-about"><Link to="/about">About</Link></p>
-            <div className="search-icon">
-              <SearchBar/>
-            </div>
+          <p className="navbar-about">
+            <Link to="/about">About</Link>
+          </p>
+        </div>
+        <div className="search-icon">
+          <SearchBar />
         </div>
         <div>{getLinks()}</div>
       </header>

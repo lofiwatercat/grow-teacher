@@ -130,17 +130,17 @@ export const getSearchedPosts = (query) => async dispatch => {
 
   if (res.ok) {
       const data = await res.json();
-      console.log('it worked');
       dispatch(receivePosts(data));
   }
 };
 
 const postsReducer = (state = {}, action) => {
   Object.freeze(state);
-
   let nextState = { ...state };
+
   switch (action.type) {
     case RECEIVE_POSTS:
+      nextState = {}; 
       action.posts.forEach((post) => (nextState[post._id] = post));
       return nextState;
     case RECEIVE_POST:
