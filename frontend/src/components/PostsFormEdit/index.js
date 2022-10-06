@@ -149,10 +149,10 @@ const PostsForm = () => {
               error={
                 !(
                   newPost.body.length === 0 ||
-                  (newPost.body.length >= 2 && newPost.body.length <= 255)
+                  (newPost.body.length >= 2 && newPost.body.length <= 1000)
                 )
               }
-              helperText="Body must be between 2 and 255 characters"
+              helperText="Body must be between 2 and 1000 characters"
               id="outlined-basic"
               label="Body"
               variant="outlined"

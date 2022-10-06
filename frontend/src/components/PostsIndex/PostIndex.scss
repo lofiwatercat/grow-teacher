@@ -1,11 +1,20 @@
+.posts-index-page {
+  width: 80%;
+  margin: auto;
+  margin-top: 100px;
+}
+
+.posts-index-title {
+  width: 100%;
+}
+
 .posts-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  width: 60%;
+  width: 100%;
   min-width: 865px;
   margin: auto;
-  margin-top: 100px;
-  background-color: #FFED91;
+  background-color: #ffed91;
   border-radius: 5px;
   box-shadow: 0px 0px 3px 3px gainsboro;
 }

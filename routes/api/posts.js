@@ -65,7 +65,7 @@ router.get("/", async (req, res) => {
           p.imageUrl = post.imageUrl;
           p.author_name = await User.findOne({ _id: post.author }).then(
             (res) => {
-              return "test_name";
+              return res.username;
             }
           );
           p._id = post._id;
@@ -123,7 +123,11 @@ router.post("/",
                   })}
               ),
             author: req.user._id,
-            imageUrl: `https://grow-teacher-dev.s3.${process.env.S3_BUCKET_REGION}.amazonaws.com/${req.file.key}`
+            imageUrl: s3.getSignedUrl('getObject', {
+                Bucket: 'grow-teacher-dev',
+                Key: req.file.key,
+                // Expires: null
+            }),
           });
 
           let post = await newPost.save();
@@ -276,28 +280,48 @@ router.delete('/:id/comments/:commentId', requireUser, (req, res) => {
 });
 
 //reply to a comment
-// router.post('/:id/comments/:commentId',requireUser, async(req, res, next) => {
-//     if (!isProduction) {
-//         const csrfToken = req.csrfToken();
-//         res.cookie("CSRF-TOKEN", csrfToken);
-//     }
-//     try {
-//         const newComment = new Comment({
-//         body: req.body.body,
-//         post: req.params.id,
-//         author: req.user.id,
-//         replies: req.body.replies,
-//       });
-
-//       let comment = await newComment.save();
-//       comment = await comment.sort({ createdAt: -1 }).populate('author', 'username');
-//       return res.json(comment);
-//     }
-//     catch(err) {
-//       next(err);
-//     }
+// router.post("/:id/comments/:commentId", requireUser, async (req, res, next) => {
+//   if (!isProduction) {
+//     const csrfToken = req.csrfToken();
+//     res.cookie("CSRF-TOKEN", csrfToken);
 //   }
-// )
+//   try {
+//     const newComment = new Comment({
+//       body: req.body.body,
+//       post: req.params.id,
+//       author: req.user.id,
+//       replies: req.body.replies,
+//     });
+
+//     let comment = await newComment.save();
+//     comment = await comment
+//       .sort({ createdAt: -1 })
+//       .populate("author", "username");
+//     return res.json(comment);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 //reply to a comment
+
+
+//searchBar
+// `/api/posts/search/${query}`
+router.get('/search/:query', (req, res) => {
+  // console.log(req.params.query, 'this should be the query')
+  console.log(req.params.query)
+
+  Post.find(
+    { title: new RegExp(req.params.query) })
+    .populate("author", {
+      select: "username",
+      match: { username: newRegExp(req.params.query)}
+    })
+    .then(posts => {
+      console.log("POSTS",posts)
+      return res.json(posts);
+    })
+    .catch(err => res.status(404).json({ nopostsfound: 'No posts found with that query' }));
+})
 
 module.exports = router;
