@@ -1,21 +1,21 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import { getPosts } from "../../store/reducers/posts_reducer";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getSearchedPosts } from "../../store/reducers/posts_reducer";
-import "./SearchBar.css";
+import { FaSearch } from "react-icons/fa";
+import "./SearchBar.scss";
 
 const SearchBar = () => {
-    const dispatch = useDispatch();
-    const [query, setQuery] = useState("");
-    const history = useHistory();
+  const dispatch = useDispatch();
+  const [query, setQuery] = useState("");
+  const history = useHistory();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        dispatch(getSearchedPosts(query));
-        history.push(`/search/${query}`);
-        setQuery("");
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(getSearchedPosts(query));
+    history.push(`/search/${query}`);
+    setQuery("");
+  };
 
   return (
     <>
@@ -24,10 +24,13 @@ const SearchBar = () => {
           <input
             id="search-input"
             type="text"
-            onChange={e => setQuery(e.target.value)}
-            placeholder={`Search by title, body, and item`}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={`Search by title and description`}
             autoFocus="autofocus"
           />
+          <a href="#">
+            <FaSearch />
+          </a>
         </form>
       </div>
     </>

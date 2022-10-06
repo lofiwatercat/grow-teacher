@@ -23,7 +23,7 @@ function NavBar() {
     if (loggedIn) {
       return (
         <ul className="links-nav">
-          <li></li>
+          <li><SearchBar /></li>
           <li>
             <Link to={"/posts"}>All Posts</Link>
           </li>
@@ -72,9 +72,6 @@ function NavBar() {
           <p className="navbar-about">
             <Link to="/about">About</Link>
           </p>
-        </div>
-        <div className="search-icon">
-          <SearchBar />
         </div>
         <div>{getLinks()}</div>
       </header>
