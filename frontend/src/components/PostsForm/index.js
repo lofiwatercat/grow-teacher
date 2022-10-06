@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createPostWithImage } from "../../store/reducers/posts_reducer";
 import TextField from "@mui/material/TextField";
-import { TextareaField } from "evergreen-ui";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
@@ -104,39 +103,44 @@ const PostsForm = () => {
           </div>
           <div className="posts-form-topic-container">
             <div className="posts-form-topic">
-              <TextField
-                className="posts-form-title"
-                error={
-                  !(
-                    newPost.title.length === 0 ||
-                    (newPost.title.length >= 2 && newPost.title.length <= 60)
-                  )
-                }
-                id="outlined-basic"
-                label="Title"
-                variant="outlined"
-                onChange={(e) =>
-                  setNewPost({ ...newPost, title: e.target.value })
-                }
-                required
-                helperText="Title must be between 2 and 60 characters"
-              />
+              <div className="posts-form-title-container">
+                <TextField
+                  className="posts-form-title"
+                  error={
+                    !(
+                      newPost.title.length === 0 ||
+                      (newPost.title.length >= 2 && newPost.title.length <= 60)
+                    )
+                  }
+                  id="outlined-basic"
+                  label="Title"
+                  variant="outlined"
+                  onChange={(e) =>
+                    setNewPost({ ...newPost, title: e.target.value })
+                  }
+                  required
+                  helperText="Title must be between 2 and 60 characters"
+                />
+              </div>
 
-              <TextareaField
+              <TextField
                 className="posts-form-body"
-                validationMessage={
+                error={
                   !(
                     newPost.body.length === 0 ||
                     (newPost.body.length >= 2 && newPost.body.length <= 1000)
                   )
-                    ? "Body must be between 2 and 1000 characters"
-                    : null
                 }
-                label="Description of your post"
+                id="outlined-multiline-flexible"
+                label="Description"
+                multiline
                 onChange={(e) =>
                   setNewPost({ ...newPost, body: e.target.value })
                 }
+                minRows={14}
                 required
+                helperText="Description must be between 2 and 1000 characters"
+                placeholder="Description"
               />
               <div className="posts-form-image-button-container">
                 <div className="posts-form-image-button">
@@ -154,6 +158,7 @@ const PostsForm = () => {
               </div>
             </div>
             <div className="posts-form-image-container">
+              {!imagePreview && <h1>Upload an image!</h1>}
               {imagePreview && (
                 <img
                   className="posts-form-image"

@@ -2,7 +2,7 @@
   width: 60%;
   height: 100%;
   margin: auto;
-  margin-top: 110px;
+  margin-top: 100px;
   min-width: 850px;
   background-color: white;
   padding: 15px;
@@ -27,15 +27,17 @@
   display: block;
 }
 
+.posts-form-title-container {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
 .posts-form-title {
   width: 100%;
 }
 
 .posts-form-body {
-  padding: 30px;
-  font-size: 1rem;
-  font: inherit;
-  min-height: 350px;
+  width: 100%;
 }
 
 .posts-form-image-button-container {
@@ -49,6 +51,14 @@
   height: 100%;
   margin-left: 10px;
   margin-right: 10px;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+  aspect-ratio: 1 / 1;
+  max-width: 500px;
+  max-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .posts-form-image {
@@ -65,6 +75,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .ub-pt_8px {
