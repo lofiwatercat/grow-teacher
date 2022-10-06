@@ -58,7 +58,7 @@ app.use('/api/comments', commentsRouter);
 if (isProduction) {
   const path = require('path');
   // Serve the static assets in the frontend's build folder
-  app.use(express.static(path.resolve("./frontend/build")));
+  app.use(express.static(path.resolve("frontend/build")));
 
   // Serve the frontend's index.html file at the root route
   app.get('/', (req, res) => {
