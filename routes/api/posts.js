@@ -312,6 +312,7 @@ router.get('/search/:query', (req, res) => {
   Post.find({
     $or: [{ "title": { $regex: req.params.query, $options: 'i' } },
     { "body": { $regex: req.params.query, $options: 'i' } },
+    { "author_name": { $regex: req.params.query, $options: 'i' }},
     ]
   })
     .then(posts => {
