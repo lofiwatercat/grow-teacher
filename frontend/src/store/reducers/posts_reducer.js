@@ -2,7 +2,6 @@ import jwtFetch from "../jwt";
 import { jwtImageFetch, getCookie } from "../jwt";
 import {
   RECEIVE_COMMENT,
-  REMOVE_COMMENT,
   UPDATE_COMMENT,
 } from "./comments_reducer";
 
@@ -133,12 +132,23 @@ export const deletePost = (postId) => async (dispatch) => {
   }
 };
 
+export const getSearchedPosts = (query) => async dispatch => {
+  const res = await jwtFetch(`/api/posts/search/${query}`)
+  if (res.status >= 400) throw res;
+
+  if (res.ok) {
+      const data = await res.json();
+      dispatch(receivePosts(data));
+  }
+};
+
 const postsReducer = (state = {}, action) => {
   Object.freeze(state);
-
   let nextState = { ...state };
+
   switch (action.type) {
     case RECEIVE_POSTS:
+      nextState = {}; 
       action.posts.forEach((post) => (nextState[post._id] = post));
       return nextState;
     case RECEIVE_POST:
