@@ -65,7 +65,7 @@ router.get("/", async (req, res) => {
           p.imageUrl = post.imageUrl;
           p.author_name = await User.findOne({ _id: post.author }).then(
             (res) => {
-              return "test_name";
+              return res.username;
             }
           );
           p._id = post._id;
@@ -311,12 +311,12 @@ router.get('/search/:query', (req, res) => {
   // console.log(req.params.query, 'this should be the query')
   Post.find({
     $or: [{ "title": { $regex: req.params.query, $options: 'i' } },
-    { "body": { $regex: req.params.query, $options: 'i' } },
     { "author_name": { $regex: req.params.query, $options: 'i' }},
     ]
   })
     .then(posts => {
-      res.json(posts);
+      console.log(posts);
+      return res.json(posts);
     })
     .catch(err => res.status(404).json({ nopostsfound: 'No posts found with that query' }));
 })

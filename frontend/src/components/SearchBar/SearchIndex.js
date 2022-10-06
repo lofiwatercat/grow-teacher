@@ -1,11 +1,18 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getPosts } from "../../store/reducers/posts_reducer";
 import PostsIndexItem from "../PostsIndexItem";
+import { getSearchedPosts } from "../../store/reducers/posts_reducer";
 
 const SearchIndex = () => {
   const posts = useSelector(getPosts);
   const { query } = useParams();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getSearchedPosts(query));
+  }, [query])
 
   let searchResults;
   if (posts.length === 0) {
