@@ -65,7 +65,7 @@ router.get("/", async (req, res) => {
           p.imageUrl = post.imageUrl;
           p.author_name = await User.findOne({ _id: post.author }).then(
             (res) => {
-              return "test_name";
+              return res.username;
             }
           );
           p._id = post._id;

@@ -9,7 +9,7 @@ import "./PostsIndexItem.scss";
 const PostsIndexItem = ({ post }) => {
   return (
     <>
-      <Link className="post-index-item" to={`posts/${post._id}`}>
+      <Link className="post-index-item" to={`/posts/${post._id}`}>
         <Card sx={{ maxWidth: 340, height: 340 }}>
           <CardMedia component="img" height="170" image={post.imageUrl} alt="post" />
           <CardContent>

@@ -6,3 +6,10 @@
   text-decoration: none;
   margin: 15px;
 }
+
+@media only screen and (max-width: 600px) {
+  .post-index-item {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
