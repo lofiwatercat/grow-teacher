@@ -36,7 +36,7 @@ const SplashPage = () => {
                 <h1>1</h1>
               </div>
               <div className="instruction-title">
-                <h3>Title</h3>
+                <h3>Ask for help</h3>
               </div>
               <p>Create a post with a funding goal and/or equipment checklist.</p>
             </div>
@@ -49,7 +49,7 @@ const SplashPage = () => {
               <div className="instruction-title">
                 <h3>Contribute</h3>
               </div>
-              <p>Create a post with a funding goal and equipment checklist.</p>
+              <p>Bring items to the class room and check it off</p>
             </div>
           </div>
           <div className="instruction">
@@ -60,7 +60,7 @@ const SplashPage = () => {
               <div className="instruction-title">
                 <h3>Share with friends and family</h3>
               </div>
-              <p>Create a post with a funding goal and equipment checklist.</p>
+              <p>Get to know the teacher and parents</p>
             </div>
           </div>
         </div>
