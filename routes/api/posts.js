@@ -123,6 +123,7 @@ router.post("/",
                   })}
               ),
             author: req.user._id,
+            authorName: req.user.username,
             imageUrl: s3.getSignedUrl('getObject', {
                 Bucket: 'grow-teacher-dev',
                 Key: req.file.key,
@@ -310,6 +311,7 @@ router.delete('/:id/comments/:commentId', requireUser, (req, res) => {
 router.get('/search/:query', (req, res) => {
   Post.find({
     $or: [{ "title": { $regex: req.params.query, $options: 'i' } },
+      { "authorName": { $regex: req.params.query, $options: 'i' } },
     ]
   })
     .then(posts => {
