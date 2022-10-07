@@ -41,16 +41,15 @@ const PostsShow = () => {
     return amount;
   };
 
-
   // Load the post
   useEffect(() => {
-    dispatch(fetchPost(postId));
+    dispatch(fetchPost(postId)).catch((error) => history.push("/posts"));
   }, []);
 
   // Calculate current progress when post is loaded
-  useEffect( () => {
+  useEffect(() => {
     setCurrentProgress(calcCurrentProgress());
-  }, [post])
+  }, [post]);
 
   // Exit out for first render
   if (!post?.author) return null;
@@ -95,7 +94,7 @@ const PostsShow = () => {
                 <h6>Author</h6>
               </div>
             </div>
-              {sessionUser && comments && <CommentsIndex comments={comments} />}
+            {sessionUser && comments && <CommentsIndex comments={comments} />}
           </div>
 
           <div className="post-show-right">

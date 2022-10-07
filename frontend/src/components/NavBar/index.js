@@ -28,7 +28,7 @@ function NavBar() {
             <Link to={"/posts"}>All Posts</Link>
           </li>
           <li>
-            <Link to={"/posts/new"}>Write a Post</Link>
+            <Link to={"/posts/new"}>Create a Post</Link>
           </li>
           <li>
             <Link to={"/profile"}>Profile</Link>
