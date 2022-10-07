@@ -94,8 +94,8 @@ const PostsShow = () => {
               <div className="post-show-author">
                 <h6>Author</h6>
               </div>
-              {sessionUser && comments && <CommentsIndex comments={comments} />}
             </div>
+              {sessionUser && comments && <CommentsIndex comments={comments} />}
           </div>
 
           <div className="post-show-right">

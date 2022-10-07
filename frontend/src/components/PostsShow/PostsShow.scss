@@ -1,10 +1,8 @@
 .post-show {
   width: 60%;
-  display: flex;
+  display: block;
   margin-left: auto;
   margin-right: auto;
-  flex-wrap: wrap;
-  height: fit-content;
 }
 
 .post-show-title {
@@ -17,10 +15,10 @@
 }
 
 .post-show-container {
-  margin-top: 1%;
   width: 100%;
   display: flex;
   justify-content: space-between;
+  min-height: 100%;
 }
 
 .post-show-left {
@@ -42,7 +40,7 @@
 .post-show-right {
   position: -webkit-sticky;
   position: sticky;
-  top: 100px;
+  top: 60px;
   align-self: flex-start;
   background-color: white;
   margin-left: 1.5rem;

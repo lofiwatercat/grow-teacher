@@ -21,7 +21,7 @@ const SearchBar = () => {
             id="search-input"
             type="text"
             onChange={(e) => setQuery(e.target.value)}
-            placeholder={`Search by title and description`}
+            placeholder={`Search by title of posts!`}
             autoFocus="autofocus"
           />
           <a href="#" onClick={handleSubmit}>
