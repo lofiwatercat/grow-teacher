@@ -45,7 +45,7 @@ const PostsShow = () => {
 
   // Load the post
   useEffect(() => {
-    dispatch(fetchPost(postId));
+    dispatch(fetchPost(postId)).catch(error => history.push('/posts'));
   }, []);
 
   // Calculate current progress when post is loaded
