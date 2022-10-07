@@ -12,3 +12,12 @@ export const cuteTimeAgo = (timeAsString) => {
   if (timeDiffInSeconds >= 86400)
     return String(Math.ceil(timeDiffInSeconds / 86400)) + "d";
 };
+
+export const dayTimeAgo = (timeAsString) => {
+  const rightNow = new Date();
+  const timeDiffInSeconds = Math.ceil(
+    (rightNow - new Date(timeAsString)) / 1000
+  );
+
+  return String(Math.ceil(timeDiffInSeconds / 86400)) + " day(s)";
+};

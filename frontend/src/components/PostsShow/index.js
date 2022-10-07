@@ -14,6 +14,8 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CommentsIndex from "../CommentsIndex";
 import { getComments } from "../../store/reducers/comments_reducer";
+import { dayTimeAgo } from "../../utils/dateUtil";
+import Button from "@mui/material/Button";
 
 const PostsShow = () => {
   const sessionUser = useSelector((state) => state.session.user);
@@ -43,7 +45,7 @@ const PostsShow = () => {
 
   // Load the post
   useEffect(() => {
-    dispatch(fetchPost(postId)).catch((error) => history.push("/posts"));
+    dispatch(fetchPost(postId));
   }, []);
 
   // Calculate current progress when post is loaded
@@ -58,17 +60,15 @@ const PostsShow = () => {
     e.preventDefault();
     dispatch(deletePost(postId));
     // After deletion, the deleted post is still in index until refresh
-    // history.push('/posts')
+    history.push("/posts");
   };
 
-  // Total cost of all the items, or goal of the go fund me
+  // Total cost of all the items, or goal of the post
   let totalCost = 0;
 
   post.items.forEach((item) => {
     totalCost += item.totalCost;
   });
-
-  // Make progress bar fill up based on status
 
   const handleEdit = (e) => {
     e.preventDefault();
@@ -86,12 +86,37 @@ const PostsShow = () => {
             <div className="post-image-container">
               <img className="post-image" src={post.imageUrl} alt="post" />
             </div>
+            {sessionUser._id === post.author._id && (
+              <div className="post-show-buttons">
+                <Button
+                  className="post-show-edit-button"
+                  variant="contained"
+                  onClick={handleEdit}
+                >
+                  Edit Post
+                </Button>
+                <Button
+                  className="post-show-delete-button"
+                  variant="contained"
+                  color="error"
+                  onClick={handleDelete}
+                >
+                  Delete Post
+                </Button>
+              </div>
+            )}
             <p>{post.body}</p>
-            <button onClick={handleDelete}>DELETE POST</button>
-            <button onClick={handleEdit}>EDIT POST</button>
             <div className="post-show-bottom">
               <div className="post-show-author">
-                <h6>Author</h6>
+                <div>
+                  <span className="post-show-author-name">
+                    {`${post.author.username} `}
+                  </span>
+                  is organizating this post!
+                </div>
+                <div>
+                  <p>{`Created ${dayTimeAgo(post.createdAt)} ago`}</p>
+                </div>
               </div>
             </div>
             {sessionUser && comments && <CommentsIndex comments={comments} />}
@@ -104,7 +129,6 @@ const PostsShow = () => {
             <ProgressBar now={(currentProgress / totalCost) * 100} />
 
             <div className="item-labels">
-              <p></p>
               <p>Amount</p>
             </div>
             {post.items.map((item) => {

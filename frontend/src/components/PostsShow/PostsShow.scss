@@ -5,6 +5,12 @@
   margin-right: auto;
 }
 
+@media only screen and (max-width: 1100px) {
+  .post-show {
+    width: 100%;
+  }
+}
+
 .post-show-title {
   width: 100%;
   font-size: 2.5rem;
@@ -19,12 +25,16 @@
   display: flex;
   justify-content: space-between;
   min-height: 100%;
+  padding-bottom: 5%;
 }
 
 .post-show-left {
   background-color: yellow;
   width: 65%;
-  padding: 1px;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 3px 3px gainsboro;
+  background-color: white;
 }
 
 .post-image-container {
@@ -35,6 +45,28 @@
 .post-image {
   width: 100%;
   height: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.post-show-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.post-show-edit-button {
+  background-color: var(--grad-clr2) !important;
+  color: black !important;
+}
+
+.post-show-edit-button:hover {
+  background-color: var(--grad-clr1) !important;
+}
+
+.post-show-delete-button {
+  margin-left: 7px !important;
 }
 
 .post-show-right {
@@ -115,7 +147,6 @@
     background-color: #bbb;
     border-radius: 50%;
     display: inline-block;
-
   }
 
   .green {
@@ -132,9 +163,7 @@
     width: 15px;
     border-radius: 50%;
     display: inline-block;
-
   }
-
 }
 
 .post-show-bottom {
@@ -142,14 +171,23 @@
   border-top: 1px solid #c8c8c8;
   border-bottom: 1px solid #c8c8c8;
   width: 100%;
-  height: 60px;
+  height: 80px;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
 }
 
 .post-show-author {
   display: flex;
-  align-items: center;
   width: 100%;
   height: 100%;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.post-show-author p {
+  margin-bottom: 0;
+}
+
+.post-show-author-name {
+  font-weight: 600;
 }
