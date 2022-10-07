@@ -28,7 +28,6 @@ app.use(passport.initialize());
 
 const { isProduction } = require('./config/keys');
 
-console.log("IS PRODUCTION!?!?!?!??!?", isProduction)
 
 if (!isProduction) {
     // enable CORS only in development because React will be on the React
