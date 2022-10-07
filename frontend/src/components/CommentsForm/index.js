@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { createComment } from "../../store/reducers/comments_reducer";
-import { TextareaField } from "evergreen-ui";
+import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./CommentsForm.scss";
@@ -45,16 +45,21 @@ const CommentsForm = () => {
   return (
     <>
       <div className="comments-form">
-        <TextareaField
-          validationMessage={
-            comment.body.length < 2 || comment.body.length > 500
-              ? "Comment must be between 2 and 500 characters"
-              : null
+        <TextField
+          className="comments-form-input"
+          error={
+            !(comment.body.length === 0) &&
+            (comment.body.length < 2 || comment.body.length > 500)
           }
+          id="outlined-basic"
           label="Have something to contribute?"
+          variant="outlined"
           onChange={handleChange}
-          value={comment.body}
           required
+          multiline
+          minRows={4}
+          helperText="Comment must be between 2 and 500 characters"
+          placeholder="Contribute to the conversation"
         />
         <div className="comments-form-button">
           <ThemeProvider theme={theme}>
