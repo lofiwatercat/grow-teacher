@@ -191,8 +191,8 @@ router.delete("/:id", requireUser, (req, res) => {
 });
 
 //get all posts of a user
-router.get("/user/:user_id", (req, res) => {
-  Post.find({ user: req.params.user_id })
+router.get("/user/:user_id", requireUser, (req, res) => {
+  Post.find({ author: req.params.user_id })
     .sort({ createdAt: -1 })
     .populate("author")
     .then((posts) => res.json(posts))

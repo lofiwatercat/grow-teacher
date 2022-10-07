@@ -142,6 +142,16 @@ export const getSearchedPosts = (query) => async dispatch => {
   }
 };
 
+// Get user's posts
+export const fetchUserPosts = (user) => async dispatch => {
+  const res = await jwtFetch(`/api/posts/user/${user._id}`)
+
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(receivePosts(data));
+  }
+}
+
 const postsReducer = (state = {}, action) => {
   Object.freeze(state);
   let nextState = { ...state };

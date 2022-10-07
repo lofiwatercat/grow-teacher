@@ -14,6 +14,7 @@ import PostsIndexPage from "./views/PostsIndexPage";
 import PostsFormEditPage from "./views/PostsFormEditPage";
 import AboutPage from "./views/AboutPage/AboutPage";
 import SearchIndex from "./components/SearchBar/SearchIndex";
+import ProfilePage from "./views/ProfilePage"
 
 import Testing from './components/testing'
 
@@ -37,6 +38,7 @@ function App() {
           <ProtectedRoute exact path="/posts/new" component={PostsFormPage} />
           <ProtectedRoute exact path="/posts/:postId" component={PostsShowPage} />
           <ProtectedRoute exact path="/posts/:postId/edit" component={PostsFormEditPage} />
+          <ProtectedRoute exact path="/profile" component={ProfilePage} />
           <ProtectedRoute exact path="/search/:query" component={SearchIndex} />
           <Route exact path="/about" component={AboutPage}/>
           <Redirect to="/" />
