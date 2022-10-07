@@ -124,11 +124,7 @@ router.post("/",
               ),
             author: req.user._id,
             authorName: req.user.username,
-            imageUrl: s3.getSignedUrl('getObject', {
-                Bucket: 'grow-teacher-dev',
-                Key: req.file.key,
-                // Expires: null
-            }),
+            imageUrl: `https://grow-teacher-dev.s3.${process.env.S3_BUCKET_REGION}.amazonaws.com/${req.file.key}`
           });
 
           let post = await newPost.save();
