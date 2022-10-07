@@ -127,10 +127,6 @@ const PostsShow = () => {
               ${currentProgress} <span>raised of ${totalCost}</span>
             </h2>
             <ProgressBar now={(currentProgress / totalCost) * 100} />
-
-            <div className="item-labels">
-              <p>Amount</p>
-            </div>
             {post.items.map((item) => {
               return (
                 <PostItem
