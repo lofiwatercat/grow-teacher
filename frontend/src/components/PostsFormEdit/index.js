@@ -21,10 +21,6 @@ const PostsForm = () => {
   const { postId } = useParams()
 
   // Function that we call in the use effect to populate the items
-  const populateItems = (i) => {
-    let newItem = post.items[i] 
-    setItemFields([...itemFields, newItem]);
-  };
 
   let post = useSelector(getPost(postId))
 

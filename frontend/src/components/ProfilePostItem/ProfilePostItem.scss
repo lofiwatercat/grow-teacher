@@ -1,0 +1,15 @@
+.post-profile-item:hover {
+  scale: 1.01;
+}
+
+.post-profile-item {
+  text-decoration: none;
+  margin: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+  .post-profile-item {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
