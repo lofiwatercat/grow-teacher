@@ -13,7 +13,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Receieves a post from profile
 const ProfilePostItem = ({ post }) => {
 
-    const calcCurrentProgress = () => {
+  const calcCurrentProgress = () => {
     // A counter to set the current progress to
     let amount = 0;
     for (let i = 0; i < post.items.length; i++) {
@@ -39,7 +39,7 @@ const ProfilePostItem = ({ post }) => {
   return (
     <>
       <Link className="post-profile-item" to={`/posts/${post._id}`}>
-        <Card sx={{ maxWidth: 340, height: 340 }}>
+        <Card sx={{ maxWidth: 340, height: 250 }}>
           <CardMedia component="img" height="170" image={post.imageUrl} alt="post" />
           <CardContent>
             <Typography sx={{ textDecoration: "none" }} className="card-text" gutterBottom variant="h5" component="div">

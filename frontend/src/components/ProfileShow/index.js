@@ -5,12 +5,14 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import { fetchUserPosts, getPosts } from "../../store/reducers/posts_reducer";
 
 import ProfilePostItem from "../ProfilePostItem"
+import "./ProfileShow.scss";
 
 const ProfileShow = () => {
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const history = useHistory();
   const posts = useSelector(getPosts);
+  const [body, setBody] = useState();
 
   // I want to fetch all of the user's posts, useEffect here?
   useEffect(() => {
