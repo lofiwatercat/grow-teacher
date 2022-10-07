@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useHistory } from "react-router-dom";
 
-import fetchUserPosts from "../../store/reducers/posts_reducer";
+import { fetchUserPosts } from "../../store/reducers/posts_reducer";
 
 const ProfileShow = () => {
   const user = useSelector((state) => state.session.user);
