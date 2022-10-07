@@ -123,11 +123,8 @@ router.post("/",
                   })}
               ),
             author: req.user._id,
-            imageUrl: s3.getSignedUrl('getObject', {
-                Bucket: 'grow-teacher-dev',
-                Key: req.file.key,
-                // Expires: null
-            }),
+            authorName: req.user.username,
+            imageUrl: `https://grow-teacher-dev.s3.${process.env.S3_BUCKET_REGION}.amazonaws.com/${req.file.key}`
           });
 
           let post = await newPost.save();
@@ -194,8 +191,8 @@ router.delete("/:id", requireUser, (req, res) => {
 });
 
 //get all posts of a user
-router.get("/user/:user_id", (req, res) => {
-  Post.find({ user: req.params.user_id })
+router.get("/user/:user_id", requireUser, (req, res) => {
+  Post.find({ author: req.params.user_id })
     .sort({ createdAt: -1 })
     .populate("author")
     .then((posts) => res.json(posts))
@@ -308,13 +305,12 @@ router.delete('/:id/comments/:commentId', requireUser, (req, res) => {
 //searchBar
 // `/api/posts/search/${query}`
 router.get('/search/:query', (req, res) => {
-  // console.log(req.params.query, 'this should be the query')
-  console.log(req.params.query)
-
-  Post.find(
-    { title: new RegExp(req.params.query) })
+  Post.find({
+    $or: [{ "title": { $regex: req.params.query, $options: 'i' } },
+      { "authorName": { $regex: req.params.query, $options: 'i' } },
+    ]
+  })
     .then(posts => {
-      console.log("POSTS",posts)
       return res.json(posts);
     })
     .catch(err => res.status(404).json({ nopostsfound: 'No posts found with that query' }));

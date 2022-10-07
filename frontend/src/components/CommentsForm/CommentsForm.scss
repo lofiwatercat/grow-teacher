@@ -4,11 +4,24 @@
   margin-top: 3rem;
 }
 
-.comments-form-button {
+.comments-form-button-container {
   display: flex;
   justify-content: flex-end;
 }
 
+.comments-form-button-container button {
+  background-color: var(--grad-clr2);
+  color: black;
+}
+
+.comments-form-button-container button:hover {
+  background-color: var(--grad-clr1);
+}
+
 .ub-mb_24px {
   margin-bottom: 0;
+}
+
+.comments-form-input {
+  width: 100%;
 }

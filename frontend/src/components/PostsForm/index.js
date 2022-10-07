@@ -86,6 +86,7 @@ const PostsForm = () => {
     data.append("body", copy.body);
     data.append("items", JSON.stringify(copy.items));
     data.append("imageUrl", imageUrl);
+    data.append("authorName", sessionUser.username);
     let res = await dispatch(createPostWithImage(data, imageUrl));
     if (res === -1) {
       setShowErrors(true);

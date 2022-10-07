@@ -10,7 +10,7 @@ const PostsIndexItem = ({ post }) => {
   return (
     <>
       <Link className="post-index-item" to={`/posts/${post._id}`}>
-        <Card sx={{ maxWidth: 340, height: 340 }}>
+        <Card sx={{ maxWidth: 340, height: 340 }} className="post-index-item-card">
           <CardMedia component="img" height="170" image={post.imageUrl} alt="post" />
           <CardContent>
             <Typography sx={{ textDecoration: "none" }} className="card-text" gutterBottom variant="h5" component="div">
