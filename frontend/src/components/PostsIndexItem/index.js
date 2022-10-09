@@ -3,15 +3,14 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import imagePlaceholder from "../../../src/assets/images/image-placeholder.png"
 import "./PostsIndexItem.scss";
 
 // Receieves a post from index
 const PostsIndexItem = ({ post }) => {
   return (
     <>
-      <Link className="post-index-item" to={`posts/${post._id}`}>
-        <Card sx={{ maxWidth: 340, height: 340 }}>
+      <Link className="post-index-item" to={`/posts/${post._id}`}>
+        <Card sx={{ maxWidth: 340, height: 340 }} className="post-index-item-card">
           <CardMedia component="img" height="170" image={post.imageUrl} alt="post" />
           <CardContent>
             <Typography sx={{ textDecoration: "none" }} className="card-text" gutterBottom variant="h5" component="div">

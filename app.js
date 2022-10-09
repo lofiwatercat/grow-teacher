@@ -21,12 +21,13 @@ const commentsRouter = require('./routes/api/comments');
 const app = express();
 
 app.use(logger('dev'));
-app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(cookieParser());
 app.use(passport.initialize());
 
 const { isProduction } = require('./config/keys');
+
 
 if (!isProduction) {
     // enable CORS only in development because React will be on the React
@@ -57,6 +58,9 @@ app.use('/api/comments', commentsRouter);
 // Production, deploying to heroku
 if (isProduction) {
   const path = require('path');
+  // Serve the static assets in the frontend's build folder
+  app.use(express.static(path.resolve("frontend/build")));
+
   // Serve the frontend's index.html file at the root route
   app.get('/', (req, res) => {
     res.cookie('CSRF-TOKEN', req.csrfToken());
@@ -65,8 +69,6 @@ if (isProduction) {
     );
   });
 
-  // Serve the static assets in the frontend's build folder
-  app.use(express.static(path.resolve("./frontend/build")));
 
   // Serve the frontend's index.html file at all other routes NOT starting with /api
   app.get(/^(?!\/?api).*/, (req, res) => {

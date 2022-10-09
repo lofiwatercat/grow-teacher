@@ -1,35 +1,52 @@
-import { useDispatch, useSelector } from "react-redux"
-import { useEffect, useState } from "react"
-import { updatePost, fetchPost } from "../../store/reducers/posts_reducer"
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useRef, useState } from "react";
+import {
+  updatePost,
+  fetchPost,
+  updatePostNoDispatch,
+} from "../../store/reducers/posts_reducer";
 
-const PostItem = ({ currentProgress, setCurrentProgress, post, item, authorId}) => {
-  let currentUserId = useSelector(state => state.session.user._id)
-  let dispatch = useDispatch()
+const PostItem = ({
+  currentProgress,
+  setCurrentProgress,
+  post,
+  item,
+  authorId,
+}) => {
+  let currentUserId = useSelector((state) => state.session.user._id);
+  let dispatch = useDispatch();
+  const didMount = useRef(false);
 
-  const [itemStatus, newItemStatus] = useState(item.status)
-
+  const [itemStatus, newItemStatus] = useState(item.status);
 
   useEffect(() => {
-    // Change the item in the post data
-    for (let i = 0; i < post.items.length; i++) {
-      let arrayItem = post.items[i];
-      if (arrayItem._id === item._id) {
-        post.items[i].status = itemStatus;
-        // Update current progress
-        if (itemStatus === true) {
-          setCurrentProgress(currentProgress + arrayItem.totalCost)
-        } else {
-          setCurrentProgress(currentProgress - arrayItem.totalCost)
+    // Don't send a request on first show
+    if (didMount.current) {
+      // Change the item in the post data
+      for (let i = 0; i < post.items.length; i++) {
+        let arrayItem = post.items[i];
+        if (arrayItem._id === item._id) {
+          post.items[i].status = itemStatus;
+          // Update current progress
+          if (itemStatus === true) {
+            setCurrentProgress(currentProgress + arrayItem.totalCost);
+          } else {
+            setCurrentProgress(currentProgress - arrayItem.totalCost);
+          }
         }
       }
-    }
-    dispatch(updatePost(post, post.imageUrl))
-    dispatch(fetchPost(post._id))
-  }, [itemStatus])
 
-  let statusText = "needed"
+      // Update the post in the backend, but don't need to update the store
+      // because we did that in the for loop already
+      dispatch(updatePostNoDispatch(post, post.imageUrl));
+    } else {
+      didMount.current = true;
+    }
+  }, [itemStatus]);
+
+  let statusText = "needed";
   if (item.status) {
-    statusText = "fufilled"
+    statusText = "fufilled";
   }
 
   let statusColor = "red";
@@ -37,33 +54,55 @@ const PostItem = ({ currentProgress, setCurrentProgress, post, item, authorId}) 
     statusColor = "green";
   }
 
-
   // Switch the item's status
   const handleStatus = (e) => {
     e.preventDefault();
     newItemStatus(!itemStatus);
-  }
+  };
+
+  const itemLabels = () => {
+    return (
+      <div className="item-labels">
+        <p>Item</p>
+        <p>Quantity</p>
+        <p>Cost</p>
+        <p>Status</p>
+      </div>
+    );
+  };
 
   // If current user is post creator, allow them to edit item status
   if (authorId === currentUserId) {
-  return (
-  <div className="post-item">
-      <p className="first-p">{item.name}</p>
-      <p>{item.amount}</p>
-      <p>${item.totalCost}</p>
-      <p>{statusText}</p>
-      <span className={`status-circle ${statusColor}`}></span>
-      <button className="toggle-button" onClick={handleStatus} >Toggle</button>
-  </div>
-    )} else {
-  return (
-  <div className="post-item">
-      <p>{item.name}</p>
-      <p>{item.amount}</p>
-      <p>${item.totalCost}</p>
-      <span className={`status-circle ${statusColor}`}></span>
-  </div>
-    )}
-}
+    return (
+      <>
+        {/* {itemLabels} */}
+        <div className="post-item">
+          <p className="first-p">{item.name}</p>
+          <p>{item.amount}</p>
+          <p>${item.totalCost}</p>
+          <p>{statusText}</p>
+          <span className={`status-circle ${statusColor}`}></span>
+          <button className="toggle-button" onClick={handleStatus}>
+            Toggle
+          </button>
+          <p>{item.details}</p>
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        {/* {itemLabels} */}
+        <div className="post-item">
+          <p>{item.name}</p>
+          <p>{item.amount}</p>
+          <p>${item.totalCost}</p>
+          <span className={`status-circle ${statusColor}`}></span>
+          <p>{statusText}</p>
+        </div>
+      </>
+    );
+  }
+};
 
 export default PostItem;

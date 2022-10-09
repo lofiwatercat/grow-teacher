@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import "./NavBar.scss";
 import { logout } from "../../store/reducers/session_reducer";
 import logo from "../../assets/images/pencil.svg";
+import SearchBar from "../SearchBar";
 
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);
@@ -22,17 +23,20 @@ function NavBar() {
     if (loggedIn) {
       return (
         <ul className="links-nav">
+          <li><SearchBar /></li>
           <li>
             <Link to={"/posts"}>All Posts</Link>
           </li>
           <li>
-            <Link to={"/posts/new"}>Write a Post</Link>
+            <Link to={"/posts/new"}>Create a Post</Link>
           </li>
           <li>
             <Link to={"/profile"}>Profile</Link>
           </li>
           <li>
-            <Link to="/login" onClick={logoutUser}>Logout</Link>
+            <Link to="/login" onClick={logoutUser}>
+              Logout
+            </Link>
           </li>
         </ul>
       );
@@ -54,7 +58,7 @@ function NavBar() {
       <header className="navbar">
         <div className="navbar-left">
           <p>
-            <Link to="/posts" className="logo">
+            <Link to="/" className="logo">
               <img
                 className="logo-image"
                 height={"24px"}
@@ -65,7 +69,9 @@ function NavBar() {
               GrowTeacher
             </Link>
           </p>
-          <p className="navbar-about"><Link to="/about">About</Link></p>
+          <p className="navbar-about">
+            <Link to="/about">About</Link>
+          </p>
         </div>
         <div>{getLinks()}</div>
       </header>

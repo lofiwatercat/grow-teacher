@@ -10,6 +10,7 @@ const validateRegisterInput = require('../../validation/register.js');
 const validateLoginInput = require('../../validation/login.js');
 const { loginUser, restoreUser } = require('../../config/passport');
 const { isProduction } = require('../../config/keys');
+const { requireUser } = require("../../config/passport");
 
 router.get("/test", (req, res) => res.json({ msg: "This is the users route" }));
 
@@ -84,5 +85,29 @@ router.post('/login', validateLoginInput, async (req, res, next) => {
     return res.json(await loginUser(user));
   })(req, res, next);
 });
+
+// Update a user
+router.patch(
+  "/:id",
+  requireUser,
+  async (req, res) => {
+    if (!isProduction) {
+      const csrfToken = req.csrfToekn();
+      res.cookie("CSRF-TOKEN", csrfToken);
+    }
+
+    User.findOneAndUpdate(
+      { _id: req.params.id },
+      req.body,
+      { new: true, useFindAndModify: false },
+      (err, user) => {
+        if (err) {
+          return res.status(400).send(err)
+        }
+        return res.json(user);
+      }
+    )
+  }
+)
 
 module.exports = router;

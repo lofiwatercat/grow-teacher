@@ -1,0 +1,19 @@
+.profile-show {
+  display: flex;
+  margin-top: 10%;
+  justify-content: space-around;
+  background-color: white;
+  margin-left: 10%;
+  margin-right: 10%;
+  border-radius: 10px;
+  box-shadow: 2px 5px 10px darkgray;
+
+  .user-info {
+    margin-top: 30px;
+  }
+}
+
+.user-posts {
+  display: flex;
+  flex-direction: column;
+}

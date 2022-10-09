@@ -8,8 +8,8 @@ const validatePostInput = [
       .withMessage('Title must be between 2 and 60 characters'),
     check('body')
       .exists({ checkFalsy: true })
-      .isLength({ min: 2, max: 255 })
-      .withMessage('Body must be between 2 and 255 characters'),
+      .isLength({ min: 2, max: 1000 })
+      .withMessage('Body must be between 2 and 1000 characters'),
     check("items.*.name")  
       .exists({ checkFalsy: true })
       .withMessage('name must exist'),
