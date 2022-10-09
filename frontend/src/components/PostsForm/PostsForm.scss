@@ -12,6 +12,19 @@
   flex-direction: column;
 }
 
+@media all and (max-width: 1400px) {
+  .posts-form-container {
+    width: 80%;
+  }
+}
+
+@media all and (max-width: 1100px) {
+  .posts-form-container {
+    width: 100%;
+  }
+}
+
+
 .posts-form-header {
   width: 100%;
 }

@@ -17,7 +17,9 @@ const CommentsForm = () => {
   const [comment, setComment] = useState(payload);
 
   const handleChange = (e) => {
-    setComment({ ...comment, body: e.target.value });
+    let input = e.target.value;
+    if (input.length >= 500) input = input.slice(0, 500);
+    setComment({ ...comment, body: input });
   };
 
   const handleSubmit = (e) => {
@@ -46,6 +48,7 @@ const CommentsForm = () => {
           minRows={4}
           helperText="Comment must be between 2 and 500 characters"
           placeholder="Contribute to the conversation"
+          value={comment.body}
         />
         <div className="comments-form-button-container">
           <Button variant="contained" onClick={handleSubmit}>

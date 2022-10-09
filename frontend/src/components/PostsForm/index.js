@@ -29,6 +29,17 @@ const PostsForm = () => {
   };
   const [newPost, setNewPost] = useState(post);
 
+  const handleTextChange = (e, field) => {
+    let input = e.target.value;
+    if (field === "title") {
+      if (input.length >= 60) input = input.slice(0, 60);
+      setNewPost({ ...newPost, title: input });
+    } else {
+      if (input.length >= 1000) input = input.slice(0, 1000);
+      setNewPost({ ...newPost, body: input });
+    }
+  };
+
   const handleItemChange = (e, index) => {
     let data = [...itemFields];
     data[index][e.target.name] = e.target.value;
@@ -116,11 +127,10 @@ const PostsForm = () => {
                   id="outlined-basic"
                   label="Title"
                   variant="outlined"
-                  onChange={(e) =>
-                    setNewPost({ ...newPost, title: e.target.value })
-                  }
+                  onChange={(e) => handleTextChange(e, "title")}
                   required
                   helperText="Title must be between 2 and 60 characters"
+                  value={newPost.title}
                 />
               </div>
 
@@ -135,13 +145,12 @@ const PostsForm = () => {
                 id="outlined-multiline-flexible"
                 label="Description"
                 multiline
-                onChange={(e) =>
-                  setNewPost({ ...newPost, body: e.target.value })
-                }
+                onChange={(e) => handleTextChange(e, "body")}
                 minRows={14}
                 required
                 helperText="Description must be between 2 and 1000 characters"
                 placeholder="Description"
+                value={newPost.body}
               />
               <div className="posts-form-image-button-container">
                 <div className="posts-form-image-button">
