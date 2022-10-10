@@ -203,30 +203,14 @@ const PostsFormEdit = () => {
                 helperText="Description must be between 2 and 1000 characters"
                 placeholder="Description"
               />
-              <div className="posts-form-image-button-container">
-                <div className="posts-form-image-button">
-                  <Button variant="contained" component="label">
-                    Upload Image
-                    <input
-                      type="file"
-                      onChange={handleFile}
-                      accept=".gif,.jpg,.jpeg,.png,.tiff,.raw"
-                      required
-                      hidden
-                    />
-                  </Button>
-                </div>
-              </div>
             </div>
-            <div className="posts-form-image-container">
+            <div
+              className="posts-form-image-container"
+              style={{
+                backgroundImage: `url(${imagePreview})`
+              }}
+            >
               {!imagePreview && <h1>Upload an image!</h1>}
-              {imagePreview && (
-                <img
-                  className="posts-form-image"
-                  src={imagePreview}
-                  alt="preview"
-                />
-              )}
             </div>
           </div>
           <h3>Items:</h3>
