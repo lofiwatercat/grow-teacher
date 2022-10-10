@@ -74,10 +74,8 @@ router.post(
   requireUser,
   upload.single("imageUrl"),
   async (req, res, next) => {
-    if (!isProduction) {
-      const csrfToken = req.csrfToken();
-      res.cookie("CSRF-TOKEN", csrfToken);
-    }
+    const csrfToken = req.csrfToken();
+    res.cookie("CSRF-TOKEN", csrfToken);
     const file = req.file;
     // Check if there are any empty values
     for (const [key, value] of Object.entries(req.body)) {
