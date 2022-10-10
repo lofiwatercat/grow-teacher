@@ -122,6 +122,8 @@ router.post(
     console.log("5 - AFTER NEWPOST")
 
     let post = await newPost.save();
+
+    console.log("6 - AFTER SAVING POST", post);
     post = post.populate("author", "_id username email");
     post.then((post) => res.json(post));
   }
