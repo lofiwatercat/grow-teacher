@@ -1,17 +1,26 @@
-// searchBar `/api/posts/search/${query}`
-router.get("/search/:query", (req, res) => {
-  Post.find({
-    $or: [
-      { title: { $regex: req.params.query, $options: "i" } },
-      { authorName: { $regex: req.params.query, $options: "i" } },
-    ],
-  })
-    .then((posts) => {
-      return res.json(posts);
-    })
-    .catch((err) =>
-      res.status(404).json({ nopostsfound: "No posts found with that query" })
-    );
-});
+  // Progress bar
+  useEffect(() => {
+    // Don't send a request on first show
+    if (didMount.current) {
+      // Change the item in the post data
+      for (let i = 0; i < post.items.length; i++) {
+        let arrayItem = post.items[i];
+        if (arrayItem._id === item._id) {
+          post.items[i].status = itemStatus;
+          // Update current progress
+          if (itemStatus === true) {
+            setCurrentProgress(currentProgress + arrayItem.totalCost);
+          } else {
+            setCurrentProgress(currentProgress - arrayItem.totalCost);
+          }
+        }
+      }
 
+      // Update the post in the backend, but don't need to update the store
+      // because we did that in the for loop already
+      dispatch(updatePostNoDispatch(post, post.imageUrl));
+    } else {
+      didMount.current = true;
+    }
+  }, [itemStatus]);
 
