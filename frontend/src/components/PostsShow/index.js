@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import "./PostsShow.scss";
 import {
   fetchPost,
@@ -39,7 +39,6 @@ const PostsShow = () => {
         amount += arrayItem.totalCost;
       }
     }
-    // console.log(amount);
     return amount;
   };
 
@@ -65,7 +64,6 @@ const PostsShow = () => {
 
   // Total cost of all the items, or goal of the post
   let totalCost = 0;
-
   post.items.forEach((item) => {
     totalCost += item.totalCost;
   });

@@ -9,10 +9,9 @@ const ProfileShowPage = () => {
 
   return (
     <>
-      <ProfileShow/>
+      <ProfileShow />
     </>
   );
 };
 
 export default ProfileShowPage;
-

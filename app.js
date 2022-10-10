@@ -16,7 +16,6 @@ const csurf = require('csurf');
 // const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/api/users');
 const postsRouter = require('./routes/api/posts');
-const commentsRouter = require('./routes/api/comments');
 
 const app = express();
 
@@ -53,7 +52,6 @@ const csrfRouter = require('./routes/api/csrf');
 app.use('/api/users', usersRouter);
 app.use('/api/csrf', csrfRouter);
 app.use('/api/posts', postsRouter);
-app.use('/api/comments', commentsRouter);
 
 // Production, deploying to heroku
 if (isProduction) {

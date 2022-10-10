@@ -22,7 +22,6 @@ const ProfilePostItem = ({ post }) => {
         amount += arrayItem.totalCost;
       }
     }
-    // console.log(amount);
     return amount;
   };
 
@@ -30,7 +29,6 @@ const ProfilePostItem = ({ post }) => {
 
   // Total cost of all the items, or goal of the post
   let totalCost = 0;
-
   post.items.forEach((item) => {
     totalCost += item.totalCost;
   });

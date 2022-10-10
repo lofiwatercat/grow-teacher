@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
 import NavBar from "./components/NavBar"
 import { getCurrentUser } from "./store/reducers/session_reducer"
-
 import { AuthRoute, ProtectedRoute } from "./components/Routes/Routes";
 
 import LoginForm from "./components/SessionForms/LoginForm";
@@ -15,8 +14,6 @@ import PostsFormEditPage from "./views/PostsFormEditPage";
 import AboutPage from "./views/AboutPage/AboutPage";
 import SearchIndex from "./components/SearchBar/SearchIndex";
 import ProfilePage from "./views/ProfilePage"
-
-import Testing from './components/testing'
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -34,7 +31,6 @@ function App() {
           <AuthRoute exact path="/login" component={LoginForm} />
           <AuthRoute exact path="/signup" component={LoginForm} />
           <ProtectedRoute exact path="/posts" component={PostsIndexPage} />
-          <ProtectedRoute exact path="/testing" component={Testing} />
           <ProtectedRoute exact path="/posts/new" component={PostsFormPage} />
           <ProtectedRoute exact path="/posts/:postId" component={PostsShowPage} />
           <ProtectedRoute exact path="/posts/:postId/edit" component={PostsFormEditPage} />

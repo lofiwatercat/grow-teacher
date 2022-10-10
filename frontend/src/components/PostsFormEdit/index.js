@@ -9,7 +9,6 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
-import "./PostsFormEdit.scss";
 import { useHistory, useParams } from "react-router-dom";
 import { Pane, Dialog } from "evergreen-ui";
 
@@ -49,8 +48,6 @@ const PostsFormEdit = () => {
       items: [],
     };
   }
-
-  // Make an array of the post items, and set the itemFields to it
 
   const [newPost, setNewPost] = useState(post);
 
@@ -207,7 +204,7 @@ const PostsFormEdit = () => {
             <div
               className="posts-form-image-container"
               style={{
-                backgroundImage: `url(${imagePreview})`
+                backgroundImage: `url(${imagePreview})`,
               }}
             >
               {!imagePreview && <h1>Upload an image!</h1>}

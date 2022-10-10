@@ -1,9 +1,6 @@
 import jwtFetch from "../jwt";
-import { jwtImageFetch, getCookie } from "../jwt";
-import {
-  RECEIVE_COMMENT,
-  UPDATE_COMMENT,
-} from "./comments_reducer";
+import { getCookie } from "../jwt";
+import { RECEIVE_COMMENT, UPDATE_COMMENT } from "./comments_reducer";
 
 export const RECEIVE_POST = "posts/RECEIVE_POST";
 export const RECEIVE_POSTS = "posts/RECEIVE_POSTS";
@@ -67,31 +64,15 @@ export const fetchPost = (id) => async (dispatch) => {
 export const createPostWithImage = (data) => async (dispatch) => {
   const jwtToken = localStorage.getItem("jwtToken");
   const auth = "Bearer " + jwtToken;
-  
+
   const res = await fetch(`/api/posts`, {
     method: "POST",
     body: data,
     headers: {
-      "Authorization": auth,
+      Authorization: auth,
       "CSRF-Token": getCookie("CSRF-TOKEN"),
-    }
+    },
   });
-
-  if (res.ok) {
-    const newPost = await res.json();
-    dispatch(receivePost(newPost));
-    return newPost
-  } else {
-    return -1;
-  }
-};
-
-export const createPost = (post, imageUrl) => async (dispatch) => {
-  const res = await jwtFetch(`/api/posts`, {
-    method: "POST",
-    body: JSON.stringify(post),
-    file: imageUrl
-  }).catch(res => {return -1});
 
   if (res.ok) {
     const newPost = await res.json();
@@ -122,7 +103,7 @@ export const updatePostNoDispatch = (post, imageUrl) => async (dispatch) => {
     body: JSON.stringify(post),
     file: imageUrl,
   });
-}
+};
 
 export const deletePost = (postId) => async (dispatch) => {
   const res = await jwtFetch(`/api/posts/${postId}`, {
@@ -134,25 +115,25 @@ export const deletePost = (postId) => async (dispatch) => {
   }
 };
 
-export const getSearchedPosts = (query) => async dispatch => {
-  const res = await jwtFetch(`/api/posts/search/${query}`)
+export const getSearchedPosts = (query) => async (dispatch) => {
+  const res = await jwtFetch(`/api/posts/search/${query}`);
   if (res.status >= 400) throw res;
-
-  if (res.ok) {
-      const data = await res.json();
-      dispatch(receivePosts(data));
-  }
-};
-
-// Get user's posts
-export const fetchUserPosts = (user) => async dispatch => {
-  const res = await jwtFetch(`/api/posts/user/${user._id}`)
 
   if (res.ok) {
     const data = await res.json();
     dispatch(receivePosts(data));
   }
-}
+};
+
+// Get user's posts
+export const fetchUserPosts = (user) => async (dispatch) => {
+  const res = await jwtFetch(`/api/posts/user/${user._id}`);
+
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(receivePosts(data));
+  }
+};
 
 const postsReducer = (state = {}, action) => {
   Object.freeze(state);
@@ -160,7 +141,7 @@ const postsReducer = (state = {}, action) => {
 
   switch (action.type) {
     case RECEIVE_POSTS:
-      nextState = {}; 
+      nextState = {};
       action.posts.forEach((post) => (nextState[post._id] = post));
       return nextState;
     case RECEIVE_POST:

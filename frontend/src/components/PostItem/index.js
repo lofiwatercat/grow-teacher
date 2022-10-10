@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import {
-  updatePost,
-  fetchPost,
   updatePostNoDispatch,
 } from "../../store/reducers/posts_reducer";
 import "./PostItem.scss";

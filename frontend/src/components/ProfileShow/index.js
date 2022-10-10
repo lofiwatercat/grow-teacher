@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { fetchUserPosts, getPosts } from "../../store/reducers/posts_reducer";
 
@@ -37,7 +37,6 @@ const ProfileShow = () => {
           </div>
         </div>
         <div className="posts-container">
-          {/* User posts go in here*/}
           {posts.map((post) => {
             return <ProfilePostItem post={post} key={post._id} />;
           })}
