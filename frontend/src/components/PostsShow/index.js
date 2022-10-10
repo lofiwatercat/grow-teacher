@@ -83,9 +83,10 @@ const PostsShow = () => {
         </div>
         <div className="post-show-container">
           <div className="post-show-left">
-            <div className="post-image-container">
-              <img className="post-image" src={post.imageUrl} alt="post" />
-            </div>
+            <div
+              className="post-image-container"
+              style={{ backgroundImage: `url(${post.imageUrl})` }}
+            ></div>
             {sessionUser._id === post.author._id && (
               <div className="post-show-buttons">
                 <Button
