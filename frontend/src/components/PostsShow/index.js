@@ -45,7 +45,7 @@ const PostsShow = () => {
 
   // Load the post
   useEffect(() => {
-    dispatch(fetchPost(postId)).catch(error => history.push("/posts"));
+    dispatch(fetchPost(postId)).catch((error) => history.push("/posts"));
   }, []);
 
   // Calculate current progress when post is loaded
@@ -105,7 +105,7 @@ const PostsShow = () => {
                 </Button>
               </div>
             )}
-            <p>{post.body}</p>
+            <p className="post-body">{post.body}</p>
             <div className="post-show-bottom">
               <div className="post-show-author">
                 <div>
@@ -127,18 +127,20 @@ const PostsShow = () => {
               ${currentProgress} <span>raised of ${totalCost}</span>
             </h2>
             <ProgressBar now={(currentProgress / totalCost) * 100} />
-            {post.items.map((item) => {
-              return (
-                <PostItem
-                  currentProgress={currentProgress}
-                  setCurrentProgress={setCurrentProgress}
-                  post={post}
-                  item={item}
-                  authorId={post.author._id}
-                  key={`${item._id}`}
-                />
-              );
-            })}
+            <div className="post-items-container">
+              {post.items.map((item) => {
+                return (
+                  <PostItem
+                    currentProgress={currentProgress}
+                    setCurrentProgress={setCurrentProgress}
+                    post={post}
+                    item={item}
+                    authorId={post.author._id}
+                    key={`${item._id}`}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
