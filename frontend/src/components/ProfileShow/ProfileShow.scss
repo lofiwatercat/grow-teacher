@@ -1,19 +1,32 @@
-.profile-show {
-  display: flex;
-  margin-top: 10%;
-  justify-content: space-around;
-  background-color: white;
-  margin-left: 10%;
-  margin-right: 10%;
-  border-radius: 10px;
-  box-shadow: 2px 5px 10px darkgray;
-
-  .user-info {
-    margin-top: 30px;
-  }
+.user-info-container {
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 1%;
+  margin-bottom: 1%;
 }
 
-.user-posts {
+.user-info {
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0px 0px 3px 3px gainsboro;
+  background-color: white;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 80px;
+}
+
+.user-info-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.user-info-details p {
+  padding-left: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0;
 }
