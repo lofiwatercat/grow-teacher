@@ -28,6 +28,8 @@ Teachers in public schools need to use their personal finances to make up for th
 ### Search Bar
 Users can search for posts based on title or username
 
+![](https://github.com/loFiWaterCat/grow-teacher/blob/readme/images/Screen%20Shot%202022-10-09%20at%2010.13.57%20PM.png)
+
 # Contributors
 * [Alan Tran-Kiem](https://github.com/loFiWaterCat)
 * [zuzu Chaoui](https://github.com/zoumus)
