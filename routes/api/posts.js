@@ -81,10 +81,19 @@ router.post(
     const file = req.file;
     // Check if there are any empty values
     for (const [key, value] of Object.entries(req.body)) {
-      if (value === "") {
+      if (value == false) {
         return null;
       }
     }
+
+    for (let i = 0; i < req.body.items.length; i++) {
+      for (const [key, value] of Object.entries(req.body.items[i])) {
+        if (value == false) {
+          return null;
+        }
+      }
+    }
+
 
     if (!req.file) {
       return null;
