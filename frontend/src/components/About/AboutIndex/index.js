@@ -1,6 +1,7 @@
 import AboutIndexItem from "../AboutIndexItem";
 import derek from "../../../assets/images/derek.jpg";
 import zuzu from "../../../assets/images/zuzu.PNG";
+import alan from "../../../assets/images/alan-profile-pic.jpg"
 import "./AboutIndex.scss";
 
 const AboutIndex = () => {
@@ -9,11 +10,11 @@ const AboutIndex = () => {
     fullName: "Alan Tran-Kiem",
     role: "Team Lead",
     git: "https://github.com/loFiWaterCat",
-    linkedin: "linked",
-    angellist: "angellist",
-    email: "email",
-    funFact: "",
-    futureGoals: "",
+    linkedin: "https://www.linkedin.com/in/alan-tran-kiem-971210252/",
+    angellist: "https://angel.co/u/alan-tran-kiem",
+    email: "mailto:alan001tk@gmail.com",
+    funFact: "Love jamming out to music, hit me up for jam sessions. And bass guitars rock.",
+    futureGoals: "Make my own video game using Rust.",
   };
   const dev2 = {
     name: "derek",
