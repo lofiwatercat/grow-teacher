@@ -45,7 +45,7 @@ const ProfilePostItem = ({ post }) => {
             <Typography sx={{ textDecoration: "none" }} className="card-profile-text" gutterBottom variant="h5" component="div">
               {post.title}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" color="text.secondary" component={'span'}>
               <ProgressBar now={(currentProgress / totalCost) * 100} />
             </Typography>
           </CardContent>

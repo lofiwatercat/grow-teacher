@@ -14,7 +14,6 @@ const ProfileShow = () => {
   const posts = useSelector(getPosts);
   const [body, setBody] = useState();
 
-  // I want to fetch all of the user's posts, useEffect here?
   useEffect(() => {
     dispatch(fetchUserPosts(user));
   }, [user]);

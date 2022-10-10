@@ -21,7 +21,7 @@ const PostsIndex = () => {
           <h3>All Posts</h3>
         </div>
         <div className="posts-container">
-          {posts.map((post) => {
+          {posts && posts.map((post) => {
             return <PostsIndexItem post={post} key={post._id} />;
           })}
         </div>
