@@ -56,23 +56,7 @@ router.get("/", async (req, res) => {
   }
   Post.find({})
     .then(async (posts) => {
-      const payload = await Promise.all(
-        posts.map(async (post) => {
-          const p = {};
-          p.title = post.title;
-          p.body = post.body;
-          p.items = post.items;
-          p.imageUrl = post.imageUrl;
-          p.author_name = await User.findOne({ _id: post.author }).then(
-            (res) => {
-              return res.username;
-            }
-          );
-          p._id = post._id;
-          return p;
-        })
-      );
-      res.json(payload);
+      res.json(posts);
     })
     .catch((err) => res.status(404).json({ nopostsfound: "No posts found" }));
 });
