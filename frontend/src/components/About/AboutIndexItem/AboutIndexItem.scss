@@ -44,6 +44,8 @@
 }
 
 .alan {
+  background-image: url("../../../assets/images/alan.jpg");
+  background-position: bottom;
 }
 
 .dev-image.derek {
@@ -103,6 +105,12 @@
   font-size: 1rem;
 }
 
+@media all and (max-width: 1531px) {
+  .dev-facts {
+    min-height: 248px;
+  }
+}
+
 @media only screen and (max-width: 1500px) {
   .dev-details {
     h1 {
@@ -115,7 +123,7 @@
   }
 }
 
-@media only screen and (max-width: 1100px) {
+@media all and (max-width: 1100px) {
   .dev-container {
     width: 80%;
   }

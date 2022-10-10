@@ -1,7 +1,4 @@
 import AboutIndexItem from "../AboutIndexItem";
-import derek from "../../../assets/images/derek.jpg";
-import zuzu from "../../../assets/images/zuzu.PNG";
-import alan from "../../../assets/images/alan-profile-pic.jpg"
 import "./AboutIndex.scss";
 
 const AboutIndex = () => {
@@ -13,7 +10,8 @@ const AboutIndex = () => {
     linkedin: "https://www.linkedin.com/in/alan-tran-kiem-971210252/",
     angellist: "https://angel.co/u/alan-tran-kiem",
     email: "mailto:alan001tk@gmail.com",
-    funFact: "Love jamming out to music, hit me up for jam sessions. And bass guitars rock.",
+    funFact:
+      "Love jamming out to music, hit me up for jam sessions. And bass guitars rock.",
     futureGoals: "Make my own video game using Rust.",
   };
   const dev2 = {
@@ -25,7 +23,8 @@ const AboutIndex = () => {
     angellist: "https://angel.co/u/derek-li-30",
     email: "mailto:liderek63@gmail.com",
     funFact: "I have a very good sense of balance",
-    futureGoals: "To utilize my technical skills in creating products that improve people's lives, and eventually own a company.",
+    futureGoals:
+      "To utilize my technical skills in creating products that improve people's lives, and eventually own a company.",
   };
   const dev3 = {
     name: "zuzu",
