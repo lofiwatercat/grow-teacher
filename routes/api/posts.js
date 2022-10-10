@@ -10,7 +10,7 @@ const s3 = new Aws.S3({
   secretAccessKey: process.env.S3_SECRET_ACCESS_KEY, // secretAccessKey is also store in .env file
   region: process.env.S3_BUCKET_REGION,
 });
-const fileImage = `image-${Date.now()}.jpeg` || `image-${Date.now()}.png`;
+
 const upload = multer({
   storage: multers3({
     s3,
