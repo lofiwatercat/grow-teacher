@@ -1,7 +1,8 @@
 .dev-container {
   display: block;
   width: 30%;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
   aspect-ratio: 1 / 1;
   border: 1px solid black;
   margin-bottom: 10px;
@@ -37,6 +38,27 @@
   overflow: hidden;
   margin-top: 8px;
   margin-bottom: 8px;
+  object-fit: cover;
+  background-size: cover;
+}
+
+.alan {
+}
+
+.dev-image.derek {
+  background-image: url("../../../assets/images/derek.jpg");
+  background-position: center;
+}
+
+.dev-image.zuzu {
+  background-image: url("../../../assets/images/zuzu.PNG");
+  background-position: center;
+}
+
+.dev-bottom-half {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .dev-details {
@@ -69,6 +91,15 @@
 .dev-personal-links li:hover {
   opacity: 0.7;
   transition: 0s;
+}
+
+.dev-facts {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.dev-facts p {
+  font-size: 1rem;
 }
 
 @media only screen and (max-width: 1500px) {
@@ -108,5 +139,11 @@
     h1 {
       font-size: 2rem;
     }
+  }
+}
+
+@media all and (min-width: 1934px) {
+  .dev-facts {
+    height: 152px;
   }
 }

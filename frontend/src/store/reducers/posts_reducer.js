@@ -60,7 +60,7 @@ export const fetchPost = (id) => async (dispatch) => {
     const post = await res.json();
     return dispatch(receivePost(post));
   } else {
-    throw new Error ("Nonexistent Post");
+    return -1;
   }
 };
 
