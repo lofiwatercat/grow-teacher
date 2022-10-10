@@ -89,7 +89,6 @@ const PostItem = ({
           <p>{statusText}</p>
         </div>
         <div className="post-item-status">
-          <span className={`status-circle ${statusColor}`}></span>
           {authorId === currentUserId && (
             <Switch onClick={handleStatus} checked={!item.status} />
           )}
@@ -97,7 +96,7 @@ const PostItem = ({
       </div>
       <div className="post-item-details">
         <div>
-          <span className="post-item-details-span">{"Details: "}</span>
+          <span className="post-item-details-span"></span>
           {item.details ? item.details : "No details given"}
         </div>
       </div>

@@ -14,6 +14,7 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+  transform: rotate(180deg);
 }
 
 .post-item div {
@@ -46,6 +47,7 @@
 }
 
 .post-item-details-span {
+  margin-left: 30px;
   font-style: italic;
   color: black !important;
   font-size: 0.875rem !important;
@@ -53,7 +55,7 @@
 
 // change color scheme of the switch button
 .MuiSwitch-thumb {
-  color: gray !important;
+  color: green !important;
 }
 
 .MuiSwitch-track {
