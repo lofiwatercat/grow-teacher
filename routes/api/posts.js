@@ -55,7 +55,7 @@ router.get("/", async (req, res) => {
     res.cookie("CSRF-TOKEN", csrfToken);
   }
   Post.find({})
-    .then(async (posts) => {
+    .then((posts) => {
       res.json(posts);
     })
     .catch((err) => res.status(404).json({ nopostsfound: "No posts found" }));

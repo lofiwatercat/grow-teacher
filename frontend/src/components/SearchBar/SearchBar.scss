@@ -8,6 +8,7 @@
   align-items: center;
 }
 
+
 .search-bar-container input {
   width: 0;
   outline: none;
@@ -32,6 +33,10 @@
 
 @media screen and (max-width: 1500px) {
   .search-bar-container:hover input {
+    width: 118px;
+  }
+
+  #search-input:hover {
     width: 118px;
   }
 }
