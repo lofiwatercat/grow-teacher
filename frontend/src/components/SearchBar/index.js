@@ -20,6 +20,28 @@ const SearchBar = () => {
 
     const search = document.querySelector("#search-input");
 
+    search.addEventListener("focus", () => {
+      if (window.innerWidth <= 1500) {
+        search.style.width = smallWidth;
+      } else if (window.innerWidth <= 1600) {
+        search.style.width = mediumWidth;
+      } else {
+        search.style.width = largeWidth;
+      }
+      search.style.paddingLeft = "10px";
+    });
+
+    search.addEventListener("click", () => {
+      if (window.innerWidth <= 1500) {
+        search.style.width = smallWidth;
+      } else if (window.innerWidth <= 1600) {
+        search.style.width = mediumWidth;
+      } else {
+        search.style.width = largeWidth;
+      }
+      search.style.paddingLeft = "10px";
+    });
+
     search.addEventListener("mouseenter", () => {
       if (window.innerWidth <= 1500) {
         search.style.width = smallWidth;
