@@ -28,14 +28,9 @@ Teachers in public schools need to use their personal finances to make up for th
 * Comments created by the logged in user have update and delete option
 
 ### Search Bar
-Users can search for posts based on title or username
+Users can search for posts based on title or username. It was a challenge to add a filter that worked properly with our schema.
 
 ![](https://github.com/loFiWaterCat/grow-teacher/blob/main/frontend/src/assets/images/search-code.png)
-
-### Progress bar
-Items' status will contribute to the progress bar of a post
-
-![](https://github.com/loFiWaterCat/grow-teacher/blob/main/frontend/src/assets/images/progress-bar-code.png)
 
 # Contributors
 * [Alan Tran-Kiem](https://github.com/loFiWaterCat)
