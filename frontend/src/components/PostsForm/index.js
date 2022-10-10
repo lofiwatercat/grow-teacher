@@ -79,17 +79,25 @@ const PostsForm = () => {
     }
   };
 
-  const handleErrors = async (post) => {
+  const handleErrors = async (createPost) => {
     let errorsArr = [];
 
-    if (post.title.length <= 1) {
+    if (createPost.title.length <= 1) {
       errorsArr.push("Invalid title length");
     }
-    if (post.body.length <= 1) {
+    if (createPost.body.length <= 1) {
       errorsArr.push("Invalid description length");
     }
 
-    post.items.forEach((item, i) => {
+    if (imageUrl === null) {
+      errorsArr.push("Please include a picture")
+    }
+
+    if (itemFields.length === 0) {
+      errorsArr.push("Please include at least one item");
+    }
+
+    createPost.items.forEach((item, i) => {
       if (item.name.length === 0) {
         errorsArr.push(`Item ${i + 1}: Invalid name length`);
       }
@@ -298,8 +306,10 @@ const PostsForm = () => {
             confirmLabel="Got it!"
             minHeightContent={0}
           >
-            {errors.map((error) => (
-              <p className="post-errors">{error}</p>
+            {errors.map((error, i) => (
+              <p className="post-errors" key={i}>
+                {error}
+              </p>
             ))}
           </Dialog>
         </Pane>
