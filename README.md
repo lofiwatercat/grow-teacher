@@ -32,6 +32,11 @@ Users can search for posts based on title or username. It was a challenge to add
 
 ![](https://github.com/loFiWaterCat/grow-teacher/blob/main/frontend/src/assets/images/search-code.png)
 
+### Progress Bar
+Items' status will contribute to the funding goal of a post. Making the use effect not launch on first render cut down on unnecessary requests.
+
+![](https://github.com/loFiWaterCat/grow-teacher/blob/main/frontend/src/assets/images/progress-bar-code.png)
+
 # Contributors
 * [Alan Tran-Kiem](https://github.com/loFiWaterCat)
 * [Zuzu Chaoui](https://github.com/zoumus)
