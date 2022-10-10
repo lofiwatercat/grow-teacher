@@ -90,7 +90,7 @@ const PostsForm = () => {
     }
 
     if (imageUrl === null) {
-      errorsArr.push("Please include a picture")
+      errorsArr.push("Please include a picture");
     }
 
     if (itemFields.length === 0) {
@@ -212,15 +212,15 @@ const PostsForm = () => {
                 </div>
               </div>
             </div>
-            <div className="posts-form-image-container">
+            <div
+              className="posts-form-image-container"
+              style={{
+                backgroundImage: imagePreview
+                  ? `url(${imagePreview})`
+                  : "url('')",
+              }}
+            >
               {!imagePreview && <h1>Upload an image!</h1>}
-              {imagePreview && (
-                <img
-                  className="posts-form-image"
-                  src={imagePreview}
-                  alt="preview"
-                />
-              )}
             </div>
           </div>
           <h3>Items:</h3>
