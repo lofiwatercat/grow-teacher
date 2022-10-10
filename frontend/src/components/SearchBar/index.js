@@ -19,6 +19,18 @@ const SearchBar = () => {
     const largeWidth = "350px";
 
     const search = document.querySelector("#search-input");
+
+    search.addEventListener("mouseenter", () => {
+      if (window.innerWidth <= 1500) {
+        search.style.width = smallWidth;
+      } else if (window.innerWidth <= 1600) {
+        search.style.width = mediumWidth;
+      } else {
+        search.style.width = largeWidth;
+      }
+      search.style.paddingLeft = "10px";
+    });
+
     search.addEventListener("mouseleave", () => {
       if (search.value) {
         if (window.innerWidth <= 1500) {
