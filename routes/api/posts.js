@@ -264,7 +264,7 @@ router.delete("/:id/comments/:commentId", requireUser, (req, res) => {
     });
 });
 
-//searchBar `/api/posts/search/${query}`
+// searchBar `/api/posts/search/${query}`
 router.get("/search/:query", (req, res) => {
   Post.find({
     $or: [

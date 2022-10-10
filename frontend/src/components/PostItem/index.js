@@ -19,6 +19,7 @@ const PostItem = ({
 
   const [itemStatus, newItemStatus] = useState(item.status);
 
+  // Progress bar
   useEffect(() => {
     // Don't send a request on first show
     if (didMount.current) {
