@@ -1,7 +1,9 @@
 .dev-container {
   display: block;
+  background-color: white;
   width: 30%;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
   aspect-ratio: 1 / 1;
   border: 1px solid black;
   margin-bottom: 10px;
@@ -37,6 +39,29 @@
   overflow: hidden;
   margin-top: 8px;
   margin-bottom: 8px;
+  object-fit: cover;
+  background-size: cover;
+}
+
+.alan {
+  background-image: url("../../../assets/images/alan.jpg");
+  background-position: bottom;
+}
+
+.dev-image.derek {
+  background-image: url("../../../assets/images/derek.jpg");
+  background-position: center;
+}
+
+.dev-image.zuzu {
+  background-image: url("../../../assets/images/zuzu.PNG");
+  background-position: center;
+}
+
+.dev-bottom-half {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .dev-details {
@@ -71,6 +96,21 @@
   transition: 0s;
 }
 
+.dev-facts {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.dev-facts p {
+  font-size: 1rem;
+}
+
+@media all and (max-width: 1531px) {
+  .dev-facts {
+    min-height: 248px;
+  }
+}
+
 @media only screen and (max-width: 1500px) {
   .dev-details {
     h1 {
@@ -83,7 +123,7 @@
   }
 }
 
-@media only screen and (max-width: 1100px) {
+@media all and (max-width: 1100px) {
   .dev-container {
     width: 80%;
   }
@@ -108,5 +148,11 @@
     h1 {
       font-size: 2rem;
     }
+  }
+}
+
+@media all and (min-width: 1934px) {
+  .dev-facts {
+    height: 152px;
   }
 }

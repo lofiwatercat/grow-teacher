@@ -1,5 +1,5 @@
 .posts-index-page {
-  width: 80%;
+  width: 60%;
   margin: auto;
   margin-top: 100px;
 }
@@ -10,7 +10,7 @@
 
 .posts-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   width: 100%;
   margin: auto;
   background-color: white;
@@ -18,26 +18,48 @@
   box-shadow: 0px 0px 3px 3px gainsboro;
 }
 
-@media only screen and (max-width: 1100px) {
+@media all and (max-width: 1400px) {
+  .posts-index-page {
+    width: 80%;
+  }
+}
+
+@media all and (max-width: 1100px) {
   .posts-index-page {
     width: 100%;
   }
 }
 
-@media only screen and (max-width: 1700px) {
+@media all and (min-width: 4000px) {
+  .posts-container {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media all and (max-width: 2560px) {
+  .posts-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media all and (max-width: 1700px) {
   .posts-container {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media only screen and (max-width: 800px) {
+@media all and (max-width: 800px) {
   .posts-container {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media all and (max-width: 600px) {
   .posts-container {
     grid-template-columns: repeat(1, 1fr);
+  }
+
+  .post-index-item-card {
+    width: 340px !important;
   }
 }

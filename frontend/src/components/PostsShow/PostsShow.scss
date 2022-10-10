@@ -1,11 +1,17 @@
 .post-show {
-  width: 70%;
+  width: 60%;
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-@media only screen and (max-width: 1100px) {
+@media all and (max-width: 1400px) {
+  .post-show {
+    width: 80%;
+  }
+}
+
+@media all and (max-width: 1100px) {
   .post-show {
     width: 100%;
   }
@@ -30,7 +36,7 @@
 
 .post-show-left {
   background-color: yellow;
-  width: 65%;
+  width: 60%;
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0px 0px 3px 3px gainsboro;
@@ -39,14 +45,19 @@
 
 .post-image-container {
   width: 100%;
-  height: 45vh;
+  height: 50vh;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .post-image {
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 45vh;
   border-radius: 15px;
   overflow: hidden;
+  object-fit: cover;
 }
 
 .post-show-buttons {
@@ -73,6 +84,10 @@
   margin-left: 7px !important;
 }
 
+.post-body {
+  margin-top: 10px;
+}
+
 .post-show-right {
   position: -webkit-sticky;
   position: sticky;
@@ -82,7 +97,7 @@
   margin-left: 1.5rem;
   border-radius: 15px;
   box-shadow: 0px 0px 3px 3px gainsboro;
-  width: 35%;
+  width: 40%;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -103,25 +118,6 @@
     }
   }
 
-  .post-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 3%;
-    padding-bottom: 3%;
-    border-bottom: 1px solid gray;
-
-    p {
-      height: 50%;
-      text-transform: capitalize;
-      margin-bottom: 0px;
-    }
-
-    .first-p {
-      width: 20%;
-    }
-  }
-
   .toggle-button {
     height: 50%;
     padding: 5px;
@@ -135,36 +131,26 @@
     background-color: #074d81;
   }
 
-  .item-labels {
-    display: flex;
-    margin-left: 27%;
-  }
-
-  #label-2 {
-    margin-top: 10%;
-    margin-right: 11%;
-  }
-
   .status-circle {
-    height: 15px;
-    width: 15px;
+    height: 20px;
+    width: 20px;
     background-color: #bbb;
     border-radius: 50%;
     display: inline-block;
   }
 
   .green {
-    background-color: green;
-    height: 15px;
-    width: 15px;
+    background-color: #006a4e;
+    height: 20px;
+    width: 20px;
     border-radius: 50%;
     display: inline-block;
   }
 
   .red {
-    background-color: red;
-    height: 15px;
-    width: 15px;
+    background-color: #e32636;
+    height: 20px;
+    width: 20px;
     border-radius: 50%;
     display: inline-block;
   }

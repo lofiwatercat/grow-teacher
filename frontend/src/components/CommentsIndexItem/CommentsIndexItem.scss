@@ -1,8 +1,3 @@
-.comment-modal {
-  padding-left: 32px;
-  padding-right: 32px;
-}
-
 .comment-edit-form {
   padding: 10px;
 }
@@ -12,7 +7,7 @@
 }
 
 .comments-index-item:hover {
-  background-color: rgba($color: #000000, $alpha: 0.05)
+  background-color: rgba($color: #000000, $alpha: 0.05);
 }
 
 .comments-item-header {
@@ -44,7 +39,7 @@
   font-weight: 0;
   font-size: 12px;
   margin-left: 5px;
-  color:rgba($color: #000000, $alpha: 0.55)
+  color: rgba($color: #000000, $alpha: 0.55);
 }
 
 .comments-item-body {

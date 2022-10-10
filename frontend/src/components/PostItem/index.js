@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import {
-  updatePost,
-  fetchPost,
   updatePostNoDispatch,
 } from "../../store/reducers/posts_reducer";
+import "./PostItem.scss";
+import Switch from "@mui/material/Switch";
 
 const PostItem = ({
   currentProgress,
@@ -71,38 +71,35 @@ const PostItem = ({
     );
   };
 
-  // If current user is post creator, allow them to edit item status
-  if (authorId === currentUserId) {
-    return (
-      <>
-        {/* {itemLabels} */}
-        <div className="post-item">
-          <p className="first-p">{item.name}</p>
-          <p>{item.amount}</p>
-          <p>${item.totalCost}</p>
-          <p>{statusText}</p>
-          <span className={`status-circle ${statusColor}`}></span>
-          <button className="toggle-button" onClick={handleStatus}>
-            Toggle
-          </button>
-          <p>{item.details}</p>
+  return (
+    <>
+      <div className="post-item">
+        <div>
+          <p className="post-item-name">{item.name}</p>
         </div>
-      </>
-    );
-  } else {
-    return (
-      <>
-        {/* {itemLabels} */}
-        <div className="post-item">
-          <p>{item.name}</p>
-          <p>{item.amount}</p>
+        <div>
+          <p className="post-item-amount">{item.amount}</p>
+        </div>
+        <div className="post-item-total">
           <p>${item.totalCost}</p>
-          <span className={`status-circle ${statusColor}`}></span>
+        </div>
+        <div className="post-item-status-text">
           <p>{statusText}</p>
         </div>
-      </>
-    );
-  }
+        <div className="post-item-status">
+          {authorId === currentUserId && (
+            <Switch onClick={handleStatus} checked={!item.status} />
+          )}
+        </div>
+      </div>
+      <div className="post-item-details">
+        <div>
+          <span className="post-item-details-span"></span>
+          {item.details ? item.details : "No details given"}
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default PostItem;

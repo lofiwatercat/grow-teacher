@@ -17,7 +17,7 @@ const PostsIndexItem = ({ post }) => {
               {post.title}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {post.author_name}
+              {post.authorName}
             </Typography>
           </CardContent>
         </Card>

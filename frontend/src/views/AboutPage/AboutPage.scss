@@ -6,7 +6,8 @@
     "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
 
-.about-text h1, .about-index-header h1 {
+.about-text h1,
+.about-index-header h1 {
   text-align: center;
   font-size: 2rem;
   margin-bottom: 20px;
@@ -14,10 +15,13 @@
 
 .about-text {
   margin-bottom: 30px;
+  box-shadow: 0px 0px 3px 3px gainsboro;
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .about-text p {
   text-align: start;
   font-size: 24px;
 }
-

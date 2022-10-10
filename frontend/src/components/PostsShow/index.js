@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import "./PostsShow.scss";
 import {
   fetchPost,
@@ -39,7 +39,6 @@ const PostsShow = () => {
         amount += arrayItem.totalCost;
       }
     }
-    // console.log(amount);
     return amount;
   };
 
@@ -65,7 +64,6 @@ const PostsShow = () => {
 
   // Total cost of all the items, or goal of the post
   let totalCost = 0;
-
   post.items.forEach((item) => {
     totalCost += item.totalCost;
   });
@@ -83,9 +81,10 @@ const PostsShow = () => {
         </div>
         <div className="post-show-container">
           <div className="post-show-left">
-            <div className="post-image-container">
-              <img className="post-image" src={post.imageUrl} alt="post" />
-            </div>
+            <div
+              className="post-image-container"
+              style={{ backgroundImage: `url(${post.imageUrl})` }}
+            ></div>
             {sessionUser._id === post.author._id && (
               <div className="post-show-buttons">
                 <Button
@@ -105,14 +104,14 @@ const PostsShow = () => {
                 </Button>
               </div>
             )}
-            <p>{post.body}</p>
+            <p className="post-body">{post.body}</p>
             <div className="post-show-bottom">
               <div className="post-show-author">
                 <div>
                   <span className="post-show-author-name">
                     {`${post.author.username} `}
                   </span>
-                  is organizating this post!
+                  is organizing this post!
                 </div>
                 <div>
                   <p>{`Created ${dayTimeAgo(post.createdAt)} ago`}</p>
@@ -127,18 +126,20 @@ const PostsShow = () => {
               ${currentProgress} <span>raised of ${totalCost}</span>
             </h2>
             <ProgressBar now={(currentProgress / totalCost) * 100} />
-            {post.items.map((item) => {
-              return (
-                <PostItem
-                  currentProgress={currentProgress}
-                  setCurrentProgress={setCurrentProgress}
-                  post={post}
-                  item={item}
-                  authorId={post.author._id}
-                  key={`${item._id}`}
-                />
-              );
-            })}
+            <div className="post-items-container">
+              {post.items.map((item) => {
+                return (
+                  <PostItem
+                    currentProgress={currentProgress}
+                    setCurrentProgress={setCurrentProgress}
+                    post={post}
+                    item={item}
+                    authorId={post.author._id}
+                    key={`${item._id}`}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

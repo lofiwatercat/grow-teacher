@@ -19,6 +19,7 @@ const PostsForm = () => {
   const [imageUrl, setImageUrl] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [showErrors, setShowErrors] = useState(false);
+  const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -28,6 +29,17 @@ const PostsForm = () => {
     items: [],
   };
   const [newPost, setNewPost] = useState(post);
+
+  const handleTextChange = (e, field) => {
+    let input = e.target.value;
+    if (field === "title") {
+      if (input.length >= 60) input = input.slice(0, 60);
+      setNewPost({ ...newPost, title: input });
+    } else {
+      if (input.length >= 1000) input = input.slice(0, 1000);
+      setNewPost({ ...newPost, body: input });
+    }
+  };
 
   const handleItemChange = (e, index) => {
     let data = [...itemFields];
@@ -67,6 +79,45 @@ const PostsForm = () => {
     }
   };
 
+  const handleErrors = async (createPost) => {
+    let errorsArr = [];
+
+    if (createPost.title.length <= 1) {
+      errorsArr.push("Invalid title length");
+    }
+    if (createPost.body.length <= 1) {
+      errorsArr.push("Invalid description length");
+    }
+
+    if (imageUrl === null) {
+      errorsArr.push("Please include a picture");
+    }
+
+    if (itemFields.length === 0) {
+      errorsArr.push("Please include at least one item");
+    }
+
+    createPost.items.forEach((item, i) => {
+      if (item.name.length === 0) {
+        errorsArr.push(`Item ${i + 1}: Invalid name length`);
+      }
+      if (item.totalCost < 1) {
+        errorsArr.push(`Item ${i + 1}: Invalid total cost`);
+      }
+      if (item.amount < 1) {
+        errorsArr.push(`Item ${i + 1}: Invalid amount`);
+      }
+    });
+
+    setErrors(errorsArr);
+    return errorsArr;
+  };
+
+  const handleCloseErrors = () => {
+    setShowErrors(false);
+    setErrors([]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -80,6 +131,12 @@ const PostsForm = () => {
     // thus, have to make a copy of newPost, and reassign the items field
     let copy = newPost;
     copy.items = itemFields;
+
+    let postErrors = await handleErrors(copy);
+    if (postErrors.length !== 0) {
+      setShowErrors(true);
+      return;
+    }
 
     const data = new FormData();
     data.append("title", copy.title);
@@ -116,11 +173,10 @@ const PostsForm = () => {
                   id="outlined-basic"
                   label="Title"
                   variant="outlined"
-                  onChange={(e) =>
-                    setNewPost({ ...newPost, title: e.target.value })
-                  }
+                  onChange={(e) => handleTextChange(e, "title")}
                   required
                   helperText="Title must be between 2 and 60 characters"
+                  value={newPost.title}
                 />
               </div>
 
@@ -135,13 +191,12 @@ const PostsForm = () => {
                 id="outlined-multiline-flexible"
                 label="Description"
                 multiline
-                onChange={(e) =>
-                  setNewPost({ ...newPost, body: e.target.value })
-                }
+                onChange={(e) => handleTextChange(e, "body")}
                 minRows={14}
                 required
                 helperText="Description must be between 2 and 1000 characters"
                 placeholder="Description"
+                value={newPost.body}
               />
               <div className="posts-form-image-button-container">
                 <div className="posts-form-image-button">
@@ -158,15 +213,15 @@ const PostsForm = () => {
                 </div>
               </div>
             </div>
-            <div className="posts-form-image-container">
+            <div
+              className="posts-form-image-container"
+              style={{
+                backgroundImage: imagePreview
+                  ? `url(${imagePreview})`
+                  : "url('')",
+              }}
+            >
               {!imagePreview && <h1>Upload an image!</h1>}
-              {imagePreview && (
-                <img
-                  className="posts-form-image"
-                  src={imagePreview}
-                  alt="preview"
-                />
-              )}
             </div>
           </div>
           <h3>Items:</h3>
@@ -247,11 +302,17 @@ const PostsForm = () => {
           <Dialog
             isShown={showErrors}
             title="Please meet the requirements of all fields"
-            onCloseComplete={() => setShowErrors(false)}
+            onCloseComplete={() => handleCloseErrors()}
             preventBodyScrolling
             confirmLabel="Got it!"
             minHeightContent={0}
-          ></Dialog>
+          >
+            {errors.map((error, i) => (
+              <p className="post-errors" key={i}>
+                {error}
+              </p>
+            ))}
+          </Dialog>
         </Pane>
       )}
     </>

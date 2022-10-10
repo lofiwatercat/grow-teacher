@@ -13,3 +13,16 @@
     margin-right: auto;
   }
 }
+
+.card-profile-text {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  overflow: hidden;
+}
+
+.card-profile-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 40%;
+}

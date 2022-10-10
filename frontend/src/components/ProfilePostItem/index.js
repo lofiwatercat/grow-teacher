@@ -22,7 +22,6 @@ const ProfilePostItem = ({ post }) => {
         amount += arrayItem.totalCost;
       }
     }
-    // console.log(amount);
     return amount;
   };
 
@@ -30,7 +29,6 @@ const ProfilePostItem = ({ post }) => {
 
   // Total cost of all the items, or goal of the post
   let totalCost = 0;
-
   post.items.forEach((item) => {
     totalCost += item.totalCost;
   });
@@ -38,16 +36,15 @@ const ProfilePostItem = ({ post }) => {
 
   return (
     <>
-      <Link className="post-profile-item" to={`/posts/${post._id}`}>
-        <Card sx={{ maxWidth: 340, height: 250 }}>
+      <Link className="post-index-item" to={`/posts/${post._id}`}>
+        <Card sx={{ maxWidth: 340, height: 300 }} className="post-index-item-card">
           <CardMedia component="img" height="170" image={post.imageUrl} alt="post" />
-          <CardContent>
-            <Typography sx={{ textDecoration: "none" }} className="card-text" gutterBottom variant="h5" component="div">
+          <CardContent className="card-profile-content">
+            <Typography sx={{ textDecoration: "none" }} className="card-profile-text" gutterBottom variant="h5" component="div">
               {post.title}
-              <ProgressBar now={(currentProgress / totalCost) * 100} />
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {post.author_name}
+            <Typography variant="body2" color="text.secondary" component={'span'}>
+              <ProgressBar now={(currentProgress / totalCost) * 100} />
             </Typography>
           </CardContent>
         </Card>

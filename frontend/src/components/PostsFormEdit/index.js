@@ -9,7 +9,6 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
-import "./PostsFormEdit.scss";
 import { useHistory, useParams } from "react-router-dom";
 import { Pane, Dialog } from "evergreen-ui";
 
@@ -19,6 +18,7 @@ const PostsFormEdit = () => {
   const [imageUrl, setImageUrl] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [showErrors, setShowErrors] = useState(false);
+  const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
   const { postId } = useParams();
@@ -37,8 +37,8 @@ const PostsFormEdit = () => {
       if (itemFields.length !== postItems.length) {
         setItemFields(postItems);
       }
-      setImagePreview(post.imageUrl);
     }
+    setImagePreview(post.imageUrl);
   }, [postId]);
 
   if (!post) {
@@ -49,9 +49,18 @@ const PostsFormEdit = () => {
     };
   }
 
-  // Make an array of the post items, and set the itemFields to it
-
   const [newPost, setNewPost] = useState(post);
+
+  const handleTextChange = (e, field) => {
+    let input = e.target.value;
+    if (field === "title") {
+      if (input.length >= 60) input = input.slice(0, 60);
+      setNewPost({ ...newPost, title: input });
+    } else {
+      if (input.length >= 1000) input = input.slice(0, 1000);
+      setNewPost({ ...newPost, body: input });
+    }
+  };
 
   const handleItemChange = (e, index) => {
     let data = [...itemFields];
@@ -92,6 +101,41 @@ const PostsFormEdit = () => {
     setItemFields(data);
   };
 
+  const handleErrors = async (updatedPost) => {
+    let errorsArr = [];
+
+    if (updatedPost.title.length <= 1) {
+      errorsArr.push("Invalid title length");
+    }
+    if (updatedPost.body.length <= 1) {
+      errorsArr.push("Invalid description length");
+    }
+
+    if (itemFields.length === 0) {
+      errorsArr.push("Please include at least one item");
+    }
+
+    updatedPost.items.forEach((item, i) => {
+      if (item.name.length === 0) {
+        errorsArr.push(`Item ${i + 1}: Invalid name length`);
+      }
+      if (item.totalCost < 1) {
+        errorsArr.push(`Item ${i + 1}: Invalid total cost`);
+      }
+      if (item.amount < 1) {
+        errorsArr.push(`Item ${i + 1}: Invalid amount`);
+      }
+    });
+
+    setErrors(errorsArr);
+    return errorsArr;
+  };
+
+  const handleCloseErrors = () => {
+    setShowErrors(false);
+    setErrors([]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -105,8 +149,15 @@ const PostsFormEdit = () => {
     // thus, have to make a copy of newPost, and reassign the items field
     let copy = newPost;
     copy.items = itemFields;
-    let postId = await dispatch(updatePost(copy, imageUrl));
-    history.push(`/posts/${post._id}`);
+
+    let postErrors = await handleErrors(copy);
+    if (postErrors.length !== 0) {
+      setShowErrors(true);
+      return;
+    } else {
+      let postId = await dispatch(updatePost(copy, imageUrl));
+      history.push(`/posts/${post._id}`);
+    }
   };
 
   return (
@@ -114,7 +165,7 @@ const PostsFormEdit = () => {
       {sessionUser && (
         <div className="posts-form-container">
           <div className="posts-form-header">
-            <h1>Create a new post!</h1>
+            <h1>Update your post!</h1>
           </div>
           <div className="posts-form-topic-container">
             <div className="posts-form-topic">
@@ -122,18 +173,13 @@ const PostsFormEdit = () => {
                 <TextField
                   className="posts-form-title"
                   error={
-                    !(
-                      newPost.title.length === 0 ||
-                      (newPost.title.length >= 2 && newPost.title.length <= 60)
-                    )
+                    !(newPost.title.length >= 2 && newPost.title.length <= 60)
                   }
                   id="outlined-basic"
                   label="Title"
                   variant="outlined"
                   value={newPost.title}
-                  onChange={(e) =>
-                    setNewPost({ ...newPost, title: e.target.value })
-                  }
+                  onChange={(e) => handleTextChange(e, "title")}
                   required
                   helperText="Title must be between 2 and 60 characters"
                 />
@@ -142,47 +188,26 @@ const PostsFormEdit = () => {
               <TextField
                 className="posts-form-body"
                 error={
-                  !(
-                    newPost.body.length === 0 ||
-                    (newPost.body.length >= 2 && newPost.body.length <= 1000)
-                  )
+                  !(newPost.body.length >= 2 && newPost.body.length <= 1000)
                 }
                 id="outlined-multiline-flexible"
                 label="Description"
                 multiline
                 value={newPost.body}
-                onChange={(e) =>
-                  setNewPost({ ...newPost, body: e.target.value })
-                }
+                onChange={(e) => handleTextChange(e, "body")}
                 minRows={14}
                 required
                 helperText="Description must be between 2 and 1000 characters"
                 placeholder="Description"
               />
-              <div className="posts-form-image-button-container">
-                <div className="posts-form-image-button">
-                  <Button variant="contained" component="label" disabled>
-                    Upload Image
-                    <input
-                      type="file"
-                      onChange={handleFile}
-                      accept=".gif,.jpg,.jpeg,.png,.tiff,.raw"
-                      required
-                      hidden
-                    />
-                  </Button>
-                </div>
-              </div>
             </div>
-            <div className="posts-form-image-container">
+            <div
+              className="posts-form-image-container"
+              style={{
+                backgroundImage: `url(${imagePreview})`,
+              }}
+            >
               {!imagePreview && <h1>Upload an image!</h1>}
-              {imagePreview && (
-                <img
-                  className="posts-form-image"
-                  src={imagePreview}
-                  alt="preview"
-                />
-              )}
             </div>
           </div>
           <h3>Items:</h3>
@@ -253,7 +278,7 @@ const PostsFormEdit = () => {
           </div>
           <div className="create-button">
             <Button variant="contained" onClick={handleSubmit}>
-              Create
+              Update
             </Button>
           </div>
         </div>
@@ -263,11 +288,17 @@ const PostsFormEdit = () => {
           <Dialog
             isShown={showErrors}
             title="Please meet the requirements of all fields"
-            onCloseComplete={() => setShowErrors(false)}
+            onCloseComplete={() => handleCloseErrors()}
             preventBodyScrolling
             confirmLabel="Got it!"
             minHeightContent={0}
-          ></Dialog>
+          >
+            {errors.map((error, i) => (
+              <p className="post-errors" key={i}>
+                {error}
+              </p>
+            ))}
+          </Dialog>
         </Pane>
       )}
     </>

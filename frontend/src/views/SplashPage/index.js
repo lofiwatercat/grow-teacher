@@ -18,7 +18,7 @@ const SplashPage = () => {
             <h1>Join the community!</h1>
           </div>
           <div>
-            <button onClick={() => history.push('/login')}>Start here</button>
+            <button onClick={() => history.push("/login")}>Start here</button>
           </div>
         </div>
       </div>
@@ -38,7 +38,9 @@ const SplashPage = () => {
               <div className="instruction-title">
                 <h3>Ask for help</h3>
               </div>
-              <p>Create a post with a funding goal and/or equipment checklist.</p>
+              <p>
+                Create a post with a funding goal and/or equipment checklist.
+              </p>
             </div>
           </div>
           <div className="instruction">

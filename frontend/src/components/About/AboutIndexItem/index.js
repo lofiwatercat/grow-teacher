@@ -1,22 +1,25 @@
-import placeholder from "../../../assets/images/image-placeholder.png";
 import { VscGithub } from "react-icons/vsc";
 import { AiOutlineLinkedin } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
 import { FaAngellist } from "react-icons/fa";
 import "./AboutIndexItem.scss";
 
-const AboutIndexItem = ({ devs }) => {
+const AboutIndexItem = ({ dev }) => {
   return (
     <>
-      {devs.map((dev) => (
-        <div className="dev-container">
-          <div className="dev-profile">
-            <div className="dev-image-container">
-              <img className="dev-image" src={placeholder} alt="dev-pic" />
-            </div>
-            <div className="dev-details">
-              <h1>{dev.name}</h1>
-              <p>{dev.role}</p>
+      <div className="dev-container">
+        <div className="dev-profile">
+          <div className="dev-image-container">
+            <div className={`dev-image ${dev.name}`}></div>
+          </div>
+          <div className="dev-details">
+            <h1>{dev.fullName}</h1>
+            <p>{dev.role}</p>
+            <div className="dev-bottom-half">
+              <div className="dev-facts">
+                <p>{`Fun Fact: ${dev.funFact}`}</p>
+                <p>{`Future Goals: ${dev.futureGoals}`}</p>
+              </div>
               <ul className="dev-personal-links">
                 <li>
                   <a target="_blank" rel="noreferrer" href={dev.git}>
@@ -42,7 +45,7 @@ const AboutIndexItem = ({ devs }) => {
             </div>
           </div>
         </div>
-      ))}
+      </div>
     </>
   );
 };

@@ -1,0 +1,67 @@
+.post-item {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding-top: 3%;
+}
+
+.post-item p {
+  text-transform: capitalize;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.post-item-status {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  transform: rotate(180deg);
+}
+
+.post-item div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.post-item-name {
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.post-item-amount {
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.post-item-status-text {
+  font-style: italic;
+}
+
+.post-item-details {
+  display: flex;
+  border-bottom: 1px solid #c8c8c8;
+  font-size: 0.875rem;
+  color: black;
+  padding-bottom: 5px;
+}
+
+.post-item-details-span {
+  margin-left: 30px;
+  font-style: italic;
+  color: black !important;
+  font-size: 0.875rem !important;
+}
+
+// change color scheme of the switch button
+.MuiSwitch-thumb {
+  color: green !important;
+}
+
+.MuiSwitch-track {
+  background-color: gray !important;
+}
+
+.Mui-checked .MuiSwitch-thumb {
+  color: #e32636 !important;
+}

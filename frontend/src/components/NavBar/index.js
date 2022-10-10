@@ -23,7 +23,9 @@ function NavBar() {
     if (loggedIn) {
       return (
         <ul className="links-nav">
-          <li><SearchBar /></li>
+          <li>
+            <SearchBar />
+          </li>
           <li>
             <Link to={"/posts"}>All Posts</Link>
           </li>
