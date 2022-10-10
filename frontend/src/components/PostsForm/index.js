@@ -19,6 +19,7 @@ const PostsForm = () => {
   const [imageUrl, setImageUrl] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [showErrors, setShowErrors] = useState(false);
+  const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -78,6 +79,36 @@ const PostsForm = () => {
     }
   };
 
+  const handleErrors = async (post) => {
+    let errorsArr = [];
+
+    if (post.title.length <= 1) {
+      errorsArr.push("Invalid title length");
+    }
+    if (post.body.length <= 1) {
+      errorsArr.push("Invalid description length");
+    }
+
+    post.items.forEach((item, i) => {
+      if (item.name.length === 0) {
+        errorsArr.push(`Item ${i + 1}: Invalid name length`);
+      }
+      if (item.totalCost < 1) {
+        errorsArr.push(`Item ${i + 1}: Invalid total cost`);
+      }
+      if (item.amount < 1) {
+        errorsArr.push(`Item ${i + 1}: Invalid amount`);
+      }
+    });
+
+    setErrors(errorsArr);
+  };
+
+  const handleCloseErrors = () => {
+    setShowErrors(false);
+    setErrors([]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -91,6 +122,12 @@ const PostsForm = () => {
     // thus, have to make a copy of newPost, and reassign the items field
     let copy = newPost;
     copy.items = itemFields;
+
+    await handleErrors(copy);
+    if (errors.length !== 0) {
+      setShowErrors(true);
+      return;
+    }
 
     const data = new FormData();
     data.append("title", copy.title);
@@ -256,11 +293,15 @@ const PostsForm = () => {
           <Dialog
             isShown={showErrors}
             title="Please meet the requirements of all fields"
-            onCloseComplete={() => setShowErrors(false)}
+            onCloseComplete={() => handleCloseErrors()}
             preventBodyScrolling
             confirmLabel="Got it!"
             minHeightContent={0}
-          ></Dialog>
+          >
+            {errors.map((error) => (
+              <p className="post-errors">{error}</p>
+            ))}
+          </Dialog>
         </Pane>
       )}
     </>
