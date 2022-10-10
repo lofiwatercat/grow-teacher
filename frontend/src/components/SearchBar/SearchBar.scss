@@ -13,6 +13,7 @@
   padding-left: 10px;
 }
 
+
 .search-bar-container input {
   width: 0;
   outline: none;
@@ -39,4 +40,9 @@
   .search-bar-container:hover input {
     width: 118px;
   }
+}
+
+#search-input:focus {
+  width: 118px;
+  padding-left: 10px;
 }
