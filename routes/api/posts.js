@@ -75,13 +75,14 @@ router.post(
   upload.single("imageUrl"),
   async (req, res, next) => {
     if (!isProduction) {
+      console.log("1 - IN PRODUCTION");
       const csrfToken = req.csrfToken();
       res.cookie("CSRF-TOKEN", csrfToken);
     }
-    const file = req.file;
     // Check if there are any empty values
     for (const [key, value] of Object.entries(req.body)) {
       if (value == false) {
+        console.log("2 - IN REQ.BODY", key, value)
         return null;
       }
     }
@@ -89,15 +90,17 @@ router.post(
     for (let i = 0; i < req.body.items.length; i++) {
       for (const [key, value] of Object.entries(req.body.items[i])) {
         if (value == false) {
+          console.log("3 - IN REQ.BODY.ITEMS", key, value)
           return null;
         }
       }
     }
 
-
     if (!req.file) {
       return null;
     }
+
+    console.log("4 - AFTER CHECKS")
 
     const newPost = new Post({
       title: req.body.title,
@@ -115,6 +118,8 @@ router.post(
       authorName: req.user.username,
       imageUrl: `https://grow-teacher-dev.s3.${process.env.S3_BUCKET_REGION}.amazonaws.com/${req.file.key}`,
     });
+
+    console.log("5 - AFTER NEWPOST")
 
     let post = await newPost.save();
     post = post.populate("author", "_id username email");
