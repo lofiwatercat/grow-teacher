@@ -112,7 +112,7 @@ const PostsShow = () => {
                   <span className="post-show-author-name">
                     {`${post.author.username} `}
                   </span>
-                  is organizating this post!
+                  is organizing this post!
                 </div>
                 <div>
                   <p>{`Created ${dayTimeAgo(post.createdAt)} ago`}</p>
