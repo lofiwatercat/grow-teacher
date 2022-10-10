@@ -90,12 +90,21 @@ router.post("/",
       res.cookie("CSRF-TOKEN", csrfToken);
     }
     const file = req.file;
+    // Check if there are any empty values
+    for (const [key, value] of Object.entries(req.body)) {
+      if (value === "") {
+        return null;
+      }
+    }
+
+    if (!req.file) {
+      return null;
+    }
     
           const newPost = new Post({
             title: req.body.title,
             body: req.body.body,
             items: JSON.parse(req.body.items).map(
-              
                 (item) => {
 
                   return ({
