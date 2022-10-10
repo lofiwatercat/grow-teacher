@@ -110,6 +110,7 @@ const PostsForm = () => {
     });
 
     setErrors(errorsArr);
+    return errorsArr;
   };
 
   const handleCloseErrors = () => {
@@ -131,8 +132,8 @@ const PostsForm = () => {
     let copy = newPost;
     copy.items = itemFields;
 
-    await handleErrors(copy);
-    if (errors.length !== 0) {
+    let postErrors = await handleErrors(copy);
+    if (postErrors.length !== 0) {
       setShowErrors(true);
       return;
     }
