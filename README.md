@@ -38,9 +38,9 @@ Items' status will contribute to the funding goal of a post. Making the use effe
 ![](https://github.com/loFiWaterCat/grow-teacher/blob/main/frontend/src/assets/images/progress-bar-code.png)
 
 # Contributors
-* [Alan Tran-Kiem](https://github.com/loFiWaterCat)
-* [Zuzu Chaoui](https://github.com/zoumus)
-* [Derek Li](https://github.com/deli123)
+* [Alan Tran-Kiem](https://github.com/loFiWaterCat) - Team Lead
+* [Zuzu Chaoui](https://github.com/zoumus) - Backend Lead
+* [Derek Li](https://github.com/deli123) - Frontend Lead
 
 # Future Features
 * Upload profile picture
