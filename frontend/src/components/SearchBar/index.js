@@ -14,10 +14,20 @@ const SearchBar = () => {
   };
 
   useEffect(() => {
+    const smallWidth = "118px";
+    const mediumWidth = "235px";
+    const largeWidth = "350px";
+
     const search = document.querySelector("#search-input");
     search.addEventListener("mouseleave", () => {
       if (search.value) {
-        search.style.width = "350px";
+        if (window.innerWidth <= 1500) {
+          search.style.width = smallWidth;
+        } else if (window.innerWidth <= 1600) {
+          search.style.width = mediumWidth;
+        } else {
+          search.style.width = largeWidth;
+        }
         search.style.paddingLeft = "10px";
       } else {
         search.style.width = "0px";
@@ -27,7 +37,13 @@ const SearchBar = () => {
 
     const searchButton = document.querySelector(".search-button");
     searchButton.addEventListener("mouseover", () => {
-      search.style.width = "350px";
+      if (window.innerWidth <= 1500) {
+        search.style.width = smallWidth;
+      } else if (window.innerWidth <= 1600) {
+        search.style.width = mediumWidth;
+      } else {
+        search.style.width = largeWidth;
+      }
       search.style.paddingLeft = "10px";
     });
     searchButton.addEventListener("mouseleave", () => {
