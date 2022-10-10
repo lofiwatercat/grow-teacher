@@ -32,6 +32,11 @@ Users can search for posts based on title or username
 
 ![](https://github.com/loFiWaterCat/grow-teacher/blob/main/frontend/src/assets/images/search-code.png)
 
+### Progress bar
+Items' status will contribute to the progress bar of a post
+
+![](https://github.com/loFiWaterCat/grow-teacher/blob/main/frontend/src/assets/images/progress-bar-code.png)
+
 # Contributors
 * [Alan Tran-Kiem](https://github.com/loFiWaterCat)
 * [Zuzu Chaoui](https://github.com/zoumus)
