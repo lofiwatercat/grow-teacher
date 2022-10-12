@@ -65,7 +65,6 @@ export const createPostWithImage = (data) => async (dispatch) => {
   const jwtToken = localStorage.getItem("jwtToken");
   const auth = "Bearer " + jwtToken;
 
-  console.error(auth)
   const res = await fetch(`/api/posts`, {
     method: "POST",
     body: data,
