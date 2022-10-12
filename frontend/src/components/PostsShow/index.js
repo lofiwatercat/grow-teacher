@@ -7,15 +7,14 @@ import {
   getPost,
   deletePost,
 } from "../../store/reducers/posts_reducer";
-
 import PostItem from "../PostItem";
-
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CommentsIndex from "../CommentsIndex";
 import { getComments } from "../../store/reducers/comments_reducer";
 import { dayTimeAgo } from "../../utils/dateUtil";
 import Button from "@mui/material/Button";
+import { Pane, Dialog } from "evergreen-ui";
 
 const PostsShow = () => {
   const sessionUser = useSelector((state) => state.session.user);
@@ -25,6 +24,8 @@ const PostsShow = () => {
 
   const post = useSelector(getPost(postId));
   const comments = useSelector(getComments);
+  const [showDelete, setShowDelete] = useState(false);
+
   // Progress bar status
   const [currentProgress, setCurrentProgress] = useState(0);
 
@@ -55,8 +56,8 @@ const PostsShow = () => {
   // Exit out for first render
   if (!post?.author) return null;
 
-  const handleDelete = (e) => {
-    e.preventDefault();
+  const handleDelete = () => {
+    setShowDelete(false);
     dispatch(deletePost(postId));
     // After deletion, the deleted post is still in index until refresh
     history.push("/posts");
@@ -98,7 +99,7 @@ const PostsShow = () => {
                   className="post-show-delete-button"
                   variant="contained"
                   color="error"
-                  onClick={handleDelete}
+                  onClick={() => setShowDelete(true)}
                 >
                   Delete Post
                 </Button>
@@ -143,6 +144,23 @@ const PostsShow = () => {
           </div>
         </div>
       </div>
+      {showDelete && (
+        <Pane>
+          <Dialog
+            isShown={showDelete}
+            title={"Delete Post"}
+            intent={"danger"}
+            preventBodyScrolling
+            onCloseComplete={() => setShowDelete(false)}
+            confirmLabel={"Delete"}
+            onConfirm={() => handleDelete()}
+          >
+            <div className="comment-modal">
+              Are you sure you want to delete this post?
+            </div>
+          </Dialog>
+        </Pane>
+      )}
     </>
   );
 };
