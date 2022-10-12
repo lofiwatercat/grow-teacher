@@ -78,10 +78,16 @@
 
 .post-show-edit-button:hover {
   background-color: var(--grad-clr1) !important;
+  color: white !important;
 }
 
 .post-show-delete-button {
   margin-left: 7px !important;
+}
+
+.post-show-delete-button:hover {
+  background-color: #e32636 !important;
+  color: white !important;
 }
 
 .post-body {
