@@ -15,7 +15,7 @@ const { requireUser } = require("../../config/passport");
 router.get("/test", (req, res) => res.json({ msg: "This is the users route" }));
 
 router.get('/current', restoreUser, (req, res) => {
-  if (!isProduction) {
+  if (true) {
     // In development, allow React server to gain access to the CSRF token
     // whenever the current user information is first loaded into the
     // React application
