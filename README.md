@@ -21,7 +21,7 @@ Teachers in public schools need to use their personal finances to make up for th
 * Images attached by a user are saved to the database and stored in an AWS S3 bucket
 * All posts are displayed on the post index page and posts created by the logged in user display update and delete options on the post show page
 
-![](https://github.com/loFiWaterCat/grow-teacher/blob/readme/images/ezgif.com-gif-maker.gif)
+![](https://github.com/loFiWaterCat/grow-teacher/tree/main/images)
 
 ### Create, Read, Update, and Delete Comment
 * Logged in users can comment on posts
