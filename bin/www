@@ -29,10 +29,13 @@ mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => {
     debug("Connected to MongoDB successfully");
-
-    server.listen(port);
   })
-  .catch(err => debug(err));
+  .catch(err => {
+    debug(err);
+  })
+  .finally(() => {
+    server.listen(port);
+  });
 
 /**
  * Listen on provided port, on all network interfaces.
