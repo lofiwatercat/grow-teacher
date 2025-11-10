@@ -4,6 +4,18 @@
  * Module dependencies.
  */
 
+// Catch unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  // Don't exit - let the server try to continue
+});
+
+// Catch uncaught exceptions
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+  process.exit(1);
+});
+
 var app = require('../app');
 // removed ('backend:server')
 var debug = require('debug')('backend:server');
@@ -11,6 +23,13 @@ var http = require('http');
 
 const mongoose = require('mongoose');
 const { mongoURI: db } = require('../config/keys.js');
+
+// Validate MongoDB URI
+if (!db) {
+  console.error('MONGO_URI is not set! Please set the MONGO_URI environment variable.');
+  console.error('Current NODE_ENV:', process.env.NODE_ENV);
+  process.exit(1);
+}
 
 /**
  * Get port from environment and store in Express.

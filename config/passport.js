@@ -40,6 +40,15 @@ passport.use(new LocalStrategy({
     };
   };
 
+// Validate secretOrKey before creating JWT strategy
+if (!secretOrKey) {
+  const error = new Error('SECRET_OR_KEY is not set or is empty. Please set the SECRET_OR_KEY environment variable.');
+  console.error(error.message);
+  console.error('Current NODE_ENV:', process.env.NODE_ENV);
+  console.error('SECRET_OR_KEY value:', process.env.SECRET_OR_KEY ? 'SET (but may be empty)' : 'NOT SET');
+  throw error;
+}
+
 const options = {};
 options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 options.secretOrKey = secretOrKey;
