@@ -13,10 +13,19 @@ process.on('unhandledRejection', (reason, promise) => {
 // Catch uncaught exceptions
 process.on('uncaughtException', (error) => {
   console.error('Uncaught Exception:', error);
+  console.error('Stack:', error.stack);
   process.exit(1);
 });
 
-var app = require('../app');
+// Wrap app require in try-catch to catch module loading errors
+var app;
+try {
+  app = require('../app');
+} catch (error) {
+  console.error('Error loading app.js:', error);
+  console.error('Stack:', error.stack);
+  process.exit(1);
+}
 // removed ('backend:server')
 var debug = require('debug')('backend:server');
 var http = require('http');
