@@ -23,8 +23,8 @@ export const clearSessionErrors = () => ({
   type: CLEAR_SESSION_ERRORS,
 });
 
-export const signup = (user) => startSession(user, "api/users/register");
-export const login = (user) => startSession(user, "api/users/login");
+export const signup = (user) => startSession(user, "/api/users/register");
+export const login = (user) => startSession(user, "/api/users/login");
 
 const startSession = (userInfo, route) => async (dispatch) => {
   try {
@@ -36,9 +36,20 @@ const startSession = (userInfo, route) => async (dispatch) => {
     localStorage.setItem("jwtToken", token);
     return dispatch(receiveCurrentUser(user));
   } catch (err) {
-    const res = await err.json();
-    if (res.statusCode === 400) {
-      return dispatch(receiveErrors(res.errors));
+    // Handle error response
+    try {
+      const res = await err.json();
+      console.error("Login/Signup error response:", res);
+      if (res.statusCode === 400) {
+        return dispatch(receiveErrors(res.errors));
+      }
+      // Handle other error status codes
+      return dispatch(receiveErrors({ email: res.message || "An error occurred. Please try again." }));
+    } catch (jsonErr) {
+      // If err.json() fails, log the error
+      console.error("Login/Signup error - could not parse response:", err);
+      console.error("Error status:", err.status, err.statusText);
+      return dispatch(receiveErrors({ email: "An error occurred. Please try again." }));
     }
   }
 };
@@ -49,9 +60,14 @@ export const logout = () => (dispatch) => {
 };
 
 export const getCurrentUser = () => async (dispatch) => {
-  const res = await jwtFetch("/api/users/current");
-  const user = await res.json();
-  return dispatch(receiveCurrentUser(user));
+  try {
+    const res = await jwtFetch("/api/users/current");
+    const user = await res.json();
+    return dispatch(receiveCurrentUser(user));
+  } catch (err) {
+    // If not logged in, user will be null - this is expected
+    return dispatch(receiveCurrentUser(null));
+  }
 };
 
 const nullErrors = null;

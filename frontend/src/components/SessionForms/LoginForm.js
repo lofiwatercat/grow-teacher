@@ -74,13 +74,16 @@ function LoginForm() {
     return setState(e.currentTarget.value);
   };
 
-  const handleDemoLogin = (e) => {
+  const handleDemoLogin = async (e) => {
     e.preventDefault();
-    dispatch(login({ email: "demo1@user.io", password: "password" }));
-    history.push("/posts");
+    const result = await dispatch(login({ email: "demo1@user.io", password: "password" }));
+    // Only redirect if login was successful (result contains user)
+    if (result && result.type === "session/RECEIVE_CURRENT_USER") {
+      history.push("/posts");
+    }
   };
 
-  const usernameSubmit = (e) => {
+  const usernameSubmit = async (e) => {
     e.preventDefault();
     const user = {
       email: emailSignUp,
@@ -88,13 +91,20 @@ function LoginForm() {
       password: passwordSignUp,
     };
 
-    dispatch(signup(user));
+    const result = await dispatch(signup(user));
+    // Only redirect if signup was successful
+    if (result && result.type === "session/RECEIVE_CURRENT_USER") {
+      history.push("/posts");
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(login({ email, password }));
-    history.push("/posts");
+    const result = await dispatch(login({ email, password }));
+    // Only redirect if login was successful
+    if (result && result.type === "session/RECEIVE_CURRENT_USER") {
+      history.push("/posts");
+    }
   };
 
   useEffect(() => {
