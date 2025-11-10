@@ -6,7 +6,7 @@
 
 var app = require('../app');
 // removed ('backend:server')
-var debug = require('debug');
+var debug = require('debug')('backend:server');
 var http = require('http');
 
 const mongoose = require('mongoose');

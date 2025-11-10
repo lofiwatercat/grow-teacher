@@ -92,7 +92,7 @@ router.patch(
   requireUser,
   async (req, res) => {
     if (!isProduction) {
-      const csrfToken = req.csrfToekn();
+      const csrfToken = req.csrfToken();
       res.cookie("CSRF-TOKEN", csrfToken);
     }
 

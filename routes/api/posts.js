@@ -14,7 +14,7 @@ const s3 = new Aws.S3({
 const upload = multer({
   storage: multers3({
     s3,
-    bucket: "grow-teacher-dev",
+    bucket: process.env.AWS_BUCKET_NAME,
     key: function (req, file, cb) {
       cb(null, file.fieldname + "-" + Date.now());
     },
